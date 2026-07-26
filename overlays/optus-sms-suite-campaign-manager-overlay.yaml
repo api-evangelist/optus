@@ -1,0 +1,87 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Optus SMS Suite Campaign Manager API
+  version: 1.0.0
+extends: openapi/optus-sms-suite-campaign-manager-openapi.yml
+x-apievangelist:
+  generated: '2026-07-25'
+  method: generated
+  source: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  note: >-
+    The extended document is Swagger 2.0 and is the only Optus spec that declares operationIds.
+    Additive only.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-live-copy: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+    x-apievangelist-note: >-
+      A live copy of this document is served from the API host (HTTP 200), but that copy
+      declares host api.modicagroup.com. The Optus-branded docs copy is the one harvested here.
+    x-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      data_model: data-model/optus-data-model.yml
+- target: $.info
+  update:
+    x-conventions:
+      tenancy: 'every path is scoped by the {application_name} segment, which is also the Basic auth username'
+      pagination: none - list and template collections return in full
+      idempotency: none
+- target: $.paths['/{application_name}/scheduled_campaigns'].post
+  update:
+    summary: Schedule an SMS campaign
+    x-action-class: acting
+    x-consequence: physical
+    x-blast-radius: >-
+      Highest-consequence operation on the entire Optus public surface. The spec permits up to
+      1,000,000 members in a single request and the send is scheduled, not previewed. Agentic
+      callers should require explicit human confirmation.
+    x-human-in-the-loop: recommended
+    x-agentic-access: agentic-access/optus-agentic-access.yml
+- target: $.paths['/{application_name}/delete_multiple_lists'].post
+  update:
+    summary: Delete up to 100 recipient lists
+    x-action-class: acting
+    x-consequence: write
+    x-irreversible: true
+- target: $.paths['/{application_name}/lists/{list_id}'].delete
+  update:
+    summary: Delete a recipient list
+    x-action-class: acting
+    x-consequence: write
+    x-irreversible: true
+- target: $.paths['/{application_name}/lists'].post
+  update:
+    summary: Create a recipient list and load its members
+    x-action-class: acting
+    x-consequence: write
+- target: $.paths['/{application_name}/lists'].get
+  update:
+    summary: List all active recipient lists
+    x-action-class: connected
+    x-consequence: read
+- target: $.paths['/{application_name}/templates'].get
+  update:
+    summary: List all message templates
+    x-action-class: connected
+    x-consequence: read
+- target: $.paths['/{application_name}/{campaign_id}/report'].get
+  update:
+    summary: Get per-recipient delivery status for a campaign
+    x-action-class: connected
+    x-consequence: read
+- target: $.definitions.ListRequest
+  update:
+    x-compliance-note: >-
+      remove_opt_outs defaults to true and is the only opt-out control on the surface; there is
+      no API to read or manage opt-out records. Australian and New Zealand consent rules are
+      documented at
+      https://sms.optus.com.au/docs/en/useful-information/message-compliance-and-regulatory-information/
+- target: $.definitions.Member
+  update:
+    x-apievangelist-note: >-
+      param1..param6 are free-text merge fields (50 characters each) substituted into templates
+      at send time.

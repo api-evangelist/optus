@@ -1,0 +1,48 @@
+generated: '2026-07-25'
+method: searched
+source: npm, PyPI, GitHub, and https://sms.optus.com.au/docs/en/
+official_packages_found: 0
+packages: []
+finding: >-
+  Optus publishes no first-party client library for any of its APIs, in any language. The
+  GitHub organisation github.com/Optus exists (created 2015-09-27) but has zero public
+  repositories, no name, and no description. The platform operator behind The Optus SMS Suite,
+  Modica Group, has a public org (github.com/modicagroup) with only two unrelated repositories
+  (a cloud-tools Docker image and Perl third-party integration examples), neither last touched
+  since 2019 and neither an SDK.
+substitute:
+  kind: inline code samples
+  note: >-
+    Instead of SDKs, every API documentation page ships copy-paste request examples in curl,
+    JavaScript (fetch), Python (requests), PHP (cURL), Ruby (Net::HTTP), Java
+    (java.net.http.HttpClient) and C# (HttpClient). With HTTP Basic auth and small JSON bodies
+    this is a workable substitute for simple sends, but it leaves retry, DLR reconciliation,
+    and encoding handling to the integrator.
+  languages: [curl, javascript, python, php, ruby, java, csharp]
+registries_probed:
+- {registry: npm, query: 'optus sms', result: no first-party package}
+- {registry: npm, query: modica, result: no results}
+- {registry: pypi, package: optus, result: 'third-party - "Python wrapper for the optus mobile API", published by itchannel, 0.0.1, https://github.com/itchannel/optus-api - consumer account/usage scraping, unrelated to the SMS Suite APIs and not published by Optus'}
+- {registry: pypi, package: modica, result: 404}
+- {registry: pypi, package: modica-sms, result: 404}
+- {registry: github, org: Optus, result: 'exists, 0 public repositories'}
+- {registry: github, org: modicagroup, result: '2 public repositories, neither an SDK'}
+third_party:
+- language: python
+  registry: pypi
+  name: optus
+  url: https://pypi.org/project/optus/
+  official: false
+  note: Unofficial wrapper for the Optus consumer mobile account API, not the SMS Suite messaging APIs.
+integrations_instead_of_sdks:
+  note: >-
+    Where a first-party SDK would sit, the SMS Suite instead ships pre-built connectors for
+    third-party platforms.
+  docs: https://sms.optus.com.au/docs/en/integrations/business-integrations/
+  list:
+  - {partner: Genesys Cloud, kind: BYO SMPP, url: 'https://sms.optus.com.au/docs/en/integrations/business-integrations/genesys-cloud/'}
+  - {partner: Marketo Engage, kind: webhook-triggered SMS, url: 'https://sms.optus.com.au/docs/en/integrations/business-integrations/marketo-integration/'}
+  - {partner: Salesforce CRM, kind: TXTinIT managed package, url: 'https://sms.optus.com.au/docs/en/integrations/business-integrations/salesforce-integration/'}
+  - {partner: Zapier, kind: no-code workflow triggers, url: 'https://sms.optus.com.au/docs/en/integrations/business-integrations/zapier-integration/'}
+  - {partner: Okta, kind: telephony inline hook, url: 'https://sms.optus.com.au/docs/en/integrations/business-integrations/okta-telephony-inline-hook/'}
+  - {partner: NICE CXone, kind: Optus Digital Messaging channel, note: tracked as a component on the status page}

@@ -1,0 +1,123 @@
+generated: '2026-07-25'
+method: derived
+source: >-
+  openapi/optus-sms-suite-rest-v1-openapi.yml, openapi/optus-sms-suite-rest-v2-openapi.yml,
+  openapi/optus-sms-suite-campaign-manager-openapi.yml, openapi/optus-sms-suite-status-openapi.json
+note: >-
+  Derived from the schema graph of the four published specifications plus the identifier
+  semantics documented on the interface pages. The SMS Suite is a shallow domain: there is no
+  customer, account, or subscription resource in any public API - the account is implied by the
+  Basic credential, and the Campaign Manager scopes everything under a path-level
+  {application_name}. Two identifier universes coexist and do not interoperate: REST v1 / HTTPS
+  / SOAP / REST Email mint 64-bit signed integer message IDs, while REST v2 mints UUIDs.
+identifiers:
+- {entity: Message, api: 'REST v1, HTTPS, SOAP, REST Email', type: integer, format: int64, note: '64-bit signed integer, minted by the gateway'}
+- {entity: Message, api: REST v2, type: string, format: uuid, pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'}
+- {entity: List, api: Campaign Manager, type: integer}
+- {entity: Campaign, api: Campaign Manager, type: integer}
+- {entity: Template, api: Campaign Manager, type: integer}
+- {entity: Application, api: all, type: string, note: 'the "application name" - also the Basic auth username and the Campaign Manager path segment'}
+entities:
+- name: Application
+  api: all
+  schema: null
+  description: >-
+    The credentialed unit of isolation. Not exposed as a resource - it appears as the Basic
+    auth username, as the {application_name} path parameter on Campaign Manager, and as the
+    owner of callback URLs and authorised IP ranges configured in the platform.
+  fields: [name, password, callback_urls, authorised_ip_addresses]
+- name: Message
+  api: SMS Gateway REST API v1
+  schema: openapi/optus-sms-suite-rest-v1-openapi.yml#/definitions/Message
+  composes: MessageCommon
+  description: A single mobile-terminating SMS.
+  fields: [id, source, destination, content, reference, class, mask, sms_class, scheduled]
+- name: MessageBroadcast
+  api: SMS Gateway REST API v1
+  schema: openapi/optus-sms-suite-rest-v1-openapi.yml#/definitions/MessageBroadcast
+  composes: MessageCommon
+  description: One content body fanned out to an array of up to 1000 destinations.
+  fields: [id, source, 'destination[]', content, reference, class, mask, sms_class, scheduled]
+- name: MessageCommon
+  api: SMS Gateway REST API v1
+  schema: openapi/optus-sms-suite-rest-v1-openapi.yml#/definitions/MessageCommon
+  description: Shared property set for single and broadcast messages (allOf base).
+- name: SingleMessage
+  api: SMS Gateway REST API v2
+  schema: openapi/optus-sms-suite-rest-v2-openapi.yml#/components/schemas/SingleMessage
+  description: A single MT SMS submitted asynchronously; returns 202 Accepted.
+  fields: [id, destination, source, content, reference, class, mask, sms_class, scheduled, integration_id]
+- name: MessageDetails
+  api: SMS Gateway REST API v2
+  schema: openapi/optus-sms-suite-rest-v2-openapi.yml#/components/schemas/MessageDetails
+  description: Retrieval projection of a message, including direction (MO/MT) and status.
+  fields: [id, source, destination, direction, reference, content, status]
+- name: StatusCallback
+  api: SMS Gateway REST API v2
+  schema: openapi/optus-sms-suite-rest-v2-openapi.yml#/components/schemas/StatusCallback
+  description: Delivery-receipt event payload. Also reused as the 202 submit response body.
+  fields: [id, status, detail]
+- name: ReplyCallback
+  api: SMS Gateway REST API v2
+  schema: openapi/optus-sms-suite-rest-v2-openapi.yml#/components/schemas/ReplyCallback
+  description: Inbound (mobile-originated) message event payload.
+  fields: [id, source, destination, content, operator]
+- name: List
+  api: Campaign Manager
+  schema: openapi/optus-sms-suite-campaign-manager-openapi.yml#/definitions/ListRequest
+  description: A named recipient audience, up to 1,000,000 members.
+  fields: [id, name, batch, email, members, remove_opt_outs, strict_validation, created]
+- name: Member
+  api: Campaign Manager
+  schema: openapi/optus-sms-suite-campaign-manager-openapi.yml#/definitions/Member
+  description: One recipient inside a list or campaign, with six free-text merge parameters.
+  fields: [destination, param1, param2, param3, param4, param5, param6]
+- name: Campaign
+  api: Campaign Manager
+  schema: openapi/optus-sms-suite-campaign-manager-openapi.yml#/definitions/ScheduleCampaignRequest
+  description: A scheduled send of content (or a template) to a member set.
+  fields: [id, name, content, template, schedule, members, batch, email, mask, opt_out_response, reply_response, remove_opt_outs, strict_validation]
+- name: Template
+  api: Campaign Manager
+  schema: openapi/optus-sms-suite-campaign-manager-openapi.yml#/definitions/TemplateGetResponse
+  description: A reusable named message body referenced by a campaign.
+  fields: [id, name]
+- name: CampaignReport
+  api: Campaign Manager
+  schema: openapi/optus-sms-suite-campaign-manager-openapi.yml#/definitions/CampaignReport
+  description: Per-recipient delivery outcome rows for one campaign.
+  fields: [list_name, message_id, mobile, sent_date, status, status_date, timezone]
+- name: Service
+  api: Health Monitoring API
+  schema: openapi/optus-sms-suite-status-openapi.json (inline)
+  description: A named platform service whose availability is polled every 60 seconds.
+  known_values: [https, rest, restv2, soap, smpp, email2sms]
+  fields: [name, status]
+relationships:
+- {from: Application, to: Message, kind: has_many, via: Basic-auth credential scope}
+- {from: Application, to: List, kind: has_many, via: '{application_name} path parameter'}
+- {from: Application, to: Campaign, kind: has_many, via: '{application_name} path parameter'}
+- {from: Application, to: Template, kind: has_many, via: '{application_name} path parameter'}
+- {from: Message, to: MessageCommon, kind: composes, via: allOf}
+- {from: MessageBroadcast, to: MessageCommon, kind: composes, via: allOf}
+- {from: Message, to: StatusCallback, kind: has_many, via: 'message_id (async DLR events)'}
+- {from: Message, to: ReplyCallback, kind: has_one, via: 'reply_to (only when the MO answers an MT)'}
+- {from: ReplyCallback, to: Message, kind: belongs_to, via: reply_to}
+- {from: List, to: Member, kind: has_many, via: 'members[]'}
+- {from: Campaign, to: Member, kind: has_many, via: 'members[]'}
+- {from: Campaign, to: Template, kind: has_one, via: template}
+- {from: Campaign, to: CampaignReport, kind: has_many, via: '{campaign_id}/report'}
+- {from: CampaignReport, to: Message, kind: belongs_to, via: message_id}
+- {from: CampaignReport, to: List, kind: belongs_to, via: list_name}
+gaps:
+  no_customer_resource: true
+  no_account_or_billing_resource: true
+  no_number_or_sender_id_resource: >-
+    Sender IDs and short codes are provisioned through the platform and support desk, not
+    through an API. The `source` and `mask` fields reference them by value only.
+  no_opt_out_resource: >-
+    Opt-outs are applied as a boolean (remove_opt_outs) at list and campaign creation; there is
+    no API to read, add, or remove an opt-out record.
+  no_cross_version_id_mapping: >-
+    A REST v1 int64 message id and a REST v2 UUID cannot be resolved against each other through
+    any published operation.

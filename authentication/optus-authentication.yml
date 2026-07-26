@@ -1,0 +1,90 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  openapi/optus-sms-suite-campaign-manager-openapi.yml, openapi/optus-sms-suite-rest-v1-openapi.yml,
+  openapi/optus-sms-suite-rest-v2-openapi.yml
+docs: https://sms.optus.com.au/docs/en/security/
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+  model: http-basic-only
+  oauth2: false
+  oidc: false
+  mtls: false
+  ciba: false
+  note: >-
+    Every authenticated Optus SMS Suite interface uses HTTP Basic with per-application
+    credentials. There is no OAuth 2.0, no OpenID Connect, no bearer token, no scope model, no
+    mutual TLS, and no key-issuance API. /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server return 404 on every Optus host.
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/optus-sms-suite-campaign-manager-openapi.yml
+  - openapi/optus-sms-suite-rest-v1-openapi.yml
+- name: GatewayAuthorizer
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: HTTP Basic Authentication is used for all authenticated requests.
+  sources:
+  - openapi/optus-sms-suite-rest-v2-openapi.yml
+  note: >-
+    Modelled in the spec as an apiKey in the Authorization header, but the value is a standard
+    HTTP Basic credential. Functionally identical to BasicAuth.
+credential_issuance:
+  self_service: false
+  where: >-
+    Generated inside the platform, per application, at
+    https://sms.optus.com.au/gateway/api_config/{rest|restv2|http|soap|smpp|mms}. Requires a
+    platform login.
+  username: the application name
+  password: platform-generated per application
+  rotation: not documented
+  api: none - there is no API to create, list, rotate, or revoke credentials
+by_interface:
+- {api: SMS Gateway REST API v1, mechanism: HTTP Basic (Authorization header), spec: openapi/optus-sms-suite-rest-v1-openapi.yml}
+- {api: SMS Gateway REST API v2, mechanism: HTTP Basic via the GatewayAuthorizer scheme, spec: openapi/optus-sms-suite-rest-v2-openapi.yml}
+- {api: Campaign Manager API, mechanism: HTTP Basic, per-operation security, spec: openapi/optus-sms-suite-campaign-manager-openapi.yml}
+- {api: 2FA REST API, mechanism: HTTP Basic, spec: null, media_type: application/vnd.modica.2fa.v1+json}
+- {api: REST Email API, mechanism: HTTP Basic, spec: null}
+- {api: MM7 MMS API, mechanism: HTTP Basic, spec: null}
+- {api: SOAP API, mechanism: application name + password in the SOAP request, contract: 'https://api.sms.optus.com.au/ModicaSoap.wsdl'}
+- {api: HTTPS API, mechanism: 'application and password as query-string parameters', spec: null, note: 'credentials travel in the URL - unavoidable on this legacy interface, and one reason it is deprecation-announced'}
+- {api: SMPP API, mechanism: 'system_id + password on bind, max 8 characters, over mandatory TLS 1.2+ on port 2776', spec: null}
+- {api: Health Monitoring API, mechanism: none, spec: openapi/optus-sms-suite-status-openapi.json, note: deliberately unauthenticated}
+- {api: Callbacks (DLR/MO), mechanism: 'optional Basic credentials embedded in the configured callback URL (must be URL-encoded)', note: subscriber-side}
+- {api: MM7 callbacks, mechanism: HTTP Basic required, note: 'the provider requires Basic auth on all MM7 callback URLs'}
+network_controls:
+  ip_allowlisting:
+    supported: true
+    scope: per application
+    behaviour: >-
+      Optional and default-off. Once one or more IPs or ranges are registered under "Authorised
+      IP Addresses", every other source IP is rejected with an authentication error.
+  tls_minimum: TLS 1.2
+  https_enforced: true
+platform_identity:
+  note: >-
+    Distinct from API authentication - these govern human access to the SMS Suite web platform,
+    not API calls.
+  federated_id:
+    supported: true
+    protocol: SAML 2.0
+    docs: https://sms.optus.com.au/docs/en/security/federated-identity/
+  scim:
+    supported: true
+    version: '2.0'
+    docs: https://sms.optus.com.au/docs/en/security/scim/
+  mfa: supported
+gaps:
+- No OAuth 2.0 or OpenID Connect anywhere on the public surface.
+- No scopes, so authorisation is all-or-nothing per application credential.
+- No credential lifecycle API (create/rotate/revoke) and no documented rotation policy.
+- No CIBA, which CAMARA specifies alongside OIDC for network-based authorization.
+- Credentials on the legacy HTTPS API travel in the query string.

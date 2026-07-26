@@ -1,0 +1,131 @@
+generated: '2026-07-25'
+method: derived
+status: candidate
+published: false
+search:
+  result: none
+  note: >-
+    No official or community MCP server for Optus or for The Optus SMS Suite / Modica Group was
+    found. Probed: the developer documentation and every interface page, the docs sitemap,
+    github.com/Optus (0 public repositories) and github.com/modicagroup (2 unrelated
+    repositories), npm (no @modelcontextprotocol or vendor package), and the API host itself.
+    api.sms.optus.com.au serves no /.well-known/oauth-authorization-server or
+    /.well-known/oauth-protected-resource (both 404), so there is no gated MCP endpoint hiding
+    behind an OAuth challenge either.
+  probed:
+  - {url: 'https://sms.optus.com.au/docs/en/developer-docs/', status: 200, mcp_mentioned: false}
+  - {url: 'https://api.sms.optus.com.au/.well-known/oauth-protected-resource', status: 404}
+  - {url: 'https://api.sms.optus.com.au/.well-known/oauth-authorization-server', status: 404}
+  - {registry: github, org: Optus, repos: 0}
+  - {registry: npm, query: 'optus / modica mcp', result: none}
+server:
+  name: optus-sms-suite
+  transport: http
+  url: null
+  note: >-
+    Candidate only. Nothing is deployed; the tool list below is what an MCP server over the
+    published Optus SMS Suite specs would expose, derived one tool per OpenAPI operation. Every
+    tool's real input contract is the backing operation's parameters/requestBody in the spec
+    named under source_operation - see mcp/optus-tool-crosswalk.yml.
+auth:
+  model: http-basic
+  note: >-
+    Every write tool needs per-application Basic credentials issued in the platform. Only the
+    health tools are callable unauthenticated.
+tools:
+- name: send_sms
+  description: Send an SMS to a single mobile handset (asynchronous, UUID-tracked).
+  source_operation: openapi/optus-sms-suite-rest-v2-openapi.yml#POST /messages
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: get_sms_message
+  description: Retrieve a submitted message by its UUID, including current delivery status.
+  source_operation: openapi/optus-sms-suite-rest-v2-openapi.yml#GET /messages
+  action_class: connected
+  consequence: read
+  auth_required: true
+- name: send_sms_v1
+  description: Send an SMS via the legacy REST v1 gateway, returning a 64-bit integer message ID.
+  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#POST /messages
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: broadcast_sms
+  description: Send one message body to an array of up to 1000 destinations.
+  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#POST /messages/broadcast
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: get_sms_message_v1
+  description: Retrieve a REST v1 message by its 64-bit integer message ID.
+  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#GET /messages/{messageid}
+  action_class: connected
+  consequence: read
+  auth_required: true
+- name: list_recipient_lists
+  description: List all active Campaign Manager recipient lists for an application.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getLists
+  action_class: connected
+  consequence: read
+  auth_required: true
+- name: create_recipient_list
+  description: Create a named recipient list and load its members.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#createList
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: delete_recipient_list
+  description: Delete a single recipient list by ID.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#deleteList
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: delete_recipient_lists
+  description: Delete up to 100 recipient lists in one call.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#deleteMultList
+  action_class: acting
+  consequence: write
+  auth_required: true
+- name: schedule_campaign
+  description: Schedule an SMS campaign to a member set, optionally using a saved template.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#scheduleCampaign
+  action_class: acting
+  consequence: write
+  auth_required: true
+  note: >-
+    Highest-consequence tool on the surface - a single call can dispatch up to 1,000,000 SMS.
+    Should require human confirmation before execution.
+- name: list_templates
+  description: List all Campaign Manager message templates for an application.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getTemplates
+  action_class: connected
+  consequence: read
+  auth_required: true
+- name: get_campaign_report
+  description: Get per-recipient delivery status rows for a campaign.
+  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getReport
+  action_class: connected
+  consequence: read
+  auth_required: true
+- name: get_service_status
+  description: Get near real-time availability for one or more SMS Suite services.
+  source_operation: openapi/optus-sms-suite-status-openapi.json#GET /status
+  action_class: connected
+  consequence: read
+  auth_required: false
+- name: list_services
+  description: List the service names the health API can report on.
+  source_operation: openapi/optus-sms-suite-status-openapi.json#GET /services
+  action_class: connected
+  consequence: read
+  auth_required: false
+not_covered:
+  note: >-
+    Four documented interfaces have no OpenAPI to derive from and are therefore absent from the
+    candidate tool list: the 2FA REST API (POST /challenges, POST /responses), the REST Email
+    API, the HTTPS API, and MM7/SMPP. The 2FA pair in particular would be the most useful
+    agent-facing capability on the surface.
+related:
+- mcp/optus-tool-crosswalk.yml
+- agentic-access/optus-agentic-access.yml

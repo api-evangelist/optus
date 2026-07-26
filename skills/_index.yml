@@ -1,0 +1,51 @@
+generated: '2026-07-25'
+method: generated
+source: >-
+  openapi/ in this repo plus https://sms.optus.com.au/docs/en/. Optus publishes no AGENTS.md and
+  no provider-authored agent skills; these are API Evangelist packaged operating instructions
+  grounded in the published specs and documentation.
+provider_published_skills: false
+skills:
+- file: optus-send-and-reconcile-sms.md
+  name: Send and reconcile an SMS (REST v2)
+  api: openapi/optus-sms-suite-rest-v2-openapi.yml
+  operations: ['POST /messages', 'GET /messages']
+  note: >-
+    The provider spec declares no operationIds; the skill binds by method and path as they
+    appear in the spec.
+- file: optus-run-sms-campaign.md
+  name: Build a list, schedule a campaign, pull the report
+  api: openapi/optus-sms-suite-campaign-manager-openapi.yml
+  operations: [getLists, createList, deleteList, deleteMultList, scheduleCampaign, getTemplates, getReport]
+  note: Every operationId verified verbatim in the spec.
+- file: optus-check-service-health.md
+  name: Check SMS Suite service health before sending
+  api: openapi/optus-sms-suite-status-openapi.json
+  operations: ['GET /services', 'GET /status']
+  note: Unauthenticated. Live values in the skill were probed 2026-07-25.
+- file: optus-two-factor-authentication.md
+  name: Issue and validate an SMS one-time code
+  api: null
+  operations: ['POST /challenges', 'POST /responses']
+  note: >-
+    No OpenAPI exists for the 2FA API. The skill is grounded in the published documentation
+    page only and says so at the top.
+cross_cutting_rules:
+  auth: HTTP Basic with per-application credentials; no OAuth, no token endpoint.
+  idempotency: >-
+    None on any interface. Retrying a submit sends and bills another message. `reference` is a
+    correlation label, not an idempotency key.
+  delivery: >-
+    Submits are accepted, not delivered. Outcomes arrive on a DLR callback configured per
+    application, and on REST v2 the callback is mandatory to see error codes at all.
+  identifiers: 'REST v1/HTTPS/SOAP/Email mint int64 ids; REST v2 mints UUIDs. They do not map to each other.'
+  rate_limits: None published. Build your own throttle.
+  timestamps: 'RFC 3339, not in the past, maximum 60 days ahead.'
+  numbers: E.164 with a leading plus.
+  highest_risk_operation: scheduleCampaign (up to 1,000,000 recipients, no dry-run, no documented cancel)
+related:
+- conventions/optus-conventions.yml
+- errors/optus-error-codes.yml
+- asyncapi/optus-sms-suite-asyncapi.yml
+- agentic-access/optus-agentic-access.yml
+- mcp/optus-tool-crosswalk.yml

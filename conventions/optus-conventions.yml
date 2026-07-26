@@ -1,0 +1,132 @@
+generated: '2026-07-25'
+method: searched
+source: https://sms.optus.com.au/docs/en/ plus openapi/ in this repo
+scope: The Optus SMS Suite (the only self-serve public Optus API surface)
+authentication:
+  style: http-basic
+  detail: >-
+    HTTP Basic Authentication on every authenticated interface (REST v1, REST v2, Campaign
+    Manager, 2FA, REST Email, SOAP, MM7). Credentials are per-application - an "application
+    name" acts as the username and a generated password as the secret, both issued inside the
+    platform at https://sms.optus.com.au/gateway/api_config/{rest|restv2|http|soap|smpp|mms}.
+    REST v2 declares the same Basic value through a securityScheme named GatewayAuthorizer,
+    modelled in the spec as an apiKey in the Authorization header.
+  no_oauth: true
+  no_tokens: true
+  legacy_variant: >-
+    The HTTPS API carries credentials as `application` and `password` query-string parameters
+    rather than an Authorization header.
+  smpp: system_id (application name) + password, max 8 characters, over mandatory TLS.
+  artifact: authentication/optus-authentication.yml
+network_controls:
+  ip_allowlisting:
+    supported: true
+    scope: per application
+    behaviour: >-
+      Optional. Once one or more IP addresses or ranges are added under "Authorised IP
+      Addresses", connections from every other IP are rejected with an authentication error.
+  tls:
+    minimum: TLS 1.2
+    https_only: true
+    detail: Plain-text HTTP requests are redirected to HTTPS. SMPP requires TLS 1.2+ on port 2776.
+    certificates: https://sms.optus.com.au/docs/en/integrations/api-documentation/ssl-certificates/
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  detail: >-
+    No idempotency key, no request-replay window, and no de-duplication contract is documented
+    on any interface. The optional free-text `reference` attribute on REST v1/v2, Campaign
+    Manager and REST Email is a correlation label echoed back on callbacks - it is explicitly
+    not a uniqueness or replay-safety guarantee. Retrying a submit will send another message.
+pagination:
+  supported: false
+  detail: >-
+    No collection endpoint paginates. Campaign Manager GET /{application_name}/lists and
+    /templates return complete arrays; message retrieval is single-resource by id. There are
+    no page, cursor, limit or offset parameters anywhere in the published specs.
+  bulk_limits:
+    broadcast_destinations_max: 1000
+    list_members_max: 1000000
+    delete_multiple_lists_max: 100
+field_selection:
+  expansion: false
+  sparse_fieldsets: false
+  detail: >-
+    Responses are fixed-shape. REST v1/v2 message retrieval adds optional attributes
+    (`reference`, `encoding`) only when they are present on the record.
+metadata:
+  supported: partial
+  fields:
+  - {field: reference, apis: [rest-v1, rest-v2, rest-email, https], description: Free-text customer reference echoed on retrieval and on DLR/MO callbacks}
+  - {field: batch, apis: [campaign-manager], description: Free-text batch reference on lists and scheduled campaigns}
+  - {field: 'param1..param6', apis: [campaign-manager], description: Six free-text per-member merge fields for template substitution, 50 characters each}
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No request-id or correlation header is documented or returned. Traceability is carried by
+    the message identifier instead - a 64-bit signed integer on REST v1, HTTPS, SOAP and REST
+    Email, and a UUID on REST v2. Store it; it is the only key for reconciling later callbacks
+    and reports.
+versioning:
+  scheme: uri-path
+  media_types:
+  - application/vnd.modica.gateway.v1+json
+  - application/vnd.modica.2fa.v1+json
+  - application/json
+  query_parameter: 'HTTPS API only: version=1|2 selects the error/status-code behaviour'
+  artifact: lifecycle/optus-lifecycle.yml
+error_envelope:
+  rfc9457: false
+  detail: Per-interface vendor envelopes; see errors/optus-error-codes.yml.
+  artifact: errors/optus-error-codes.yml
+rate_limits:
+  published: false
+  detail: >-
+    No documented request-rate ceiling, no 429 in any published error table, and no
+    RateLimit/Retry-After headers documented. Throughput is a commercial matter agreed per
+    account; SMPP is positioned as the high-throughput path. Sending Hours is a
+    platform-level scheduling control, not an API rate limit.
+data_formats:
+  content_type: application/json (REST family), text/xml SOAP (SOAP, MM7), form/query (HTTPS API)
+  timestamps:
+    format: RFC 3339
+    pattern: YYYY-MM-DDThh:mm:ssTZD
+    example: '1997-07-16T19:20:30+01:00'
+    rules:
+    - Scheduled timestamps must not be in the past (422)
+    - Scheduled timestamps must not be more than 60 days ahead
+  msisdn_format: >-
+    International format with a leading plus and no leading zero, e.g. +61414123456 /
+    +64211234567 / +18123456789.
+  character_sets:
+    default: GSM 03.38 7-bit
+    unicode: supported, with different length and concatenation limits
+    binary: base64-encoded on MO callbacks, signalled by an `encoding` attribute
+callbacks:
+  style: provider-POSTs-JSON-to-a-URL-configured-in-the-platform
+  configured_in: platform API Configuration screen, not per request
+  kinds: [MO (inbound message), DLR (delivery receipt), MM7 DeliverReq, MM7 DeliveryReport]
+  required_for: >-
+    REST v2 requires a DLR callback URL to receive error codes at all - without it, delivery
+    failures are invisible to the integration.
+  transport_rules:
+  - HTTPS recommended for callback URLs
+  - Certificate must match the domain name; self-signed certificates will not verify
+  - Credentials embedded in a callback URL must be URL-encoded
+  - MM7 callbacks must use HTTP Basic authentication and are acknowledged with a SOAP DeliverRsp
+  artifact: asyncapi/optus-sms-suite-asyncapi.yml
+discovery:
+  openapi_published: true
+  where: linked as downloads from the docs pages, plus two live copies on the API host
+  live:
+  - {url: 'https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json', status: 200}
+  - {url: 'https://api.sms.optus.com.au/rest/services/v1/swagger.json', status: 200}
+  gated:
+  - {url: 'https://api.sms.optus.com.au/rest/sms/v2/openapi.yaml', status: 404, note: 'documented as a runtime operation but returns Not Found anonymously'}
+  well_known: none served on any Optus host
+related:
+- authentication/optus-authentication.yml
+- errors/optus-error-codes.yml
+- lifecycle/optus-lifecycle.yml
+- conformance/optus-conformance.yml
+- asyncapi/optus-sms-suite-asyncapi.yml

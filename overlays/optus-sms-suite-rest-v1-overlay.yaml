@@ -1,0 +1,63 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Optus SMS Suite REST API v1
+  version: 1.0.0
+extends: openapi/optus-sms-suite-rest-v1-openapi.yml
+x-apievangelist:
+  generated: '2026-07-25'
+  method: generated
+  source: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  note: >-
+    The extended document is Swagger 2.0. Additive only - the harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-lifecycle-status: superseded
+    x-successor: openapi/optus-sms-suite-rest-v2-openapi.yml
+    x-apievangelist-note: >-
+      Not deprecated, but the documentation steers all new integrations to REST v2. v1 mints
+      64-bit integer message IDs; v2 mints UUIDs, and the two id spaces cannot be resolved
+      against each other through any published operation.
+    contact:
+      name: The Optus SMS Suite API Support
+      url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+      email: optussd@modicagroup.com
+    x-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      asyncapi: asyncapi/optus-sms-suite-asyncapi.yml
+- target: $.paths['/messages'].post
+  update:
+    operationId: sendSmsV1
+    summary: Send an SMS to a single mobile handset
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: acting
+    x-consequence: write
+- target: $.paths['/messages/broadcast'].post
+  update:
+    operationId: broadcastSmsV1
+    summary: Send one message body to up to 1000 destinations
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: acting
+    x-consequence: write
+    x-blast-radius: 'up to 1000 handsets per call; exceeding the account limit returns broadcast_limit'
+- target: $.paths['/messages/{messageid}'].get
+  update:
+    operationId: getSmsMessageV1
+    summary: Retrieve a message by its 64-bit message ID
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+- target: $.definitions.MessageCommon
+  update:
+    x-apievangelist-note: >-
+      `reference` is a free-text correlation label echoed back on retrieval and on DLR/MO
+      callbacks. It is NOT an idempotency key - the API de-duplicates nothing.
+    x-scheduled-limits: 'RFC 3339 timestamp, must not be in the past, maximum 60 days ahead'
+- target: $.definitions.DefaultError
+  update:
+    x-error-catalog: errors/optus-error-codes.yml
+    x-documented-codes: [send_failed, invalid_json, missing_attrib, invalid_attrib, broadcast_limit]

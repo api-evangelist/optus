@@ -1,0 +1,69 @@
+generated: '2026-07-25'
+method: searched
+source: https://sms.optus.com.au/docs/en/product-news/
+scheme: dated-product-news
+api_release_notes: false
+current_versions:
+  sms_gateway_rest: v2
+  sms_gateway_rest_legacy: v1
+  campaign_manager: v1
+  two_factor_auth: v1
+  rest_email: v1
+  health_monitoring: v1
+  https_api: v2 (selected per request)
+  mm7: 3GPP MM7 5.3.0
+  smpp: 3.3 / 3.4
+note: >-
+  The Optus SMS Suite publishes a dated Product News section rather than a per-API changelog.
+  Entries carry an author and a date and announce platform and product changes; none of the
+  three current entries announce a breaking change to a messaging API contract. There is no
+  API-level release-notes feed, no RSS/Atom for product news, and no version history page for
+  any individual interface, so contract changes have to be tracked through the interface
+  documentation pages themselves (where deprecations appear as in-page banners) and through
+  scheduled-maintenance notices on the status page.
+entries:
+- date: '2025-08-10'
+  title: Web2SMS Inbox
+  author: Pauline Scott
+  url: https://sms.optus.com.au/docs/en/product-news/web2sms-inbox/
+  kind: product-update
+  breaking: false
+  highlights:
+  - Web2SMS application redesign following usage analysis and UX research
+  - Groundwork laid for additional messaging channels including WhatsApp, RCS and video
+  - Legacy Inbox announced as retiring
+  api_impact: none (platform application, not an API contract)
+- date: '2025-08-01'
+  title: Marketplace Release
+  author: Nicola Donaldson
+  url: https://sms.optus.com.au/docs/en/product-news/marketplace-release/
+  kind: platform-release
+  breaking: false
+  highlights:
+  - Marketplace launched across all channels as a catalogue of the CPaaS product set
+  - In-product roadmap visibility into products in development and under evaluation
+  - Self-service request/procurement of additional solutions
+  - Permission-based access indicators and a navigation redesign
+  deployment_timeline:
+  - {date: '2025-06', event: Marketplace released to all users}
+  - {date: '2025-08', event: New navigation experience deployed to all customers}
+  api_impact: none
+- date: '2025-06-15'
+  title: RCS Insights
+  author: Pauline Scott
+  url: https://sms.optus.com.au/docs/en/product-news/rcs-insights/
+  kind: industry-insight
+  breaking: false
+  highlights:
+  - Analysis of Rich Communication Services adoption in business messaging across APAC and LATAM
+  api_impact: none (no RCS API is published)
+operational_change_record:
+  note: >-
+    The only dated record of changes that actually affect a running integration is the status
+    page maintenance feed - API maintenance windows and SSL certificate rotations. Captured in
+    full in lifecycle/optus-lifecycle.yml.
+  source: https://status.sms.optus.com.au/api/v2/scheduled-maintenances.json
+  records: 23
+  most_recent: {date: '2026-02-27', title: 'Urgent Action Required for Optus SMS Suite: SSL Certificate Update'}
+related:
+- lifecycle/optus-lifecycle.yml

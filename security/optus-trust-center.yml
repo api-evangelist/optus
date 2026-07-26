@@ -1,0 +1,42 @@
+generated: '2026-07-25'
+method: searched
+probe: false
+url: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+kind: security-and-compliance-page
+note: >-
+  Optus does not operate a dedicated trust portal (no trust.optus.com.au, no
+  security.optus.com.au). The nearest published equivalent is the Optus SMS Suite "Safe &
+  Secure" solution sheet, which names the compliance programs behind the one public Optus
+  developer surface, plus the developer security section at
+  https://sms.optus.com.au/docs/en/security/. Because that surface is white-labelled from
+  Modica Group, these certifications describe the operating platform Optus resells under its
+  own brand.
+certifications:
+- ISO 27001
+- SOC 2
+- IRAP
+controls:
+- encryption in transit using TLS 1.2 or greater
+- encryption at rest using AES 256
+- SAML 2.0 single sign-on
+- IP allowlisting
+- least-privilege access controls
+- strong authentication and multi-factor authentication
+- incident response
+- vulnerability management
+- penetration testing
+- secure development practices
+- data sovereignty, retention, platform reliability and business continuity controls
+hosting: AWS
+related:
+- {type: SecurityGuidance, url: 'https://sms.optus.com.au/docs/en/security/'}
+- {type: NetworkEncryption, url: 'https://sms.optus.com.au/docs/en/security/network-encryption/'}
+- {type: PracticalSecurityGuidance, url: 'https://sms.optus.com.au/docs/en/security/practical-security-guidance/'}
+- {type: ConnectivityOptions, url: 'https://sms.optus.com.au/docs/en/security/connectivity-options/'}
+- {type: PrivacyPolicy, url: 'https://www.optus.com.au/about/legal/privacy'}
+evidence:
+- source: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+  status: 200
+  quote: >-
+    Our cloud platform is deployed on AWS and supported by security and compliance programs
+    including ISO 27001, SOC 2, and IRAP.

@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Optus SMS Suite SMS Gateway REST API v2
+  version: 1.0.0
+extends: openapi/optus-sms-suite-rest-v2-openapi.yml
+x-apievangelist:
+  generated: '2026-07-25'
+  method: generated
+  source: >-
+    https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/ plus artifacts in
+    this repo. Additive only - the harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-apievangelist-recommended: true
+    x-white-label-operator: Modica Group
+    contact:
+      name: The Optus SMS Suite API Support
+      url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+      email: optussd@modicagroup.com
+    x-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      lifecycle: lifecycle/optus-lifecycle.yml
+      asyncapi: asyncapi/optus-sms-suite-asyncapi.yml
+      data_model: data-model/optus-data-model.yml
+- target: $.info
+  update:
+    x-conventions:
+      idempotency: none documented - retrying a submit sends another message
+      pagination: none
+      request_id_header: none
+      rate_limits: none published
+      timestamps: RFC 3339, not in the past, maximum 60 days ahead
+      msisdn_format: E.164 with leading plus
+      network_controls: optional per-application IP allowlisting; TLS 1.2 minimum
+- target: $.paths['/messages'].post
+  update:
+    operationId: sendSmsV2
+    summary: Send an SMS to a single mobile handset
+    x-apievangelist-note: >-
+      The provider spec declares no operationId. This id is an API Evangelist convention for
+      tool generation and is NOT a provider-published identifier.
+    x-action-class: acting
+    x-consequence: write
+    x-delivery-outcome: >-
+      Returns 202 Accepted with a UUID. Delivery success or failure only ever arrives on the
+      DLR callback - a 202 is acceptance, not delivery.
+- target: $.paths['/messages'].get
+  update:
+    operationId: getSmsMessageV2
+    summary: Retrieve a submitted message by UUID
+    x-apievangelist-note: >-
+      Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+- target: $.paths['/openapi.yaml'].get
+  update:
+    operationId: getOpenApiDocument
+    x-apievangelist-note: >-
+      Documented as a live operation but returns HTTP 404 {"message":"Not Found"} anonymously -
+      the self-describing copy is credential-gated. The public copy is the docs-hosted file at
+      https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.yaml.
+    x-probe:
+      url: https://api.sms.optus.com.au/rest/sms/v2/openapi.yaml
+      status: 404
+      probed: '2026-07-25'
+- target: $.components.securitySchemes.GatewayAuthorizer
+  update:
+    x-actual-scheme: http-basic
+    x-apievangelist-note: >-
+      Modelled as an apiKey in the Authorization header, but the value is a standard HTTP Basic
+      credential (base64 of application-name:password). Credentials are issued per application
+      at https://sms.optus.com.au/gateway/api_config/restv2.
+- target: $.components.schemas.StatusCallback
+  update:
+    x-apievangelist-note: >-
+      This schema serves double duty as the 202 submit response body and as the DLR callback
+      payload. The DLR documentation publishes only four of the twelve enum values
+      (sent, received, rejected, expired); accepted, queued, blocked and deficient appear only
+      here in the spec.
+    x-event-catalog: asyncapi/optus-sms-suite-asyncapi.yml

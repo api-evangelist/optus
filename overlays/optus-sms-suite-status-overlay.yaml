@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Optus SMS Suite Health Monitoring API
+  version: 1.0.0
+extends: openapi/optus-sms-suite-status-openapi.json
+x-apievangelist:
+  generated: '2026-07-25'
+  method: generated
+  source: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  note: >-
+    The harvested document is served from an Optus host but declares the Modica Group server
+    and Modica Group support contact - the clearest single piece of evidence that this surface
+    is a white-label. The overlay records the Optus-callable server WITHOUT mutating the
+    original.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-white-label-operator: Modica Group
+    x-apievangelist-note: >-
+      Title, contact and server in the original document all name Modica Group. The API is
+      nonetheless live and callable on the Optus host.
+- target: $.servers
+  update:
+    x-apievangelist-optus-server: https://api.sms.optus.com.au/rest/services/v1
+    x-verified:
+      url: https://api.sms.optus.com.au/rest/services/v1/status
+      status: 200
+      probed: '2026-07-25'
+- target: $.paths['/status'].get
+  update:
+    operationId: getServiceStatus
+    summary: Get near real-time availability for one or more services
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+    x-authentication: none - deliberately unauthenticated
+    x-polling-guidance: >-
+      Status is refreshed once per minute from an external, geographically distributed provider
+      independent of the platform's own infrastructure. Do not poll faster than the 60-second
+      cache interval.
+    x-empty-response-note: >-
+      Calling /status without any `service` query parameter returns {"services":{}} - the caller
+      must name the services it wants.
+- target: $.paths['/services'].get
+  update:
+    operationId: listServices
+    summary: List the service names the health API can report on
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+    x-observed-values:
+      probed: '2026-07-25'
+      services: [https, rest, soap, smpp, restv2, email2sms]
+      note: >-
+        Live response from https://api.sms.optus.com.au/rest/services/v1/services. Service names
+        are case-sensitive; an unsupported or wrongly cased name returns status "unknown".
+- target: $.info
+  update:
+    x-related-status-surface:
+      status_page: https://status.sms.optus.com.au/
+      statuspage_api: https://status.sms.optus.com.au/api/v2/summary.json
+      components_tracked: 17
+      artifact: lifecycle/optus-lifecycle.yml

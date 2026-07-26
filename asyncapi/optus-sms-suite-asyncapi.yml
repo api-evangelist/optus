@@ -1,0 +1,264 @@
+asyncapi: 3.0.0
+info:
+  title: The Optus SMS Suite Callback Surface
+  version: 1.0.0
+  description: |
+    Derived event description for the callbacks The Optus SMS Suite POSTs to subscriber-hosted
+    URLs. Optus publishes NO AsyncAPI document; this file was derived by API Evangelist from
+    two sources that are both published verbatim by the provider:
+
+      1. the `callbacks` block of the provider's own OpenAPI 3.0.3 document for SMS Gateway
+         REST API v2 (openapi/optus-sms-suite-rest-v2-openapi.yml), which carries the real
+         StatusCallback and ReplyCallback schemas; and
+      2. the callback payload shapes documented in prose on the REST v1, REST v2, REST Email
+         and MM7 documentation pages.
+
+    No field, status, or channel below was invented. Callback URLs are not supplied per
+    request - they are configured per application in the platform's API Configuration screen,
+    so the channel address is the subscriber's own endpoint.
+
+    Operational rules the provider states for every callback:
+      - HTTPS is recommended; the TLS certificate must match the domain name and self-signed
+        certificates will not verify.
+      - Credentials embedded in a callback URL must be URL-encoded.
+      - On REST v2 a DLR callback URL is REQUIRED - without one, error codes are never seen.
+      - MM7 callbacks require HTTP Basic authentication and must be acknowledged with a SOAP
+        DeliverRsp / DeliveryReportRsp.
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au/docs/en/developer-docs/
+    email: optussd@modicagroup.com
+  externalDocs:
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+
+defaultContentType: application/json
+
+servers:
+  subscriberCallback:
+    host: '{callbackHost}'
+    protocol: https
+    description: >-
+      The subscriber's own HTTPS endpoint, registered per application in the platform at
+      https://sms.optus.com.au/gateway/api_config/. The gateway is the publisher; the
+      subscriber's server is the receiver.
+    variables:
+      callbackHost:
+        description: Host of the callback URL configured by the subscriber.
+        default: callbacks.example.com
+    security:
+      - $ref: '#/components/securitySchemes/callbackBasicAuth'
+
+channels:
+  dlrCallback:
+    address: '{dlrCallbackUrl}'
+    title: Delivery receipt (DLR) callback
+    description: >-
+      POSTed when the delivery status of a mobile-terminating message changes. Required on
+      REST v2. Available on REST v1, the HTTPS API and the REST Email API.
+    parameters:
+      dlrCallbackUrl:
+        description: DLR callback URL configured in the application's API Configuration.
+    messages:
+      deliveryReceipt:
+        $ref: '#/components/messages/deliveryReceipt'
+  moCallback:
+    address: '{moCallbackUrl}'
+    title: Mobile-originated (MO) inbound message callback
+    description: >-
+      POSTed when an inbound message is received for the subscriber's number or short code.
+    parameters:
+      moCallbackUrl:
+        description: MO callback URL configured in the application's API Configuration.
+    messages:
+      inboundMessage:
+        $ref: '#/components/messages/inboundMessage'
+  mm7DeliverReq:
+    address: '{mm7CallbackUrl}'
+    title: MM7 mobile-originated MMS delivery (DeliverReq)
+    description: >-
+      3GPP MM7 SOAP DeliverReq sent to the subscriber's platform when an MMS is received from
+      a handset. The subscriber must reply with a SOAP DeliverRsp.
+    parameters:
+      mm7CallbackUrl:
+        description: MM7 callback URL configured for the MMS application.
+    messages:
+      mm7Deliver:
+        $ref: '#/components/messages/mm7Deliver'
+  mm7DeliveryReport:
+    address: '{mm7CallbackUrl}'
+    title: MM7 delivery report
+    description: >-
+      3GPP MM7 SOAP delivery report for a previously submitted MMS, acknowledged by a SOAP
+      response.
+    parameters:
+      mm7CallbackUrl:
+        description: MM7 callback URL configured for the MMS application.
+    messages:
+      mm7DeliveryReport:
+        $ref: '#/components/messages/mm7DeliveryReport'
+
+operations:
+  receiveDeliveryReceipt:
+    action: receive
+    channel:
+      $ref: '#/channels/dlrCallback'
+    summary: Receive a delivery receipt for a submitted message.
+    bindings:
+      http:
+        method: POST
+    messages:
+      - $ref: '#/channels/dlrCallback/messages/deliveryReceipt'
+  receiveInboundMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/moCallback'
+    summary: Receive an inbound (mobile-originated) message.
+    bindings:
+      http:
+        method: POST
+    messages:
+      - $ref: '#/channels/moCallback/messages/inboundMessage'
+  receiveMm7Deliver:
+    action: receive
+    channel:
+      $ref: '#/channels/mm7DeliverReq'
+    summary: Receive an inbound MMS as an MM7 DeliverReq.
+    bindings:
+      http:
+        method: POST
+    messages:
+      - $ref: '#/channels/mm7DeliverReq/messages/mm7Deliver'
+  receiveMm7DeliveryReport:
+    action: receive
+    channel:
+      $ref: '#/channels/mm7DeliveryReport'
+    summary: Receive an MM7 delivery report.
+    bindings:
+      http:
+        method: POST
+    messages:
+      - $ref: '#/channels/mm7DeliveryReport/messages/mm7DeliveryReport'
+
+components:
+  securitySchemes:
+    callbackBasicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        Optional for the REST callbacks (credentials may be embedded in the configured callback
+        URL and must be URL-encoded); REQUIRED for MM7 callbacks.
+  messages:
+    deliveryReceipt:
+      name: deliveryReceipt
+      title: Delivery receipt
+      summary: Status update for a mobile-terminating message.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DeliveryReceipt'
+      externalDocs:
+        url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+    inboundMessage:
+      name: inboundMessage
+      title: Inbound (MO) message
+      summary: A message received from a handset.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboundMessage'
+      externalDocs:
+        url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+    mm7Deliver:
+      name: mm7Deliver
+      title: MM7 DeliverReq
+      summary: 3GPP MM7 SOAP delivery of an inbound MMS.
+      contentType: application/xml
+      payload:
+        $ref: '#/components/schemas/Mm7Envelope'
+      externalDocs:
+        url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+    mm7DeliveryReport:
+      name: mm7DeliveryReport
+      title: MM7 delivery report
+      summary: 3GPP MM7 SOAP delivery report for a submitted MMS.
+      contentType: application/xml
+      payload:
+        $ref: '#/components/schemas/Mm7Envelope'
+      externalDocs:
+        url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  schemas:
+    DeliveryReceipt:
+      type: object
+      description: >-
+        REST v2 DLR payload. On REST v1, the HTTPS API and REST Email the same callback is sent
+        with a 64-bit integer message id instead of a UUID.
+      required: [message_id, status]
+      properties:
+        message_id:
+          type: string
+          format: uuid
+          description: Identifier of the message this receipt belongs to.
+        status:
+          type: string
+          description: Delivery outcome.
+          enum: [sent, received, rejected, expired]
+        detail:
+          type: string
+          description: Free-text detail supplied by the carrier transport.
+        reference:
+          type: string
+          description: Present only when the submitted message carried a reference attribute.
+    InboundMessage:
+      type: object
+      description: REST v2 MO callback payload.
+      required: [id, source, destination, content]
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          type: string
+          description: Sending handset in international format.
+        destination:
+          type: string
+          description: The short code or number the message was sent to.
+        content:
+          type: string
+        operator:
+          type: string
+          description: Carrier the message originated on.
+        reply_to:
+          type: string
+          description: >-
+            Present only when a number sequence is used and this MO is a reply to a previous MT
+            message; carries the original message id.
+        reference:
+          type: string
+          description: Present only when reply_to is present and the original MT carried a reference.
+        encoding:
+          type: string
+          description: >-
+            Present only for binary content. The value "base64" indicates the content field is
+            base64-encoded and must be decoded. Not supplied for GSM 7-bit or Unicode messages.
+          enum: [base64]
+    Mm7Envelope:
+      type: object
+      description: >-
+        3GPP MM7 5.3.0 SOAP envelope. The full element set is defined by the 3GPP MM7
+        specification rather than by Optus; the provider documents the transport, the
+        authentication requirement, and the acknowledgement contract but does not publish an
+        element-level schema. Status values are carried as MM7 StatusCode/StatusText, with
+        classes 1xxx success, 2xxx client errors, 3xxx server errors, 4xxx service errors.
+      additionalProperties: true
+
+x-apievangelist:
+  generated: '2026-07-25'
+  method: derived
+  derived_from:
+  - openapi/optus-sms-suite-rest-v2-openapi.yml (callbacks.status, callbacks.reply)
+  - https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  - https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  provider_published_asyncapi: false
+  note: >-
+    Not a provider artifact. Optus/Modica publish no AsyncAPI and no event schema registry;
+    this is an API Evangelist derivation of a genuinely documented callback surface.

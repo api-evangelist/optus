@@ -59,6 +59,10 @@ apis:
     url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
   - type: OpenAPI
     url: openapi/optus-sms-suite-rest-v1-openapi.yml
+  - type: Overlay
+    url: overlays/optus-sms-suite-rest-v1-overlay.yaml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
 - aid: optus:optus-sms-suite-rest-api-v2
   name: Optus SMS Suite SMS Gateway REST API v2
   description: >-
@@ -79,6 +83,14 @@ apis:
     url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
   - type: OpenAPI
     url: openapi/optus-sms-suite-rest-v2-openapi.yml
+  - type: Overlay
+    url: overlays/optus-sms-suite-rest-v2-overlay.yaml
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: AgentSkill
+    url: skills/optus-send-and-reconcile-sms.md
 - aid: optus:optus-sms-suite-campaign-manager-api
   name: Optus SMS Suite Campaign Manager API
   description: >-
@@ -99,6 +111,10 @@ apis:
     url: https://sms.optus.com.au/docs/api/campaign-manager.html
   - type: OpenAPI
     url: openapi/optus-sms-suite-campaign-manager-openapi.yml
+  - type: Overlay
+    url: overlays/optus-sms-suite-campaign-manager-overlay.yaml
+  - type: AgentSkill
+    url: skills/optus-run-sms-campaign.md
 - aid: optus:optus-sms-suite-health-monitoring-api
   name: Optus SMS Suite Health Monitoring API
   description: >-
@@ -116,8 +132,12 @@ apis:
     url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
   - type: OpenAPI
     url: openapi/optus-sms-suite-status-openapi.json
+  - type: Overlay
+    url: overlays/optus-sms-suite-status-overlay.yaml
   - type: StatusPage
     url: https://status.sms.optus.com.au/
+  - type: AgentSkill
+    url: skills/optus-check-service-health.md
 - aid: optus:optus-sms-suite-2fa-rest-api
   name: Optus SMS Suite 2FA REST API
   description: >-
@@ -126,6 +146,7 @@ apis:
     customisable message copy, optional alphanumeric mask, and a configurable validity window.
     Authenticated with HTTP Basic. No published OpenAPI definition was found.
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+  baseURL: https://api.sms.optus.com.au/rest/2fa
   tags:
   - Two-Factor Authentication
   - Identity
@@ -134,6 +155,8 @@ apis:
   properties:
   - type: Documentation
     url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+  - type: AgentSkill
+    url: skills/optus-two-factor-authentication.md
 - aid: optus:optus-sms-suite-rest-email-api
   name: Optus SMS Suite REST Email API
   description: >-
@@ -142,12 +165,15 @@ apis:
     DLR callbacks when the email transport has sent the message. Plain text only — no HTML, rich
     text, or attachments. No published OpenAPI definition was found.
   humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  baseURL: https://api.sms.optus.com.au/rest/email/v1
   tags:
   - Email
   - Messaging
   - REST
   properties:
   - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  - type: Webhooks
     url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
 - aid: optus:optus-sms-suite-https-api
   name: Optus SMS Suite HTTPS API
@@ -164,6 +190,10 @@ apis:
   properties:
   - type: Documentation
     url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  - type: Deprecation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
 - aid: optus:optus-sms-suite-soap-api
   name: Optus SMS Suite SOAP API
   description: >-
@@ -171,6 +201,7 @@ apis:
     classification, and structured error handling, published for legacy enterprise middleware. The
     WSDL is served publicly and targets the namespace http://api.sms.optus.com.au/ModicaSoap.
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  baseURL: https://api.sms.optus.com.au/ModicaSoap
   tags:
   - SMS
   - Messaging
@@ -181,6 +212,10 @@ apis:
     url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
   - type: WSDL
     url: https://api.sms.optus.com.au/ModicaSoap.wsdl
+  - type: Deprecation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
 - aid: optus:optus-sms-suite-mms-mm7-api
   name: Optus SMS Suite MMS MM7 API
   description: >-
@@ -188,6 +223,7 @@ apis:
     image, audio, video, and SMIL content in multipart MIME requests to /mm7, with MO message and
     delivery-report callbacks acknowledged by SOAP responses. Authenticated with HTTP Basic.
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  baseURL: https://api.sms.optus.com.au/mm7
   tags:
   - MMS
   - Messaging
@@ -196,6 +232,8 @@ apis:
   - 3GPP
   properties:
   - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  - type: Webhooks
     url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
 - aid: optus:optus-sms-suite-smpp-api
   name: Optus SMS Suite SMPP API
@@ -214,18 +252,72 @@ apis:
 common:
 - type: Website
   url: https://www.optus.com.au/
+- type: DeveloperPortal
+  url: https://sms.optus.com.au/docs/en/developer-docs/
 - type: Documentation
   url: https://sms.optus.com.au/docs/en/developer-docs/
+- type: APIReference
+  url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/
 - type: GettingStarted
   url: https://sms.optus.com.au/docs/en/developer-getting-started/
 - type: SignUp
   url: https://sms.optus.com.au/customer/online_signup
-- type: StatusPage
-  url: https://status.sms.optus.com.au/
-- type: Security
-  url: https://sms.optus.com.au/docs/en/security/
+- type: Login
+  url: https://sms.optus.com.au/login
 - type: Support
   url: https://www.optus.com.au/business/contact-us
+- type: HelpCenter
+  url: https://sms.optus.com.au/docs/en/support-centre/
+- type: TermsOfService
+  url: https://www.optus.com.au/about/legal/standard-forms-agreement/business
+- type: PrivacyPolicy
+  url: https://www.optus.com.au/about/legal/privacy
+- type: Authentication
+  url: authentication/optus-authentication.yml
+- type: Conventions
+  url: conventions/optus-conventions.yml
+- type: ErrorCatalog
+  url: errors/optus-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/optus-lifecycle.yml
+- type: StatusPage
+  url: https://status.sms.optus.com.au/
+- type: Deprecation
+  url: lifecycle/optus-lifecycle.yml
+- type: ChangeLog
+  url: changelog/optus-changelog.yml
+- type: Conformance
+  url: conformance/optus-conformance.yml
+- type: Compliance
+  url: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+- type: TrustCenter
+  url: security/optus-trust-center.yml
+- type: Security
+  url: https://bugcrowd.com/optus-vdp-pro
+- type: VulnerabilityDisclosure
+  url: security/optus-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/optus-domain-security.yml
+- type: AsyncAPI
+  url: asyncapi/optus-sms-suite-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/optus-sms-suite-asyncapi.yml
+- type: DataModel
+  url: data-model/optus-data-model.yml
+- type: MCPServer
+  url: mcp/optus-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/optus-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/optus-agentic-access.yml
+- type: LLMsTxt
+  url: llms/optus-llms.txt
+- type: Packages
+  url: packages/optus-packages.yml
+- type: Integrations
+  url: https://sms.optus.com.au/docs/en/integrations/business-integrations/
 - type: LinkedIn
   url: https://www.linkedin.com/company/optus
 - type: Wikipedia

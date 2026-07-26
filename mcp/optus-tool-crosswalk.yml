@@ -1,0 +1,76 @@
+generated: '2026-07-25'
+method: derived
+source: mcp/optus-mcp.yml + openapi/ in this repo
+note: >-
+  Optus operates no MCP server and no GraphQL surface, so this crosswalk binds the CANDIDATE
+  tool set in mcp/optus-mcp.yml to the operations that would back it. Confidence is high
+  throughout because each candidate tool was derived from exactly one published operation
+  rather than matched by name against a live tools/list. The value here is the inverse map:
+  rest_only[] and undocumented_surface[] show what an agent cannot reach today.
+surfaces:
+  openapi:
+    files:
+    - openapi/optus-sms-suite-rest-v1-openapi.yml
+    - openapi/optus-sms-suite-rest-v2-openapi.yml
+    - openapi/optus-sms-suite-campaign-manager-openapi.yml
+    - openapi/optus-sms-suite-status-openapi.json
+    operations: 15
+    operationids_declared: 7
+    note: >-
+      Only the Campaign Manager spec declares operationIds. REST v1, REST v2 and the status API
+      have none, so those rows bind by METHOD + PATH - an agent toolchain generating from these
+      specs has to synthesise its own tool names.
+  graphql:
+    endpoint: null
+    note: 'No GraphQL surface. https://api.sms.optus.com.au/graphql returns 404.'
+  mcp:
+    url: null
+    gated: false
+    note: No MCP server exists, hosted or local; tools/list was not attempted because there is no endpoint.
+crosswalk:
+- {tool: send_sms, category: messaging, rest: ['POST /messages (rest-v2)'], binding: rest, confidence: high}
+- {tool: get_sms_message, category: messaging, rest: ['GET /messages (rest-v2)'], binding: rest, confidence: high}
+- {tool: send_sms_v1, category: messaging, rest: ['POST /messages (rest-v1)'], binding: rest, confidence: high}
+- {tool: broadcast_sms, category: messaging, rest: ['POST /messages/broadcast (rest-v1)'], binding: rest, confidence: high}
+- {tool: get_sms_message_v1, category: messaging, rest: ['GET /messages/{messageid} (rest-v1)'], binding: rest, confidence: high}
+- {tool: list_recipient_lists, category: campaigns, rest: [getLists], binding: rest, confidence: high}
+- {tool: create_recipient_list, category: campaigns, rest: [createList], binding: rest, confidence: high}
+- {tool: delete_recipient_list, category: campaigns, rest: [deleteList], binding: rest, confidence: high}
+- {tool: delete_recipient_lists, category: campaigns, rest: [deleteMultList], binding: rest, confidence: high}
+- {tool: schedule_campaign, category: campaigns, rest: [scheduleCampaign], binding: rest, confidence: high, note: 'Highest blast radius on the surface; the spec permits up to 1,000,000 members.'}
+- {tool: list_templates, category: campaigns, rest: [getTemplates], binding: rest, confidence: high}
+- {tool: get_campaign_report, category: campaigns, rest: [getReport], binding: rest, confidence: high}
+- {tool: get_service_status, category: health, rest: ['GET /status (status)'], binding: rest, confidence: high, note: Unauthenticated.}
+- {tool: list_services, category: health, rest: ['GET /services (status)'], binding: rest, confidence: high, note: Unauthenticated.}
+mcp_only: []
+rest_only:
+- operation: 'GET /openapi.yaml (rest-v2)'
+  reason: >-
+    Self-description endpoint, not a capability. It also returns 404 anonymously, so it is not
+    usable even as discovery.
+undocumented_surface:
+  note: >-
+    Real, documented capabilities with no OpenAPI at all - invisible to any spec-driven tool
+    generator. This is the actual coverage gap, not mcp_only.
+  interfaces:
+  - {api: 2FA REST API, operations: ['POST /challenges', 'POST /responses'], base: 'https://api.sms.optus.com.au/rest/2fa', docs: 'https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/'}
+  - {api: REST Email API, operations: ['POST /message', 'GET message by id'], base: 'https://api.sms.optus.com.au/rest/email/v1', docs: 'https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/'}
+  - {api: HTTPS API, operations: ['GET /message'], base: 'https://api.sms.optus.com.au/message', docs: 'https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/', status: deprecation-announced}
+  - {api: SOAP API, operations: [sendMessage], contract: 'https://api.sms.optus.com.au/ModicaSoap.wsdl', status: deprecation-announced}
+  - {api: MM7 MMS API, operations: [MM7_Submit], base: 'https://api.sms.optus.com.au/mm7'}
+  - {api: SMPP API, operations: [submit_sm], transport: 'TLS port 2776'}
+event_surface:
+  note: >-
+    Four asynchronous events sit outside the request/response tool model entirely. An agent
+    submitting a message gets a 202 and a message id; the delivery outcome only ever arrives on
+    a callback the agent does not control.
+  events: [DLR callback, MO callback, MM7 DeliverReq, MM7 delivery report]
+  artifact: asyncapi/optus-sms-suite-asyncapi.yml
+coverage:
+  tools_named: 14
+  tools_bound: 14
+  mcp_only: 0
+  rest_ops_total: 15
+  rest_ops_with_a_tool: 14
+  documented_interfaces_total: 10
+  documented_interfaces_with_openapi: 4

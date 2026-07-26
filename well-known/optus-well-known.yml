@@ -1,0 +1,81 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every apis.yml baseURL host, every OpenAPI servers[] host, and the docs host
+finding: >-
+  Optus serves no /.well-known/ discovery surface on any host it controls. All five standard
+  documents were probed on four hosts and every one returned 404 (or did not resolve). The only
+  200 under an optus.com.au name is on status.sms.optus.com.au, which is an Atlassian Statuspage
+  tenant serving Atlassian's own PGP-signed security.txt (Contact:
+  https://www.atlassian.com/trust/) - it is the vendor's file, not Optus's, and is recorded here
+  only so a later round does not mistake it for an Optus artifact.
+api_catalog_published: false
+security_txt_published: false
+oidc_discovery_published: false
+hosts:
+- host: https://api.sms.optus.com.au
+  role: API host (all SMS Suite baseURLs)
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://sms.optus.com.au
+  role: docs / platform host
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /robots.txt, status: 200, note: 'allows all crawlers; disallows /csp for bingbot only'}
+- host: https://www.optus.com.au
+  role: corporate site
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /robots.txt, status: 200}
+- host: https://status.sms.optus.com.au
+  role: Atlassian Statuspage tenant (vendor-operated)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    owner: Atlassian (Statuspage), not Optus
+    contact: https://www.atlassian.com/trust/
+    note: >-
+      PGP-signed Atlassian file served by the Statuspage platform for every tenant. Not saved
+      into this repo and deliberately NOT wired as an Optus SecurityTxt pointer.
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+machine_readable_discovery_that_does_exist:
+  note: >-
+    Discovery is real here, it just is not at /.well-known/. Two OpenAPI documents are served
+    live from the API host itself, and three more are linked as downloads from the docs.
+  live:
+  - {url: 'https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json', status: 200, format: Swagger 2.0}
+  - {url: 'https://api.sms.optus.com.au/rest/services/v1/swagger.json', status: 200, format: OpenAPI 3.0.0}
+  - {url: 'https://api.sms.optus.com.au/ModicaSoap.wsdl', status: 200, format: WSDL 1.1}
+  - {url: 'https://status.sms.optus.com.au/api/v2/summary.json', status: 200, format: Statuspage API v2}
+  docs_hosted:
+  - {url: 'https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.yaml', format: Swagger 2.0}
+  - {url: 'https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.yaml', format: OpenAPI 3.0.3}
+  - {url: 'https://sms.optus.com.au/docs/api/campaign-manager.yaml', format: Swagger 2.0}
+  gated:
+  - url: https://api.sms.optus.com.au/rest/sms/v2/openapi.yaml
+    status: 404
+    note: >-
+      Declared as a real GET operation inside the provider's own REST v2 spec, but returns
+      {"message":"Not Found"} anonymously - the self-describing copy is credential-gated even
+      though the docs-hosted copy is public.
+also_probed_no_spec:
+- {url: 'https://api.sms.optus.com.au/openapi.json', status: 404}
+- {url: 'https://api.sms.optus.com.au/openapi.yaml', status: 404}
+- {url: 'https://api.sms.optus.com.au/swagger.json', status: 404}
+- {url: 'https://api.sms.optus.com.au/api-docs', status: 404}
+- {url: 'https://api.sms.optus.com.au/docs', status: 404}
+- {url: 'https://api.sms.optus.com.au/rest/gateway/swagger.json', status: 404}
+- {url: 'https://api.sms.optus.com.au/graphql', status: 404, note: 'no GraphQL surface exists; introspection not attempted'}

@@ -1,0 +1,126 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://sms.optus.com.au/docs/en/ plus derivation from openapi/ in this repo
+scope: The Optus SMS Suite, the only self-serve public Optus API surface.
+standards:
+- id: http-basic-auth
+  name: HTTP Basic Authentication (RFC 7617)
+  conforms: true
+  evidence: 'securityDefinitions BasicAuth in openapi/optus-sms-suite-rest-v1-openapi.yml and openapi/optus-sms-suite-campaign-manager-openapi.yml; documented on every interface page'
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in any published spec; no token endpoint documented.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: '/.well-known/openid-configuration returns 404 on www.optus.com.au, sms.optus.com.au and api.sms.optus.com.au'
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: '/.well-known/oauth-authorization-server returns 404 on all probed hosts'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json media type in any spec; per-interface vendor error envelopes instead.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: 'No /.well-known/security.txt on any Optus-controlled host (404 on www.optus.com.au, optus.com.au, sms.optus.com.au, api.sms.optus.com.au)'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: Deprecations are announced as documentation banners only; no Sunset or Deprecation response header is documented.
+- id: rfc3339-timestamps
+  conforms: true
+  evidence: 'Scheduled timestamps are specified as RFC 3339 across REST v1, REST v2 and REST Email; format: date-time in the specs'
+- id: e164-msisdn
+  name: E.164 international number format
+  conforms: true
+  evidence: 'All interfaces require international format with a leading plus, e.g. +61414123456'
+- id: openapi-3
+  conforms: true
+  evidence: 'openapi/optus-sms-suite-rest-v2-openapi.yml is OpenAPI 3.0.3; openapi/optus-sms-suite-status-openapi.json is OpenAPI 3.0.0'
+- id: swagger-2
+  conforms: true
+  evidence: 'openapi/optus-sms-suite-rest-v1-openapi.yml and openapi/optus-sms-suite-campaign-manager-openapi.yml are Swagger 2.0'
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A real callback surface exists (MO, DLR, MM7 DeliverReq/DeliveryReport) but Optus publishes
+    no AsyncAPI document; asyncapi/optus-sms-suite-asyncapi.yml in this repo is an API
+    Evangelist derivation from the published callback schemas, not a provider artifact.
+- id: wsdl-1-1
+  name: WSDL 1.1 / SOAP
+  conforms: true
+  evidence: 'Public WSDL at https://api.sms.optus.com.au/ModicaSoap.wsdl (HTTP 200), targetNamespace http://api.sms.optus.com.au/ModicaSoap'
+- id: 3gpp-mm7
+  name: 3GPP MM7 (MMS Relay/Server interface)
+  version: 5.3.0
+  conforms: true
+  evidence: 'Documented as "built in accordance with version 5.3.0 of the 3gpp MM7 spec"; MM7 status-code classes 1xxx-4xxx implemented'
+- id: smpp
+  name: Short Message Peer-to-Peer
+  version: 3.3, 3.4
+  conforms: true
+  evidence: 'Documented PDU set (bind_transmitter/receiver/transceiver, submit_sm, deliver_sm, enquire_link) over mandatory TLS on port 2776'
+- id: gsm-03-38
+  name: GSM 03.38 7-bit default alphabet
+  conforms: true
+  evidence: Documented default character set for SMPP and SMS encoding, with Unicode as the alternative.
+- id: scim-2-0
+  name: SCIM 2.0 user provisioning
+  conforms: true
+  scope: platform (not the messaging APIs)
+  evidence: 'https://sms.optus.com.au/docs/en/security/scim/ - "seamless synchronisation of user identities from any Identity Provider"'
+- id: saml-2-0
+  name: SAML 2.0 federated identity
+  conforms: true
+  scope: platform (not the messaging APIs)
+  evidence: 'https://sms.optus.com.au/docs/en/security/federated-identity/ and the Safe & Secure sheet ("Our platform supports SAML 2.0")'
+- id: tls-1-2
+  conforms: true
+  evidence: 'Minimum encryption standard documented as TLS 1.2 or greater; live probe of api.sms.optus.com.au negotiates TLSv1.3 (security/optus-domain-security.yml)'
+- id: fhir-r4
+  conforms: false
+- id: fapi
+  conforms: false
+- id: odata
+  conforms: false
+- id: json-api
+  conforms: false
+- id: camara
+  name: CAMARA network APIs
+  conforms: false
+  evidence: >-
+    No CAMARA API is callable from any Optus host and no Optus CAMARA specification exists.
+    Optus is a stated GSMA Open Gateway participant and one of the operators endorsing the
+    Bridge Alliance API Exchange (powered by parent Singtel's Paragon platform), but its route
+    to developers for network APIs is via the exchange and via Aduna through Singtel - not via
+    anything Optus publishes. See review.yml.
+- id: tmforum-open-api
+  conforms: false
+  evidence: No TM Forum Open API conformance certification (TMF620/622/641 or any other) was found for Optus.
+- id: 3gpp-nef-scef
+  conforms: false
+  evidence: No network exposure function, network-slicing API, or edge/MEC API is publicly documented.
+compliance_programs:
+  published: true
+  source: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+  certifications:
+  - {id: iso-27001, name: ISO/IEC 27001, status: claimed}
+  - {id: soc-2, name: SOC 2, status: claimed}
+  - {id: irap, name: 'IRAP (Australian Information Security Registered Assessors Program)', status: claimed}
+  note: >-
+    Named as the security and compliance programs supporting the cloud platform behind The
+    Optus SMS Suite. No certificate numbers, audit periods, or downloadable reports are
+    published, and there is no trust portal. Because the platform is white-labelled from
+    Modica Group, these attach to the operating platform Optus resells.
+  artifact: security/optus-trust-center.yml
+regulatory:
+  market: Australia (with New Zealand guidance)
+  docs: https://sms.optus.com.au/docs/en/useful-information/message-compliance-and-regulatory-information/
+  covered:
+  - Message classification (informational, transactional, commercial)
+  - Consent model (express, inferred, deemed - deemed applies in New Zealand but not Australia)
+  - Sender identification requirements and Sender ID use
+  - Opt-out handling and list opt-out removal (remove_opt_outs on Campaign Manager)
+  note: >-
+    Published as best-practice guidance for customers sending SMS, not as a conformance claim
+    by Optus. It is the closest thing on the surface to a regulatory posture statement.

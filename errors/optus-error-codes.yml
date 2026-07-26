@@ -1,0 +1,139 @@
+generated: '2026-07-25'
+method: searched
+source: https://sms.optus.com.au/docs/en/ (per-interface "Error Codes" reference tables)
+format: vendor-json
+rfc9457: false
+note: >-
+  The Optus SMS Suite does not use RFC 9457 problem+json. Each interface publishes its own
+  error table and its own envelope; the REST family returns a small JSON object, SOAP returns
+  a fault with a Modica.* code, MM7 returns 3GPP MM7 numeric status classes, and the legacy
+  HTTPS API returns a bare text body whose HTTP status depends on the requested API version.
+  Every entry below is transcribed from the published documentation - none are inferred.
+envelopes:
+- api: SMS Gateway REST API v1
+  spec: openapi/optus-sms-suite-rest-v1-openapi.yml
+  shape: '{"code": integer, "message": string}'
+  schema: DefaultError
+- api: SMS Gateway REST API v2
+  spec: openapi/optus-sms-suite-rest-v2-openapi.yml
+  shape: '{"message": string, "statusCode": integer, "error": string}'
+  schema: ApiErrorResponse
+- api: Campaign Manager API
+  spec: openapi/optus-sms-suite-campaign-manager-openapi.yml
+  shape: '{"code": integer, "message": string}'
+  example: '{"code": 401, "message": "unauthenticated for invalid credentials"}'
+  schema: DefaultError
+- api: REST Email API
+  shape: '{"code": integer, "message": string}'
+  variant: '{"error": string, "error-desc": string}  # scheduled-date validation'
+- api: SOAP API
+  shape: SOAP fault carrying a Modica.* code and description
+- api: MM7 MMS API
+  shape: MM7 StatusCode + StatusText in the MM7 SOAP response
+- api: HTTPS API
+  shape: plain-text body; HTTP status differs between version=1 and version=2
+- api: Health Monitoring API
+  spec: openapi/optus-sms-suite-status-openapi.json
+  shape: '{"message": string}'
+errors:
+- api: SMS Gateway REST API v1
+  docs: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  codes:
+  - {code: send_failed, description: Could not queue message due to an unknown error}
+  - {code: invalid_json, description: Invalid JSON data in the request body}
+  - {code: missing_attrib, description: Missing a required attribute}
+  - {code: invalid_attrib, description: Invalid attribute value}
+  - {code: broadcast_limit, description: Broadcast limit has been exceeded, please consult the error description for more detail.}
+  - {code: '400', description: 'Invalid scheduled timestamp (must be RFC3339)'}
+  - {code: '422', description: 'Invalid scheduled timestamp (must not be in the past)'}
+  - {code: '404', description: 'Not Found. The requested URL was not found on this server. URI is incorrect or address is truncated - e.g. posting to /rest/gateway instead of /rest/gateway/messages.'}
+- api: SMS Gateway REST API v2
+  docs: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  codes:
+  - {code: send_failed, description: Could not queue message due to an unknown error}
+  - {code: invalid_json, description: Invalid JSON data in the request body}
+  - {code: missing_attrib, description: Missing a required attribute}
+  - {code: invalid_attrib, description: Invalid attribute value}
+  - {code: '400', description: 'Invalid scheduled timestamp (must be RFC3339)'}
+  - {code: '422', description: 'Invalid scheduled timestamp (must not be in the past)'}
+  - {code: '401', description: 'Missing or incorrect credentials, or no permission to access the API'}
+  - {code: '404', description: 'No message matched the supplied id on GET /messages'}
+- api: Campaign Manager API
+  docs: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  codes:
+  - {code: '401', title: Unauthorised, description: Incorrect username and/or password}
+  - {code: '403', title: Forbidden, description: Not allowed access to the application, or not allowed access to campaign manager}
+  - {code: '404', title: Not Found, description: URL is incorrect}
+  - {code: '422', title: Unprocessable Entity, description: Validation errors within the data}
+  - {code: 4xx, description: Something else is wrong with the request}
+  - {code: 5xx, description: Something is wrong with the service}
+- api: REST Email API
+  docs: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  codes:
+  - {code: '400', description: Could not queue message due to an unknown error}
+  - {code: '400', description: Invalid JSON data in the request body}
+  - {code: '400', description: Invalid attribute value}
+  - {code: '400', description: Invalid To email address}
+  - {code: '400', description: Invalid From email address}
+  - {code: '400', description: 'Invalid scheduled timestamp (must be RFC3339)'}
+  - {code: '422', description: 'Invalid scheduled timestamp (must not be in the past)'}
+  - {code: '602', description: Missing a required attribute}
+  - {code: invalid_attrib, description: 'Invalid scheduled timestamp (must be less than 60 days)'}
+- api: SOAP API
+  docs: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  codes:
+  - {code: Modica.authenticationInvalid, message: Invalid application authentication, description: The application and password parameters are missing or incorrect, http: 400}
+  - {code: Modica.invalidDestination, message: 'Destination mobile number [destination] rejected', description: 'Destination does not match the accepted international-format pattern', http: 400}
+  - {code: Modica.queueFailed, message: Could not queue message, description: 'The gateway was unable to create the message - most likely an invalid destination number or a mobile network not enabled on the account', http: 400}
+  - {code: Modica.serviceFailed, message: An unexpected error has occurred while creating this message, http: 400}
+- api: HTTPS API
+  docs: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  note: The HTTP status returned depends on the `version` query parameter.
+  codes:
+  - {code: Invalid authentication information, description: The application or password parameters are missing or incorrect, http_v1: 500, http_v2: 401}
+  - {code: 'Missing <parameter name> parameter', description: The parameter named is missing or the gateway is unable to identify it, http_v1: 500, http_v2: 400}
+  - {code: Failed to queue message, description: 'The gateway was unable to create the message - most likely an invalid destination number or a mobile network not set up on the account', http_v1: 500, http_v2: 400}
+  - {code: '<message id>', description: The message was submitted successfully, http_v1: 200, http_v2: 200}
+- api: MM7 MMS API
+  docs: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  classes:
+  - {class: 1xxx, description: Successful operation}
+  - {class: 2xxx, description: Client errors}
+  - {class: 3xxx, description: Server errors}
+  - {class: 4xxx, description: Service errors}
+  codes:
+  - {code: '1000', title: Success, description: This code indicates that the request was executed completely}
+  - {code: '2000', title: Client error, description: Client made an invalid request}
+  - {code: '2002', title: Address Error, description: 'The address supplied in the request was not in a recognized format or was determined not to be serviced by this MMS Relay/Server. In a multi-recipient push submission this indicates at least one address is incorrect.'}
+  - {code: '2004', title: Multimedia content refused, description: 'The server could not parse the MIME content attached to the SOAP message, or the content size or media type was unacceptable.'}
+  - {code: '2007', title: Message format corrupt, description: An element value format is inappropriate or incorrect.}
+  - {code: '3003', title: Multiple addresses not supported, description: 'The MMS Relay/Server does not support this operation on multiple recipients. The operation MAY be resubmitted as multiple single-recipient operations.'}
+- api: Health Monitoring API
+  docs: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  codes:
+  - {code: '503', description: Health check service temporarily unavailable}
+  - {code: unknown, description: Returned as a per-service status value for an unsupported or incorrectly cased service name}
+delivery_statuses:
+  note: >-
+    Not errors, but the reconciliation vocabulary an integration must handle. Delivery
+    outcomes arrive asynchronously on the DLR callback, not on the submit response.
+  dlr_callback:
+  - {status: sent, description: Message has been sent by the carrier transport}
+  - {status: received, description: Message has been received}
+  - {status: rejected, description: The carrier rejected the message}
+  - {status: expired, description: 'The carrier was unable to deliver the message within a specified amount of time - for instance when the phone was turned off'}
+  platform_reporting:
+  - {status: submitted, description: Message successfully submitted to the carrier for delivery}
+  - {status: sent, description: Message has been sent by the carrier transport}
+  - {status: received, description: Message has been received}
+  - {status: frozen, description: A transient error has frozen this message}
+  - {status: rejected, description: The carrier rejected the message}
+  - {status: failed, description: Message delivery has failed due to a carrier connectivity issue}
+  - {status: dead, description: Message killed by an administrator}
+  - {status: expired, description: The carrier was unable to deliver the message in a specified amount of time}
+  spec_enum:
+    source: openapi/optus-sms-suite-rest-v2-openapi.yml#/components/schemas/StatusCallback
+    values: [accepted, queued, submitted, sent, received, blocked, deficient, frozen, rejected, failed, dead, expired]
+    note: >-
+      The OpenAPI enum is wider than either published table - accepted, queued, blocked and
+      deficient appear only in the machine-readable spec.
