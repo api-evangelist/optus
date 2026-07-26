@@ -1,0 +1,235 @@
+aid: optus
+url: https://raw.githubusercontent.com/api-evangelist/optus/refs/heads/main/apis.yml
+name: Optus
+kind: company
+description: >-
+  Optus (Singtel Optus Pty Limited) is Australia's second-largest telecommunications carrier,
+  wholly owned by Singapore's Singtel and headquartered in Macquarie Park, Sydney. It runs a
+  national mobile network reaching over 99% of the Australian population, alongside NBN and
+  cable broadband, satellite capacity inherited from AUSSAT, enterprise and government
+  connectivity, IoT/M2M services, and consumer media. Its API posture is split in two. The
+  only genuinely public, self-serve developer surface Optus operates is The Optus SMS Suite —
+  an enterprise messaging platform white-labelled from New Zealand's Modica Group at
+  sms.optus.com.au, which publishes open documentation, downloadable OpenAPI/Swagger
+  definitions, a WSDL, delivery-receipt callbacks, and a free-trial signup. Everything else is
+  partner-gated: the IoT Control Centre is a Cisco/Jasper platform behind a referral-coded
+  starter kit, and Optus has no first-party network-API portal — developer.optus.com.au and
+  api.optus.com.au resolve on Akamai but return HTTP 403 Access Denied. On network APIs Optus
+  is a stated GSMA Open Gateway participant and an endorser of the Bridge Alliance API
+  Exchange (BAEx), but as of this review no CAMARA API is callable from Optus directly; its
+  route to developers runs through its parent Singtel's Paragon-powered BAEx and Aduna, not
+  through anything Optus publishes itself.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- Australia
+- Mobile Network Operator
+- Messaging
+- SMS
+- MMS
+- Two-Factor Authentication
+- Network APIs
+- CAMARA
+- Open Gateway
+- IoT
+- 5G
+- Broadband
+- Satellite
+- Enterprise
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: optus:optus-sms-suite-rest-api-v1
+  name: Optus SMS Suite REST API v1
+  description: >-
+    JSON REST API for sending single and bulk SMS from The Optus SMS Suite, including scheduled
+    sends, broadcast to a list, and retrieval of a submitted message by 64-bit message ID.
+    Authenticated with HTTP Basic credentials issued per application in the SMS Suite platform.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  baseURL: https://api.sms.optus.com.au/rest/gateway
+  tags:
+  - SMS
+  - Messaging
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: OpenAPI
+    url: openapi/optus-sms-suite-rest-v1-openapi.yml
+- aid: optus:optus-sms-suite-rest-api-v2
+  name: Optus SMS Suite SMS Gateway REST API v2
+  description: >-
+    High-volume asynchronous SMS API using UUID-based message tracking, mandatory delivery-receipt
+    (DLR) callbacks, and advanced scheduling. Requests are authenticated with HTTP Basic credentials
+    passed in the Authorization header via the platform's GatewayAuthorizer scheme.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  baseURL: https://api.sms.optus.com.au/rest/sms/v2
+  tags:
+  - SMS
+  - Messaging
+  - REST
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: OpenAPI
+    url: openapi/optus-sms-suite-rest-v2-openapi.yml
+- aid: optus:optus-sms-suite-campaign-manager-api
+  name: Optus SMS Suite Campaign Manager API
+  description: >-
+    REST API v1 for programmatic control of SMS marketing campaigns — creating and managing
+    recipient lists, message templates, scheduled campaigns, and per-campaign reporting, scoped
+    to a named SMS Suite application.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - Campaigns
+  - Messaging
+  - Marketing
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: OpenAPI
+    url: openapi/optus-sms-suite-campaign-manager-openapi.yml
+- aid: optus:optus-sms-suite-health-monitoring-api
+  name: Optus SMS Suite Health Monitoring API
+  description: >-
+    Unauthenticated status API returning near real-time availability for individual Optus SMS Suite
+    services (rest, smpp, and others), polled every 60 seconds from an external, geographically
+    distributed provider independent of the platform's own infrastructure.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  baseURL: https://api.sms.optus.com.au/rest/services/v1
+  tags:
+  - Status
+  - Monitoring
+  - Health
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: OpenAPI
+    url: openapi/optus-sms-suite-status-openapi.json
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+- aid: optus:optus-sms-suite-2fa-rest-api
+  name: Optus SMS Suite 2FA REST API
+  description: >-
+    Hosted two-factor authentication API that creates an SMS one-time-code challenge for a mobile
+    handset with POST /challenges and validates the user's entry with POST /responses, with
+    customisable message copy, optional alphanumeric mask, and a configurable validity window.
+    Authenticated with HTTP Basic. No published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+  tags:
+  - Two-Factor Authentication
+  - Identity
+  - SMS
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+- aid: optus:optus-sms-suite-rest-email-api
+  name: Optus SMS Suite REST Email API
+  description: >-
+    Companion REST API to the SMS gateway for scheduling and sending plain-text transactional
+    email over a separate endpoint, returning a 64-bit message ID for later retrieval and firing
+    DLR callbacks when the email transport has sent the message. Plain text only — no HTML, rich
+    text, or attachments. No published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  tags:
+  - Email
+  - Messaging
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+- aid: optus:optus-sms-suite-https-api
+  name: Optus SMS Suite HTTPS API
+  description: >-
+    Legacy GET-based HTTPS interface for SMS integration, covering message sending, delivery
+    receipts, and inbound (mobile-originated) message callbacks for systems that cannot build a
+    JSON REST client. No published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  baseURL: https://api.sms.optus.com.au/message
+  tags:
+  - SMS
+  - Messaging
+  - HTTP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+- aid: optus:optus-sms-suite-soap-api
+  name: Optus SMS Suite SOAP API
+  description: >-
+    WSDL-described SOAP interface for SMS integration supporting custom source addressing, message
+    classification, and structured error handling, published for legacy enterprise middleware. The
+    WSDL is served publicly and targets the namespace http://api.sms.optus.com.au/ModicaSoap.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  tags:
+  - SMS
+  - Messaging
+  - SOAP
+  - WSDL
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  - type: WSDL
+    url: https://api.sms.optus.com.au/ModicaSoap.wsdl
+- aid: optus:optus-sms-suite-mms-mm7-api
+  name: Optus SMS Suite MMS MM7 API
+  description: >-
+    Implementation of the 3GPP MM7 SOAP protocol for sending and receiving MMS, carrying text,
+    image, audio, video, and SMIL content in multipart MIME requests to /mm7, with MO message and
+    delivery-report callbacks acknowledged by SOAP responses. Authenticated with HTTP Basic.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  tags:
+  - MMS
+  - Messaging
+  - MM7
+  - SOAP
+  - 3GPP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+- aid: optus:optus-sms-suite-smpp-api
+  name: Optus SMS Suite SMPP API
+  description: >-
+    Direct SMSC connectivity over SMPP 3.3 and 3.4 with mandatory TLS, offering high-throughput
+    binary messaging, custom character encoding, and detailed delivery reporting. A wire protocol
+    rather than an HTTP API — no OpenAPI definition exists or is expected.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
+  tags:
+  - SMS
+  - Messaging
+  - SMPP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
+common:
+- type: Website
+  url: https://www.optus.com.au/
+- type: Documentation
+  url: https://sms.optus.com.au/docs/en/developer-docs/
+- type: GettingStarted
+  url: https://sms.optus.com.au/docs/en/developer-getting-started/
+- type: SignUp
+  url: https://sms.optus.com.au/customer/online_signup
+- type: StatusPage
+  url: https://status.sms.optus.com.au/
+- type: Security
+  url: https://sms.optus.com.au/docs/en/security/
+- type: Support
+  url: https://www.optus.com.au/business/contact-us
+- type: LinkedIn
+  url: https://www.linkedin.com/company/optus
+- type: Wikipedia
+  url: https://en.wikipedia.org/wiki/Optus
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

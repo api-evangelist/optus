@@ -1,0 +1,256 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "The Optus SMS Suite REST API",
+    "description": "SMS messaging for your application"
+  },
+  "host": "api.sms.optus.com.au",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "BasicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ],
+  "consumes": [
+    "application/json",
+    "application/vnd.modica.gateway.v1+json"
+  ],
+  "basePath": "/rest/gateway",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/messages": {
+      "post": {
+        "description": "Send a message to a single mobile",
+        "parameters": [
+          {
+            "name": "message",
+            "in": "body",
+            "description": "The message JSON you want to post",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Create a new SMS message",
+            "schema": {
+              "$ref": "#/definitions/RestResponse"
+            }
+          },
+          "default": {
+            "description": "Default Error Response",
+            "schema": {
+              "$ref": "#/definitions/DefaultError"
+            }
+          }
+        }
+      }
+    },
+    "/messages/broadcast": {
+      "post": {
+        "description": "Send a message to an array of mobiles",
+        "parameters": [
+          {
+            "name": "messages",
+            "in": "body",
+            "description": "The message JSON you want to post",
+            "schema": {
+              "$ref": "#/definitions/MessageBroadcast"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Create a broadcast SMS message to one or more recipients",
+            "schema": {
+              "$ref": "#/definitions/BroadcastRestResponse"
+            }
+          },
+          "default": {
+            "description": "Default Error Response",
+            "schema": {
+              "$ref": "#/definitions/DefaultError"
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageid}": {
+      "get": {
+        "description": "Retreives detail of an already created message",
+        "parameters": [
+          {
+            "name": "messageid",
+            "in": "path",
+            "description": "Message ID to retrieve",
+            "required": true,
+            "type": "number",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "default": {
+            "description": "Default Error Response",
+            "schema": {
+              "$ref": "#/definitions/DefaultError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DefaultError": {
+      "type": "object",
+      "required": [
+        "message",
+        "code"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 600
+        }
+      }
+    },
+    "MessageCommon": {
+      "type": "object",
+      "description": "Common properties for single and broadcast messages",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "source": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "class": {
+          "type": "string",
+          "default": "mt_message"
+        },
+        "mask": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "sms_class": {
+          "type": "integer"
+        },
+        "scheduled": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Allows scheduling of messages with an upper limit of 60 days"
+        }
+      }
+    },
+    "MessageBroadcast": {
+      "type": "object",
+      "description": "Send a message to multiple handsets",
+      "required": [
+        "destination"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/MessageCommon"
+        },
+        {
+          "properties": {
+            "destination": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minimum": 1,
+                "maximum": 1000
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Message": {
+      "type": "object",
+      "description": "Send a message to one handset",
+      "required": [
+        "destination"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/MessageCommon"
+        },
+        {
+          "properties": {
+            "destination": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "RestResponse": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64",
+        "readOnly": true
+      }
+    },
+    "BroadcastRestResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "readOnly": true,
+        "description": "Response per destination",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

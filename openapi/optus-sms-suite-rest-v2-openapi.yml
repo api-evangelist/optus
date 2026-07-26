@@ -1,0 +1,296 @@
+openapi: 3.0.3
+info:
+  title: SMS Gateway REST APIv2
+  version: 1.0.0
+  description: |
+    The Optus SMS Suite Mobile Gateway REST APIv2 allows you to send SMS messages to a single handset.
+    It includes automated link shortening.
+    HTTPS use is mandatory; all attempts to use plain-text HTTP will be redirected to HTTPS.
+    Request and response data requires JSON encoding. Only HTTP GET and POST methods are required.
+    If you access the API without having the correct credentials OR permission to access the API, you will get a HTTP 401 response.
+    Your gateway application credentials ('application name' and password) are available on the platform 'https://sms.optus.com.au/gateway/api_config/restv2'
+    You will need a login and password to retrieve these.
+servers:
+  - url: "https://api.sms.optus.com.au/rest/sms/v2"
+
+security:
+  - GatewayAuthorizer: []
+paths:
+  /openapi.yaml:
+    summary: API documentation
+    get:
+      tags:
+        - documentation
+      description: API documentation
+      security: []
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+
+  /messages:
+    summary: Application API message
+    post:
+      tags:
+      - messages
+      description: Send a message to a single mobile 
+      requestBody:
+        $ref: '#/components/requestBodies/SingleMessageRequest'
+      responses:
+        '202':
+          $ref: '#/components/responses/SingleMessageResponse'
+        default:
+          $ref: '#/components/responses/ApiErrorResponse'
+      callbacks:
+        status:
+          '{$url}':
+            post:
+              summary: Status/DLR callback
+              description: Sent when the status of a MT message is updated
+              requestBody:
+                description: Status callback payload
+                content:
+                  'application/json':
+                    schema:
+                      $ref: '#/components/schemas/StatusCallback'
+              responses:
+                '200':
+                  description: callback successfully processed
+        reply:
+          '{$url}':
+            post:
+              summary: Reply/MO callback
+              description: Sent when a MO message is received
+              requestBody:
+                description: Reply callback payload
+                content:
+                  'application/json':
+                    schema:
+                      $ref: '#/components/schemas/ReplyCallback'
+              responses:
+                '200':
+                  description: callback successfully processed
+    get:
+      tags:
+      - messages
+      description: Get message details for an existing message
+      parameters:
+        - name: id
+          in: query
+          description: The message ID
+          required: true
+          schema:
+            $ref: "#/components/schemas/Uuid"
+      responses:
+        '200':
+          $ref: "#/components/responses/ResponseMessageGet"
+        default:
+          $ref: '#/components/responses/ApiErrorResponse'
+
+components:
+  schemas:
+    Uuid:
+      description: A string with UUID format.
+      type: string
+      maxLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+
+    StatusCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - accepted
+            - queued
+            - submitted
+            - sent
+            - received
+            - blocked
+            - deficient
+            - frozen
+            - rejected
+            - failed
+            - dead
+            - expired
+          example: accepted
+        detail:
+          type: string
+          example: '+642712345678'
+
+    ReplyCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          description: mobile number
+          type: string
+        destination:
+          type: string
+        content:
+          type: string
+        operator:
+          type: string
+
+    SingleMessage:
+      type: object
+      required:
+        - destination
+        - content
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        destination:
+          type: string
+          example: '+642712345678'
+        source:
+          type: string
+        content:
+          type: string
+        reference:
+          type: string
+        class:
+          type: string
+          default: mt_message
+        mask:
+          type: string
+          maxLength: 20
+        sms_class:
+          type: integer
+        scheduled:
+          type: string
+          format: date-time
+          description: Allows scheduling of messages with an upper limit of 60 days
+        integration_id:
+          type: string
+          format: uuid
+    MessageDetails:
+      description: Message details structure.
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          maxLength: 36
+        source:
+          description: The source for the message
+          type: string
+          format: none
+          maxLength: 255
+        destination:
+          description: The destination for the message
+          type: string
+          format: none
+          maxLength: 255
+        direction:
+          type: string
+          enum:
+            - MO
+            - MT
+        reference:
+          type: string
+          format: none
+          maxLength: 255
+        content:
+          type: string
+          format: none
+          maxLength: 5000
+        status:
+          type: string
+          enum:
+            - accepted
+            - queued
+            - submitted
+            - sent
+            - received
+            - blocked
+            - deficient
+            - frozen
+            - rejected
+            - failed
+            - dead
+            - expired
+          example: accepted
+
+  requestBodies:
+    Empty:
+      description: An empty body
+      required: false
+      content:
+        application/json: {}
+    
+    SingleMessageRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SingleMessage'
+
+  responses:
+    SingleMessageResponse:
+      description: API Single Message Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusCallback'
+
+    ResponseMessageGet:
+      description: Get Message response structure.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MessageDetails"
+          examples:
+            message:
+              value:
+                id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                source: '202'
+                destination: '+6412345678'
+                direction: MT
+                reference: my-ref-1234
+                content: The body of the message
+                status: received
+
+    ApiErrorResponse:
+      description: API Error Response
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              message:
+                type: string
+                pattern: "^[-_ a-zA-Z0-9]+$"
+                maxLength: 200
+                example: "SMS Gateway Service V2 error"
+              statusCode:
+                type: integer
+                format: int32
+                minimum: 1
+                maximum: 999
+                example: 500
+              error:
+                type: string
+                pattern: "^[-_ a-zA-Z0-9]+$"
+                maxLength: 500
+                example: "an example error message"
+            required:
+              - message
+              - statusCode
+              - error
+
+  securitySchemes:
+    GatewayAuthorizer:
+      description: HTTP Basic Authentication is used for all authenticated requests.
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"

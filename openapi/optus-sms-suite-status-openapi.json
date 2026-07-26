@@ -1,0 +1,261 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Omni Status API",
+    "version": "1.0.1",
+    "contact": {
+      "name": "Modica Group API Support",
+      "email": "support@modicagroup.com",
+      "url": "http://support.modicagroup.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.modicagroup.com/rest/services/v1"
+    }
+  ],
+  "paths": {
+    "/status": {
+      "get": {
+        "parameters": [
+          {
+            "name": "service",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service Statuses",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "services": {
+                      "type": "object",
+                      "example": {
+                        "rest": {
+                          "status": "available"
+                        },
+                        "smpp": {
+                          "status": "unavailable"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "unavailable",
+                              "available",
+                              "unknown"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Health check service temporarily unavailable",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Health check service temporarily unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Error Response",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "List of Services",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "services": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "rest",
+                        "smpp",
+                        "soap",
+                        "http"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Health check service temporarily unavailable",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Health check service temporarily unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Default Error Response",
+            "headers": {
+              "Content-Security-Policy": {
+                "description": "Content Security Policy to prevent certain types of attacks.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Strict-Transport-Security": {
+                "description": "HSTS header to enforce HTTPS",
+                "schema": {
+                  "type": "string",
+                  "example": "max-age=31536000; includeSubDomains; preload",
+                  "pattern": "^max-age=[0-9]+(; includeSubDomains)?(; preload)?$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

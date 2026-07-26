@@ -1,0 +1,405 @@
+---
+consumes:
+- application/json
+produces:
+- application/json
+schemes:
+- https
+swagger: '2.0'
+info:
+  title: Campaign Manager
+  contact:
+    name: "The Optus SMS Suite API Support"
+    url: "https://sms.optus.com.au"
+    email: "optussd@modicagroup.com"
+  version: 1.0.1
+host: "api.sms.optus.com.au"
+basePath: "/rest/campaign_manager/v1"
+paths:
+  "/{application_name}/delete_multiple_lists":
+    post:
+      security:
+      - BasicAuth: []
+      description: Delete multiple lists
+      operationId: deleteMultList
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      - name: list_ids
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/DeleteMultipleListsRequest"
+      responses:
+        '200':
+          description: Some/all lists were deleted
+          schema:
+            type: object
+            properties:
+              list_ids:
+                description: The IDs of lists that were deleted
+                type: array
+                items:
+                  type: integer
+              message:
+                type: string
+                example: IDs of deleted lists
+        default:
+          description: 500 Internal Server Error
+          schema:
+            type: string
+            example: 'error: Lists cannot be deleted'
+  "/{application_name}/lists":
+    get:
+      security:
+      - BasicAuth: []
+      description: Gets all active lists
+      operationId: getLists
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Lists returned
+          schema:
+            "$ref": "#/definitions/ListGetResponse"
+        default:
+          description: Default Error Response
+          schema:
+            "$ref": "#/definitions/DefaultError"
+    post:
+      security:
+      - BasicAuth: []
+      description: Creates a list
+      operationId: createList
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      - name: list
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/ListRequest"
+      responses:
+        '201':
+          description: List Created
+          schema:
+            "$ref": "#/definitions/ListCreateResponse"
+          headers:
+            Location:
+              type: string
+              description: URL of the new List
+        default:
+          description: Default Error Response
+          schema:
+            "$ref": "#/definitions/DefaultError"
+  "/{application_name}/lists/{list_id}":
+    delete:
+      security:
+      - BasicAuth: []
+      description: Delete a list
+      operationId: deleteList
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      - type: integer
+        name: list_id
+        in: path
+        required: true
+      responses:
+        '204':
+          description: List deleted
+        default:
+          description: 500 Internal Server Error
+          schema:
+            type: string
+            example: 'error: List cannot be deleted'
+  "/{application_name}/scheduled_campaigns":
+    post:
+      security:
+      - BasicAuth: []
+      operationId: scheduleCampaign
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      - name: campaign
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/ScheduleCampaignRequest"
+      responses:
+        '201':
+          description: Campaign Created
+          schema:
+            "$ref": "#/definitions/ScheduleCampaignResponse"
+          headers:
+            Location:
+              type: string
+              description: URL of the new Campaign
+        default:
+          description: Default Error Response
+          schema:
+            "$ref": "#/definitions/DefaultError"
+  "/{application_name}/templates":
+    get:
+      security:
+      - BasicAuth: []
+      description: Gets all templates
+      operationId: getTemplates
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Templates returned
+          schema:
+            "$ref": "#/definitions/TemplateGetResponse"
+        default:
+          description: Default Error Response
+          schema:
+            "$ref": "#/definitions/DefaultError"
+  "/{application_name}/{campaign_id}/report":
+    get:
+      security:
+      - BasicAuth: []
+      description: Get status report of campaign
+      operationId: getReport
+      parameters:
+      - type: string
+        name: application_name
+        in: path
+        required: true
+      - type: integer
+        name: campaign_id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Report status returned
+          schema:
+            "$ref": "#/definitions/CampaignReport"
+        default:
+          description: Default Error Response
+          schema:
+            "$ref": "#/definitions/DefaultError"
+definitions:
+  CampaignReport:
+    type: array
+    items:
+      type: object
+      properties:
+        list_name:
+          type: string
+        message_id:
+          type: integer
+          format: int64
+        mobile:
+          type: string
+        sent_date:
+          type: string
+        status:
+          type: string
+        status_date:
+          type: string
+        timezone:
+          type: string
+  DefaultError:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+  DeleteMultipleListsRequest:
+    type: object
+    required:
+    - list_ids
+    properties:
+      list_ids:
+        type: array
+        maxLength: 100
+        minLength: 1
+        items:
+          type: integer
+  ListCreateResponse:
+    type: object
+    required:
+    - id
+    properties:
+      error_messages:
+        type: string
+        readOnly: true
+      id:
+        type: integer
+        readOnly: true
+  ListGetResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+        id:
+          type: integer
+        members:
+          type: array
+          maxItems: 1000000
+          minItems: 1
+          items:
+            "$ref": "#/definitions/Member"
+        name:
+          type: string
+  ListRequest:
+    type: object
+    required:
+    - name
+    - members
+    properties:
+      batch:
+        type: string
+        maxLength: 255
+        minLength: 1
+      email:
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 3
+      members:
+        type: array
+        maxItems: 1000000
+        minItems: 1
+        items:
+          "$ref": "#/definitions/Member"
+      name:
+        type: string
+        maxLength: 50
+        minLength: 1
+      remove_opt_outs:
+        type: boolean
+        default: true
+      strict_validation:
+        type: boolean
+        default: true
+  Member:
+    type: object
+    required:
+    - destination
+    properties:
+      destination:
+        type: string
+        minLength: 1
+      param1:
+        type: string
+        maxLength: 50
+        minLength: 1
+      param2:
+        type: string
+        maxLength: 50
+        minLength: 1
+      param3:
+        type: string
+        maxLength: 50
+        minLength: 1
+      param4:
+        type: string
+        maxLength: 50
+        minLength: 1
+      param5:
+        type: string
+        maxLength: 50
+        minLength: 1
+      param6:
+        type: string
+        maxLength: 50
+        minLength: 1
+  ScheduleCampaignRequest:
+    type: object
+    required:
+    - name
+    - schedule
+    - members
+    properties:
+      batch:
+        type: string
+        maxLength: 255
+        minLength: 1
+      content:
+        type: string
+        minLength: 1
+      email:
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 3
+      mask:
+        type: string
+        maxLength: 11
+        minLength: 1
+      members:
+        type: array
+        maxItems: 1000000
+        minItems: 1
+        items:
+          "$ref": "#/definitions/Member"
+      name:
+        type: string
+        maxLength: 50
+        minLength: 1
+      opt_out_response:
+        type: string
+        maxLength: 160
+        minLength: 1
+      remove_opt_outs:
+        type: boolean
+        default: true
+      reply_response:
+        type: string
+        maxLength: 160
+        minLength: 1
+      schedule:
+        type: string
+        format: date-time
+      strict_validation:
+        type: boolean
+        default: true
+      template:
+        type: string
+  ScheduleCampaignResponse:
+    type: object
+    required:
+    - id
+    properties:
+      error_messages:
+        type: string
+        readOnly: true
+      id:
+        type: integer
+        readOnly: true
+  TemplateGetResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+securityDefinitions:
+  BasicAuth:
+    type: basic
+security:
+- BasicAuth: []
+
