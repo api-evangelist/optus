@@ -1,0 +1,1294 @@
+{
+  "item": [
+    {
+      "id": "1070e00c-ed0e-4bdc-bcd8-8e996bdfdefd",
+      "name": "delete Mult List",
+      "request": {
+        "name": "delete Mult List",
+        "description": {
+          "content": "Delete multiple lists",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            "delete_multiple_lists"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"list_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "fba34b22-a9c3-4d1a-88ed-27ca12993e3e",
+          "name": "Some/all lists were deleted",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "delete_multiple_lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"list_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"list_ids\": [\n    3897,\n    5551\n  ],\n  \"message\": \"IDs of deleted lists\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c52a91ce-254f-4d72-bead-bc02ab79721a",
+          "name": "500 Internal Server Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "delete_multiple_lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"list_ids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "\"error: Lists cannot be deleted\"",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "9b08d687-e4c9-4438-8325-57449350ec52",
+      "name": "get Lists",
+      "request": {
+        "name": "get Lists",
+        "description": {
+          "content": "Gets all active lists",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            "lists"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "ae9bd40e-156d-4e07-bd13-84881598b57d",
+          "name": "Lists returned",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"created\": \"1964-08-23T15:50:30.188Z\",\n    \"id\": 7858,\n    \"members\": [\n      {\n        \"destination\": \"string\",\n        \"param1\": \"string\",\n        \"param2\": \"string\",\n        \"param3\": \"string\",\n        \"param4\": \"string\",\n        \"param5\": \"string\",\n        \"param6\": \"string\"\n      }\n    ],\n    \"name\": \"string\"\n  },\n  {\n    \"created\": \"1992-07-28T01:49:03.132Z\",\n    \"id\": 7173,\n    \"members\": [\n      {\n        \"destination\": \"string\",\n        \"param1\": \"string\",\n        \"param2\": \"string\",\n        \"param3\": \"string\",\n        \"param4\": \"string\",\n        \"param5\": \"string\",\n        \"param6\": \"string\"\n      }\n    ],\n    \"name\": \"string\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "97fb12ac-db97-4539-96fb-c7fafa83d417",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"code\": 1467,\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "4709f5d9-807b-4311-b0ee-9c9484d8dad6",
+      "name": "create List",
+      "request": {
+        "name": "create List",
+        "description": {
+          "content": "Creates a list",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            "lists"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"<string>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"email\": \"<email>\",\n  \"remove_opt_outs\": true,\n  \"strict_validation\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "2c533cc9-435e-4b80-a7f0-1cb927571eb4",
+          "name": "List Created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"email\": \"<email>\",\n  \"remove_opt_outs\": true,\n  \"strict_validation\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "disabled": false,
+              "description": "URL of the new List",
+              "key": "Location",
+              "value": "string"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 833,\n  \"error_messages\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "d1084ace-8633-40b2-841a-b245324732f1",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"email\": \"<email>\",\n  \"remove_opt_outs\": true,\n  \"strict_validation\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"code\": 1467,\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "2e5937c8-9d1c-4ceb-9028-117417a8263e",
+      "name": "delete List",
+      "request": {
+        "name": "delete List",
+        "description": {
+          "content": "Delete a list",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            "lists",
+            ":list_id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            },
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<integer>",
+              "key": "list_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "8b110a23-8e5d-4b56-af4c-324691842287",
+          "name": "List deleted",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists",
+                ":list_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "41531285-6a33-4843-98cb-9e96737f2d87",
+          "name": "500 Internal Server Error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "lists",
+                ":list_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "list_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "\"error: List cannot be deleted\"",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "64c9e952-c3d7-4f67-b0cf-3ed65f926bb9",
+      "name": "schedule Campaign",
+      "request": {
+        "name": "schedule Campaign",
+        "description": {},
+        "url": {
+          "path": [
+            ":application_name",
+            "scheduled_campaigns"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": \"<dateTime>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"content\": \"<string>\",\n  \"email\": \"<email>\",\n  \"mask\": \"<string>\",\n  \"opt_out_response\": \"<string>\",\n  \"remove_opt_outs\": true,\n  \"reply_response\": \"<string>\",\n  \"strict_validation\": true,\n  \"template\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "486a6709-e2f6-4c95-a846-697d3fd46dce",
+          "name": "Campaign Created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "scheduled_campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": \"<dateTime>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"content\": \"<string>\",\n  \"email\": \"<email>\",\n  \"mask\": \"<string>\",\n  \"opt_out_response\": \"<string>\",\n  \"remove_opt_outs\": true,\n  \"reply_response\": \"<string>\",\n  \"strict_validation\": true,\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "disabled": false,
+              "description": "URL of the new Campaign",
+              "key": "Location",
+              "value": "string"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": 833,\n  \"error_messages\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "4e360f2a-58f4-49a8-9374-ea359b0bf0d1",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "scheduled_campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"schedule\": \"<dateTime>\",\n  \"members\": [\n    {\n      \"destination\": \"<string>\",\n      \"param1\": \"<string>\",\n      \"param2\": \"<string>\",\n      \"param3\": \"<string>\",\n      \"param4\": \"<string>\",\n      \"param5\": \"<string>\",\n      \"param6\": \"<string>\"\n    }\n  ],\n  \"batch\": \"<string>\",\n  \"content\": \"<string>\",\n  \"email\": \"<email>\",\n  \"mask\": \"<string>\",\n  \"opt_out_response\": \"<string>\",\n  \"remove_opt_outs\": true,\n  \"reply_response\": \"<string>\",\n  \"strict_validation\": true,\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"code\": 1467,\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "6215a7eb-d547-44a2-8dce-2098a8714d0a",
+      "name": "get Templates",
+      "request": {
+        "name": "get Templates",
+        "description": {
+          "content": "Gets all templates",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            "templates"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "69b20a6f-f475-4521-b479-4947c8c5fc7d",
+          "name": "Templates returned",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"id\": 1157,\n    \"name\": \"string\"\n  },\n  {\n    \"id\": 4806,\n    \"name\": \"string\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "c9ae0689-7e0e-4e7d-a32d-24ea2543dd11",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"code\": 1467,\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "e5492104-3b77-4de6-9204-d1e71ee26976",
+      "name": "get Report",
+      "request": {
+        "name": "get Report",
+        "description": {
+          "content": "Get status report of campaign",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ":application_name",
+            ":campaign_id",
+            "report"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "application_name",
+              "description": "(Required) "
+            },
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<integer>",
+              "key": "campaign_id",
+              "description": "(Required) "
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{basicAuthUsername}}"
+            },
+            {
+              "key": "password",
+              "value": "{{basicAuthPassword}}"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "ca0bc72e-529f-4f22-bf94-576d2d594de9",
+          "name": "Report status returned",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                ":campaign_id",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"list_name\": \"string\",\n    \"message_id\": 1200,\n    \"mobile\": \"string\",\n    \"sent_date\": \"string\",\n    \"status\": \"string\",\n    \"status_date\": \"string\",\n    \"timezone\": \"string\"\n  },\n  {\n    \"list_name\": \"string\",\n    \"message_id\": 4126,\n    \"mobile\": \"string\",\n    \"sent_date\": \"string\",\n    \"status\": \"string\",\n    \"status_date\": \"string\",\n    \"timezone\": \"string\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "f43e0923-50a9-472e-a2ae-7cf93982272a",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ":application_name",
+                ":campaign_id",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaign_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"code\": 1467,\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sms.optus.com.au/rest/campaign_manager/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f7bab1cc-5b6e-4be5-8e80-404260cebe93",
+    "name": "Campaign Manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: The Optus SMS Suite API Support\n Email: optussd@modicagroup.com",
+      "type": "text/plain"
+    }
+  }
+}

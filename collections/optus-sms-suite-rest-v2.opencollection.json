@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SMS Gateway REST APIv2",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /openapi.yaml",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sms.optus.com.au/rest/sms/v2/openapi.yaml"
+          },
+          "docs": "API documentation"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sms.optus.com.au/rest/sms/v2/messages",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "The message ID"
+              }
+            ]
+          },
+          "docs": "Get message details for an existing message"
+        },
+        {
+          "info": {
+            "name": "POST /messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sms.optus.com.au/rest/sms/v2/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a message to a single mobile"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

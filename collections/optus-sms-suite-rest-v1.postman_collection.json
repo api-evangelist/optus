@@ -1,0 +1,485 @@
+{
+  "item": [
+    {
+      "id": "4e4408a0-811b-4b93-a85d-91337d516b47",
+      "name": "Send a message to a single mobile",
+      "request": {
+        "name": "Send a message to a single mobile",
+        "description": {
+          "content": "Send a message to a single mobile",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "messages"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "<object>",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "a3f62d9a-8b9e-4c3b-be2b-b303a3f2eb72",
+          "name": "Create a new SMS message",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"source\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"class\": \"mt_message\",\n  \"mask\": \"<string>\",\n  \"sms_class\": \"<integer>\",\n  \"scheduled\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  3775,\n  9464\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "edf8bfbc-616a-437c-84b5-e5df4dffddef",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"source\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"class\": \"mt_message\",\n  \"mask\": \"<string>\",\n  \"sms_class\": \"<integer>\",\n  \"scheduled\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\",\n  \"code\": 345\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "e521528f-e8d4-479a-b14d-840ecfcddf94",
+      "name": "Send a message to an array of mobiles",
+      "request": {
+        "name": "Send a message to an array of mobiles",
+        "description": {
+          "content": "Send a message to an array of mobiles",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "messages",
+            "broadcast"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "<object>",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "4a239fa2-368b-40df-a111-bac1db0fcc40",
+          "name": "Create a broadcast SMS message to one or more recipients",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages",
+                "broadcast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"destination\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"class\": \"mt_message\",\n  \"mask\": \"<string>\",\n  \"sms_class\": \"<integer>\",\n  \"scheduled\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "[\n  {\n    \"status\": \"string\",\n    \"id\": 1106,\n    \"destination\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"status\": \"string\",\n    \"id\": 5860,\n    \"destination\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "3d6e9328-03ce-4b5c-8561-8d22836286db",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages",
+                "broadcast"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"destination\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"source\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"class\": \"mt_message\",\n  \"mask\": \"<string>\",\n  \"sms_class\": \"<integer>\",\n  \"scheduled\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\",\n  \"code\": 345\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "26e32d0c-7edc-4b57-a437-aaf0b4cdb0ee",
+      "name": "Retreives detail of an already created message",
+      "request": {
+        "name": "Retreives detail of an already created message",
+        "description": {
+          "content": "Retreives detail of an already created message",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "messages",
+            ":messageid"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<int64>",
+              "key": "messageid",
+              "description": "(Required) Message ID to retrieve"
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "17aec33e-56ef-49f0-9312-0fb5627db0c5",
+          "name": "Successful response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages",
+                ":messageid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<int64>",
+                  "key": "messageid",
+                  "description": "(Required) Message ID to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"content\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"id\": 9566,\n  \"source\": \"<string>\",\n  \"reference\": \"<string>\",\n  \"class\": \"mt_message\",\n  \"mask\": \"<string>\",\n  \"sms_class\": \"<integer>\",\n  \"scheduled\": \"<dateTime>\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b1ba211e-9427-466b-b322-583088c17c61",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "messages",
+                ":messageid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<int64>",
+                  "key": "messageid",
+                  "description": "(Required) Message ID to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: basic",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Basic <credentials>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\",\n  \"code\": 345\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sms.optus.com.au/rest/gateway",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d330f3ea-a2bf-47d6-82a8-7b19abf97693",
+    "name": "The Optus SMS Suite REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SMS messaging for your application",
+      "type": "text/plain"
+    }
+  }
+}

@@ -4,34 +4,38 @@ status: candidate
 published: false
 search:
   result: none
-  note: >-
-    No official or community MCP server for Optus or for The Optus SMS Suite / Modica Group was
-    found. Probed: the developer documentation and every interface page, the docs sitemap,
-    github.com/Optus (0 public repositories) and github.com/modicagroup (2 unrelated
-    repositories), npm (no @modelcontextprotocol or vendor package), and the API host itself.
-    api.sms.optus.com.au serves no /.well-known/oauth-authorization-server or
-    /.well-known/oauth-protected-resource (both 404), so there is no gated MCP endpoint hiding
-    behind an OAuth challenge either.
+  note: 'No official or community MCP server for Optus or for The Optus SMS Suite / Modica Group was found.
+    Probed: the developer documentation and every interface page, the docs sitemap, github.com/Optus (0
+    public repositories) and github.com/modicagroup (2 unrelated repositories), npm (no @modelcontextprotocol
+    or vendor package), and the API host itself. api.sms.optus.com.au serves no /.well-known/oauth-authorization-server
+    or /.well-known/oauth-protected-resource (both 404), so there is no gated MCP endpoint hiding behind
+    an OAuth challenge either.'
   probed:
-  - {url: 'https://sms.optus.com.au/docs/en/developer-docs/', status: 200, mcp_mentioned: false}
-  - {url: 'https://api.sms.optus.com.au/.well-known/oauth-protected-resource', status: 404}
-  - {url: 'https://api.sms.optus.com.au/.well-known/oauth-authorization-server', status: 404}
-  - {registry: github, org: Optus, repos: 0}
-  - {registry: npm, query: 'optus / modica mcp', result: none}
+  - url: https://sms.optus.com.au/docs/en/developer-docs/
+    status: 200
+    mcp_mentioned: false
+  - url: https://api.sms.optus.com.au/.well-known/oauth-protected-resource
+    status: 404
+  - url: https://api.sms.optus.com.au/.well-known/oauth-authorization-server
+    status: 404
+  - registry: github
+    org: Optus
+    repos: 0
+  - registry: npm
+    query: optus / modica mcp
+    result: none
 server:
   name: optus-sms-suite
   transport: http
   url: null
-  note: >-
-    Candidate only. Nothing is deployed; the tool list below is what an MCP server over the
-    published Optus SMS Suite specs would expose, derived one tool per OpenAPI operation. Every
-    tool's real input contract is the backing operation's parameters/requestBody in the spec
-    named under source_operation - see mcp/optus-tool-crosswalk.yml.
+  note: Candidate only. Nothing is deployed; the tool list below is what an MCP server over the published
+    Optus SMS Suite specs would expose, derived one tool per OpenAPI operation. Every tool's real input
+    contract is the backing operation's parameters/requestBody in the spec named under source_operation
+    - see mcp/optus-tool-crosswalk.yml.
 auth:
   model: http-basic
-  note: >-
-    Every write tool needs per-application Basic credentials issued in the platform. Only the
-    health tools are callable unauthenticated.
+  note: Every write tool needs per-application Basic credentials issued in the platform. Only the health
+    tools are callable unauthenticated.
 tools:
 - name: send_sms
   description: Send an SMS to a single mobile handset (asynchronous, UUID-tracked).
@@ -93,9 +97,8 @@ tools:
   action_class: acting
   consequence: write
   auth_required: true
-  note: >-
-    Highest-consequence tool on the surface - a single call can dispatch up to 1,000,000 SMS.
-    Should require human confirmation before execution.
+  note: Highest-consequence tool on the surface - a single call can dispatch up to 1,000,000 SMS. Should
+    require human confirmation before execution.
 - name: list_templates
   description: List all Campaign Manager message templates for an application.
   source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getTemplates
@@ -121,11 +124,15 @@ tools:
   consequence: read
   auth_required: false
 not_covered:
-  note: >-
-    Four documented interfaces have no OpenAPI to derive from and are therefore absent from the
-    candidate tool list: the 2FA REST API (POST /challenges, POST /responses), the REST Email
-    API, the HTTPS API, and MM7/SMPP. The 2FA pair in particular would be the most useful
-    agent-facing capability on the surface.
+  note: 'Four documented interfaces have no OpenAPI to derive from and are therefore absent from the candidate
+    tool list: the 2FA REST API (POST /challenges, POST /responses), the REST Email API, the HTTPS API,
+    and MM7/SMPP. The 2FA pair in particular would be the most useful agent-facing capability on the surface.'
 related:
 - mcp/optus-tool-crosswalk.yml
 - agentic-access/optus-agentic-access.yml
+deployment:
+  mode: none
+  verified: derived
+  tools: 14
+  checked: '2026-08-12'
+  source: catalog MCP census

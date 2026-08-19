@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Omni Status API",
+    "version": "1.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GET /status",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.modicagroup.com/rest/services/v1/status",
+        "params": [
+          {
+            "name": "service",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      }
+    },
+    {
+      "info": {
+        "name": "GET /services",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.modicagroup.com/rest/services/v1/services"
+      }
+    }
+  ],
+  "bundled": true
+}

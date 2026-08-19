@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaign Manager",
+    "version": "1.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deleteMultList",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/:application_name/delete_multiple_lists",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Delete multiple lists"
+    },
+    {
+      "info": {
+        "name": "getLists",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/:application_name/lists",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Gets all active lists"
+    },
+    {
+      "info": {
+        "name": "createList",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/:application_name/lists",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Creates a list"
+    },
+    {
+      "info": {
+        "name": "deleteList",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/:application_name/lists/:list_id",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "list_id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Delete a list"
+    },
+    {
+      "info": {
+        "name": "scheduleCampaign",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/:application_name/scheduled_campaigns",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      }
+    },
+    {
+      "info": {
+        "name": "getTemplates",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/:application_name/templates",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Gets all templates"
+    },
+    {
+      "info": {
+        "name": "getReport",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/:application_name/:campaign_id/report",
+        "params": [
+          {
+            "name": "application_name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "campaign_id",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Get status report of campaign"
+    }
+  ],
+  "bundled": true
+}

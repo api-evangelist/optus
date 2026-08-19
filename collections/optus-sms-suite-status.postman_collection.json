@@ -1,0 +1,405 @@
+{
+  "item": [
+    {
+      "id": "2b567f92-291b-4f6f-ac46-2f330becc1b6",
+      "name": "/status",
+      "request": {
+        "name": "/status",
+        "description": {},
+        "url": {
+          "path": [
+            "status"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "service",
+              "value": "<string>"
+            },
+            {
+              "disabled": false,
+              "key": "service",
+              "value": "<string>"
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "5b155d12-85f3-4a00-a0a2-ceee52a2e679",
+          "name": "Service Statuses",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "service",
+                  "value": "<string>"
+                },
+                {
+                  "key": "service",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"services\": {\n    \"rest\": {\n      \"status\": \"available\"\n    },\n    \"smpp\": {\n      \"status\": \"unavailable\"\n    }\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "1c3e5eea-5959-4b79-9b56-9a2b07cf2318",
+          "name": "Health check service temporarily unavailable",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "service",
+                  "value": "<string>"
+                },
+                {
+                  "key": "service",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Service Unavailable",
+          "code": 503,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Health check service temporarily unavailable\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "f3fb2aed-2b34-486f-a7df-6558b153a4ec",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "service",
+                  "value": "<string>"
+                },
+                {
+                  "key": "service",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "258ce15f-b180-45b8-a222-0af664c25ea0",
+      "name": "/services",
+      "request": {
+        "name": "/services",
+        "description": {},
+        "url": {
+          "path": [
+            "services"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "ce93ae26-5503-4503-b4b9-34110bfa9332",
+          "name": "List of Services",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"services\": [\n    \"rest\",\n    \"smpp\",\n    \"soap\",\n    \"http\"\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "83446ee8-a1ef-4d35-b9fc-040994ee7134",
+          "name": "Health check service temporarily unavailable",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Service Unavailable",
+          "code": 503,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"Health check service temporarily unavailable\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "3f8ad950-1dba-413c-a670-889412166207",
+          "name": "Default Error Response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Content Security Policy to prevent certain types of attacks.",
+              "key": "Content-Security-Policy",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "HSTS header to enforce HTTPS",
+              "key": "Strict-Transport-Security",
+              "value": "max-age=31536000; includeSubDomains; preload"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"message\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.modicagroup.com/rest/services/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bea2ae23-ba8a-46c2-bfed-2983469b0602",
+    "name": "Omni Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: Modica Group API Support\n Email: support@modicagroup.com",
+      "type": "text/plain"
+    }
+  }
+}

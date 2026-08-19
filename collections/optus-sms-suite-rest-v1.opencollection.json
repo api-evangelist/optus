@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "The Optus SMS Suite REST API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "POST /messages",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/messages"
+      },
+      "docs": "Send a message to a single mobile"
+    },
+    {
+      "info": {
+        "name": "POST /messages/broadcast",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/messages/broadcast"
+      },
+      "docs": "Send a message to an array of mobiles"
+    },
+    {
+      "info": {
+        "name": "GET /messages/{messageid}",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/messages/:messageid",
+        "params": [
+          {
+            "name": "messageid",
+            "value": "",
+            "type": "path",
+            "description": "Message ID to retrieve"
+          }
+        ]
+      },
+      "docs": "Retreives detail of an already created message"
+    }
+  ],
+  "bundled": true
+}
