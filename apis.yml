@@ -75,6 +75,11 @@ apis:
   - SMS
   - Messaging
   - REST
+  - Webhook
+  tags_raw:
+  - SMS
+  - Messaging
+  - REST
   - Webhooks
   properties:
   - type: Documentation
