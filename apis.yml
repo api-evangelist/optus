@@ -19,6 +19,18 @@ description: >-
   Exchange (BAEx), but as of this review no CAMARA API is callable from Optus directly; its
   route to developers runs through its parent Singtel's Paragon-powered BAEx and Aduna, not
   through anything Optus publishes itself.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Telecommunications
