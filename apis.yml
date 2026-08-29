@@ -461,6 +461,9 @@ apis:
   - type: StatusPage
     url: https://status.sms.optus.com.au/
 common:
+- type: CapabilityMap
+  url: capabilities/optus-capability-edges.yml
+  name: Optus Business Capability Map
 - type: Overlay
   url: overlays/optus-sms-suite-rest-v1-overlay.yaml
 - type: Overlay
