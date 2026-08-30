@@ -202,6 +202,8 @@ apis:
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
   baseURL: https://api.sms.optus.com.au/rest/gateway
   tags:
+  - Documentation
+  tags_raw:
   - documentation
   properties:
   - type: OpenAPI
@@ -235,6 +237,8 @@ apis:
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
   baseURL: https://api.sms.optus.com.au/rest/gateway
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
@@ -268,6 +272,8 @@ apis:
   humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
   baseURL: https://api.sms.optus.com.au/rest/gateway
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
