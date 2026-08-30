@@ -1,0 +1,160 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Scheduled Campaigns API
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au
+    email: optussd@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Scheduled Campaigns
+paths:
+  /{application_name}/scheduled_campaigns:
+    post:
+      security:
+      - BasicAuth: []
+      operationId: scheduleCampaign
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Campaign Created
+          headers:
+            Location:
+              description: URL of the new Campaign
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleCampaignResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleCampaignRequest'
+        required: true
+      tags:
+      - Scheduled Campaigns
+components:
+  schemas:
+    Member:
+      type: object
+      required:
+      - destination
+      properties:
+        destination:
+          type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
+    ScheduleCampaignRequest:
+      type: object
+      required:
+      - name
+      - schedule
+      - members
+      properties:
+        batch:
+          type: string
+          maxLength: 255
+          minLength: 1
+        content:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          minLength: 3
+        mask:
+          type: string
+          maxLength: 11
+          minLength: 1
+        members:
+          type: array
+          maxItems: 1000000
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Member'
+        name:
+          type: string
+          maxLength: 50
+          minLength: 1
+        opt_out_response:
+          type: string
+          maxLength: 160
+          minLength: 1
+        remove_opt_outs:
+          type: boolean
+          default: true
+        reply_response:
+          type: string
+          maxLength: 160
+          minLength: 1
+        schedule:
+          type: string
+          format: date-time
+        strict_validation:
+          type: boolean
+          default: true
+        template:
+          type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ScheduleCampaignResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

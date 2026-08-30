@@ -1,0 +1,80 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Report API
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au
+    email: optussd@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Report
+paths:
+  /{application_name}/{campaign_id}/report:
+    get:
+      security:
+      - BasicAuth: []
+      description: Get status report of campaign
+      operationId: getReport
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Report status returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignReport'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      tags:
+      - Report
+components:
+  schemas:
+    CampaignReport:
+      type: array
+      items:
+        type: object
+        properties:
+          list_name:
+            type: string
+          message_id:
+            type: integer
+            format: int64
+          mobile:
+            type: string
+          sent_date:
+            type: string
+          status:
+            type: string
+          status_date:
+            type: string
+          timezone:
+            type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

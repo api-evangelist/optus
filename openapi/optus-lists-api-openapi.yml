@@ -1,0 +1,213 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Lists API
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au
+    email: optussd@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Lists
+paths:
+  /{application_name}/lists:
+    get:
+      security:
+      - BasicAuth: []
+      description: Gets all active lists
+      operationId: getLists
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Lists returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGetResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      tags:
+      - Lists
+    post:
+      security:
+      - BasicAuth: []
+      description: Creates a list
+      operationId: createList
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: List Created
+          headers:
+            Location:
+              description: URL of the new List
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCreateResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+        required: true
+      tags:
+      - Lists
+  /{application_name}/lists/{list_id}:
+    delete:
+      security:
+      - BasicAuth: []
+      description: Delete a list
+      operationId: deleteList
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: list_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: List deleted
+        default:
+          description: 500 Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'error: List cannot be deleted'
+      tags:
+      - Lists
+components:
+  schemas:
+    Member:
+      type: object
+      required:
+      - destination
+      properties:
+        destination:
+          type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
+    ListGetResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          created:
+            type: string
+            format: date-time
+          id:
+            type: integer
+          members:
+            type: array
+            maxItems: 1000000
+            minItems: 1
+            items:
+              $ref: '#/components/schemas/Member'
+          name:
+            type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ListRequest:
+      type: object
+      required:
+      - name
+      - members
+      properties:
+        batch:
+          type: string
+          maxLength: 255
+          minLength: 1
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          minLength: 3
+        members:
+          type: array
+          maxItems: 1000000
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Member'
+        name:
+          type: string
+          maxLength: 50
+          minLength: 1
+        remove_opt_outs:
+          type: boolean
+          default: true
+        strict_validation:
+          type: boolean
+          default: true
+    ListCreateResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

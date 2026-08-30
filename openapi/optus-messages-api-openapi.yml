@@ -1,0 +1,410 @@
+openapi: 3.2.0
+info:
+  title: Optus Messages API
+  version: 1.0.0
+  description: 'Operations tagged Messages across 2 of this provider''s published API definitions: optus-sms-suite-rest-v1-openapi.yml, optus-sms-suite-rest-v2-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.sms.optus.com.au/rest/gateway
+- url: https://api.sms.optus.com.au/rest/sms/v2
+tags:
+- name: Messages
+paths:
+  /messages:
+    post:
+      description: Send a message to a single mobile
+      responses:
+        '201':
+          description: Create a new SMS message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+          application/vnd.modica.gateway.v1+json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        description: The message JSON you want to post
+        required: true
+      tags:
+      - Messages
+      security:
+      - BasicAuth: []
+    summary: Application API message
+    get:
+      tags:
+      - Messages
+      description: Get message details for an existing message
+      parameters:
+      - name: id
+        in: query
+        description: The message ID
+        required: true
+        schema:
+          $ref: '#/components/schemas/Uuid'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseMessageGet'
+        default:
+          $ref: '#/components/responses/ApiErrorResponse'
+      security:
+      - BasicAuth: []
+    servers:
+    - url: https://api.sms.optus.com.au/rest/gateway
+  /messages/broadcast:
+    post:
+      description: Send a message to an array of mobiles
+      responses:
+        '201':
+          description: Create a broadcast SMS message to one or more recipients
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BroadcastRestResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageBroadcast'
+          application/vnd.modica.gateway.v1+json:
+            schema:
+              $ref: '#/components/schemas/MessageBroadcast'
+        description: The message JSON you want to post
+        required: true
+      tags:
+      - Messages
+      security:
+      - BasicAuth: []
+    servers:
+    - url: https://api.sms.optus.com.au/rest/gateway
+  /messages/{messageid}:
+    get:
+      description: Retreives detail of an already created message
+      parameters:
+      - name: messageid
+        in: path
+        description: Message ID to retrieve
+        required: true
+        schema:
+          type: number
+          format: int64
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      tags:
+      - Messages
+      security:
+      - BasicAuth: []
+    servers:
+    - url: https://api.sms.optus.com.au/rest/gateway
+components:
+  schemas:
+    MessageBroadcast:
+      type: object
+      description: Send a message to multiple handsets
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: array
+            items:
+              type: string
+              minimum: 1
+              maximum: 1000
+    Message:
+      type: object
+      description: Send a message to one handset
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: string
+    MessageCommon:
+      type: object
+      description: Common properties for single and broadcast messages
+      required:
+      - content
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        source:
+          type: string
+        content:
+          type: string
+        reference:
+          type: string
+        class:
+          type: string
+          default: mt_message
+        mask:
+          type: string
+          maxLength: 20
+        sms_class:
+          type: integer
+        scheduled:
+          type: string
+          format: date-time
+          description: Allows scheduling of messages with an upper limit of 60 days
+    DefaultError:
+      type: object
+      required:
+      - message
+      - code
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          minimum: 100
+          maximum: 600
+    RestResponse:
+      type: array
+      items:
+        type: integer
+        format: int64
+        readOnly: true
+    BroadcastRestResponse:
+      type: array
+      items:
+        type: object
+        required:
+        - status
+        readOnly: true
+        description: Response per destination
+        properties:
+          id:
+            type: integer
+            format: int64
+          destination:
+            type: string
+          status:
+            type: string
+          message:
+            type: string
+    ReplyCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          description: mobile number
+          type: string
+        destination:
+          type: string
+        content:
+          type: string
+        operator:
+          type: string
+    SingleMessage:
+      type: object
+      required:
+      - destination
+      - content
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        destination:
+          type: string
+          example: '+642712345678'
+        source:
+          type: string
+        content:
+          type: string
+        reference:
+          type: string
+        class:
+          type: string
+          default: mt_message
+        mask:
+          type: string
+          maxLength: 20
+        sms_class:
+          type: integer
+        scheduled:
+          type: string
+          format: date-time
+          description: Allows scheduling of messages with an upper limit of 60 days
+        integration_id:
+          type: string
+          format: uuid
+    Uuid:
+      description: A string with UUID format.
+      type: string
+      maxLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+    MessageDetails:
+      description: Message details structure.
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          maxLength: 36
+        source:
+          description: The source for the message
+          type: string
+          format: none
+          maxLength: 255
+        destination:
+          description: The destination for the message
+          type: string
+          format: none
+          maxLength: 255
+        direction:
+          type: string
+          enum:
+          - MO
+          - MT
+        reference:
+          type: string
+          format: none
+          maxLength: 255
+        content:
+          type: string
+          format: none
+          maxLength: 5000
+        status:
+          type: string
+          enum:
+          - accepted
+          - queued
+          - submitted
+          - sent
+          - received
+          - blocked
+          - deficient
+          - frozen
+          - rejected
+          - failed
+          - dead
+          - expired
+          example: accepted
+    StatusCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - accepted
+          - queued
+          - submitted
+          - sent
+          - received
+          - blocked
+          - deficient
+          - frozen
+          - rejected
+          - failed
+          - dead
+          - expired
+          example: accepted
+        detail:
+          type: string
+          example: '+642712345678'
+  responses:
+    ApiErrorResponse:
+      description: API Error Response
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            properties:
+              message:
+                type: string
+                pattern: ^[-_ a-zA-Z0-9]+$
+                maxLength: 200
+                example: SMS Gateway Service V2 error
+              statusCode:
+                type: integer
+                format: int32
+                minimum: 1
+                maximum: 999
+                example: 500
+              error:
+                type: string
+                pattern: ^[-_ a-zA-Z0-9]+$
+                maxLength: 500
+                example: an example error message
+            required:
+            - message
+            - statusCode
+            - error
+    SingleMessageResponse:
+      description: API Single Message Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusCallback'
+    ResponseMessageGet:
+      description: Get Message response structure.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MessageDetails'
+          examples:
+            message:
+              value:
+                id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                source: '202'
+                destination: '+6412345678'
+                direction: MT
+                reference: my-ref-1234
+                content: The body of the message
+                status: received
+  requestBodies:
+    SingleMessageRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SingleMessage'
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    GatewayAuthorizer:
+      description: HTTP Basic Authentication is used for all authenticated requests.
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- optus-sms-suite-rest-v1-openapi.yml
+- optus-sms-suite-rest-v2-openapi.yml

@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Templates API
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au
+    email: optussd@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Templates
+paths:
+  /{application_name}/templates:
+    get:
+      security:
+      - BasicAuth: []
+      description: Gets all templates
+      operationId: getTemplates
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Templates returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateGetResponse'
+        default:
+          description: Default Error Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultError'
+      tags:
+      - Templates
+components:
+  schemas:
+    TemplateGetResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

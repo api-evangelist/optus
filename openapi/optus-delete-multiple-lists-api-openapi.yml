@@ -1,0 +1,75 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Delete Multiple Lists API
+  contact:
+    name: The Optus SMS Suite API Support
+    url: https://sms.optus.com.au
+    email: optussd@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Delete Multiple Lists
+paths:
+  /{application_name}/delete_multiple_lists:
+    post:
+      security:
+      - BasicAuth: []
+      description: Delete multiple lists
+      operationId: deleteMultList
+      parameters:
+      - name: application_name
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Some/all lists were deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  list_ids:
+                    description: The IDs of lists that were deleted
+                    type: array
+                    items:
+                      type: integer
+                  message:
+                    type: string
+                    example: IDs of deleted lists
+        default:
+          description: 500 Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: string
+                example: 'error: Lists cannot be deleted'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMultipleListsRequest'
+        required: true
+      tags:
+      - Delete Multiple Lists
+components:
+  schemas:
+    DeleteMultipleListsRequest:
+      type: object
+      required:
+      - list_ids
+      properties:
+        list_ids:
+          type: array
+          maxLength: 100
+          minLength: 1
+          items:
+            type: integer
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

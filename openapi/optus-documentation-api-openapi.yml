@@ -1,0 +1,45 @@
+openapi: 3.2.0
+info:
+  title: SMS Gateway REST APIv2 Documentation API
+  version: 1.0.0
+  description: 'The Optus SMS Suite Mobile Gateway REST APIv2 allows you to send SMS messages to a single handset.
+
+    It includes automated link shortening.
+
+    HTTPS use is mandatory; all attempts to use plain-text HTTP will be redirected to HTTPS.
+
+    Request and response data requires JSON encoding. Only HTTP GET and POST methods are required.
+
+    If you access the API without having the correct credentials OR permission to access the API, you will get a HTTP 401 response.
+
+    Your gateway application credentials (''application name'' and password) are available on the platform ''https://sms.optus.com.au/gateway/api_config/restv2''
+
+    You will need a login and password to retrieve these.
+
+    '
+servers:
+- url: https://api.sms.optus.com.au/rest/sms/v2
+security:
+- GatewayAuthorizer: []
+tags:
+- name: documentation
+paths:
+  /openapi.yaml:
+    summary: API documentation
+    get:
+      tags:
+      - documentation
+      description: API documentation
+      security: []
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+components:
+  securitySchemes:
+    GatewayAuthorizer:
+      description: HTTP Basic Authentication is used for all authenticated requests.
+      type: apiKey
+      name: Authorization
+      in: header
