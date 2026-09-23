@@ -84,3 +84,7 @@ paths:
                     type: string
       tags:
       - Services
+      summary: Get services
+      x-summary-source: derived
+      operationId: getServices
+      x-operation-id-source: derived

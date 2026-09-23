@@ -50,40 +50,21 @@ paths:
         required: true
       tags:
       - Scheduled Campaigns
+      summary: Schedule campaign
+      x-summary-source: derived
 components:
   schemas:
-    Member:
+    ScheduleCampaignResponse:
       type: object
       required:
-      - destination
+      - id
       properties:
-        destination:
+        error_messages:
           type: string
-          minLength: 1
-        param1:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param2:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param3:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param4:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param5:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param6:
-          type: string
-          maxLength: 50
-          minLength: 1
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
     ScheduleCampaignRequest:
       type: object
       required:
@@ -136,6 +117,38 @@ components:
           default: true
         template:
           type: string
+    Member:
+      type: object
+      required:
+      - destination
+      properties:
+        destination:
+          type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
     DefaultError:
       type: object
       properties:
@@ -143,17 +156,6 @@ components:
           type: integer
         message:
           type: string
-    ScheduleCampaignResponse:
-      type: object
-      required:
-      - id
-      properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
   securitySchemes:
     BasicAuth:
       type: http

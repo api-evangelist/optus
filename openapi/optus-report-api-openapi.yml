@@ -45,6 +45,8 @@ paths:
                 $ref: '#/components/schemas/DefaultError'
       tags:
       - Report
+      summary: Get report
+      x-summary-source: derived
 components:
   schemas:
     CampaignReport:

@@ -40,6 +40,8 @@ paths:
                 $ref: '#/components/schemas/DefaultError'
       tags:
       - Lists
+      summary: Get lists
+      x-summary-source: derived
     post:
       security:
       - BasicAuth: []
@@ -77,6 +79,8 @@ paths:
         required: true
       tags:
       - Lists
+      summary: Create list
+      x-summary-source: derived
   /{application_name}/lists/{list_id}:
     delete:
       security:
@@ -106,8 +110,52 @@ paths:
                 example: 'error: List cannot be deleted'
       tags:
       - Lists
+      summary: Delete list
+      x-summary-source: derived
 components:
   schemas:
+    ListCreateResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
+    ListRequest:
+      type: object
+      required:
+      - name
+      - members
+      properties:
+        batch:
+          type: string
+          maxLength: 255
+          minLength: 1
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          minLength: 3
+        members:
+          type: array
+          maxItems: 1000000
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Member'
+        name:
+          type: string
+          maxLength: 50
+          minLength: 1
+        remove_opt_outs:
+          type: boolean
+          default: true
+        strict_validation:
+          type: boolean
+          default: true
     Member:
       type: object
       required:
@@ -165,48 +213,6 @@ components:
           type: integer
         message:
           type: string
-    ListRequest:
-      type: object
-      required:
-      - name
-      - members
-      properties:
-        batch:
-          type: string
-          maxLength: 255
-          minLength: 1
-        email:
-          type: string
-          format: email
-          maxLength: 254
-          minLength: 3
-        members:
-          type: array
-          maxItems: 1000000
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/Member'
-        name:
-          type: string
-          maxLength: 50
-          minLength: 1
-        remove_opt_outs:
-          type: boolean
-          default: true
-        strict_validation:
-          type: boolean
-          default: true
-    ListCreateResponse:
-      type: object
-      required:
-      - id
-      properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
   securitySchemes:
     BasicAuth:
       type: http

@@ -40,6 +40,8 @@ paths:
                 $ref: '#/components/schemas/DefaultError'
       tags:
       - Templates
+      summary: Get templates
+      x-summary-source: derived
 components:
   schemas:
     TemplateGetResponse:
