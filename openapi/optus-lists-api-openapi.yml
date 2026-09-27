@@ -114,6 +114,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Member:
+      type: object
+      required:
+      - destination
+      properties:
+        destination:
+          type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
     ListCreateResponse:
       type: object
       required:
@@ -156,38 +188,6 @@ components:
         strict_validation:
           type: boolean
           default: true
-    Member:
-      type: object
-      required:
-      - destination
-      properties:
-        destination:
-          type: string
-          minLength: 1
-        param1:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param2:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param3:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param4:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param5:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param6:
-          type: string
-          maxLength: 50
-          minLength: 1
     ListGetResponse:
       type: array
       items:

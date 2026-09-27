@@ -65,6 +65,45 @@ components:
         id:
           type: integer
           readOnly: true
+    Member:
+      type: object
+      required:
+      - destination
+      properties:
+        destination:
+          type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
     ScheduleCampaignRequest:
       type: object
       required:
@@ -116,45 +155,6 @@ components:
           type: boolean
           default: true
         template:
-          type: string
-    Member:
-      type: object
-      required:
-      - destination
-      properties:
-        destination:
-          type: string
-          minLength: 1
-        param1:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param2:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param3:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param4:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param5:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param6:
-          type: string
-          maxLength: 50
-          minLength: 1
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
           type: string
   securitySchemes:
     BasicAuth:

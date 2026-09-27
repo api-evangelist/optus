@@ -140,16 +140,6 @@ paths:
     - url: https://api.sms.optus.com.au/rest/gateway
 components:
   schemas:
-    Message:
-      type: object
-      description: Send a message to one handset
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: string
     MessageBroadcast:
       type: object
       description: Send a message to multiple handsets
@@ -164,30 +154,22 @@ components:
               type: string
               minimum: 1
               maximum: 1000
-    BroadcastRestResponse:
-      type: array
-      items:
-        type: object
-        required:
-        - status
-        readOnly: true
-        description: Response per destination
-        properties:
-          id:
-            type: integer
-            format: int64
-          destination:
-            type: string
-          status:
-            type: string
-          message:
-            type: string
     RestResponse:
       type: array
       items:
         type: integer
         format: int64
         readOnly: true
+    Message:
+      type: object
+      description: Send a message to one handset
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: string
     MessageCommon:
       type: object
       description: Common properties for single and broadcast messages
@@ -216,6 +198,24 @@ components:
           type: string
           format: date-time
           description: Allows scheduling of messages with an upper limit of 60 days
+    BroadcastRestResponse:
+      type: array
+      items:
+        type: object
+        required:
+        - status
+        readOnly: true
+        description: Response per destination
+        properties:
+          id:
+            type: integer
+            format: int64
+          destination:
+            type: string
+          status:
+            type: string
+          message:
+            type: string
     DefaultError:
       type: object
       required:
@@ -243,36 +243,40 @@ components:
           type: string
         operator:
           type: string
-    StatusCallback:
+    SingleMessage:
       type: object
+      required:
+      - destination
+      - content
       properties:
         id:
           type: string
           format: uuid
-        status:
-          type: string
-          enum:
-          - accepted
-          - queued
-          - submitted
-          - sent
-          - received
-          - blocked
-          - deficient
-          - frozen
-          - rejected
-          - failed
-          - dead
-          - expired
-          example: accepted
-        detail:
+          readOnly: true
+        destination:
           type: string
           example: '+642712345678'
-    Uuid:
-      description: A string with UUID format.
-      type: string
-      maxLength: 36
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+        source:
+          type: string
+        content:
+          type: string
+        reference:
+          type: string
+        class:
+          type: string
+          default: mt_message
+        mask:
+          type: string
+          maxLength: 20
+        sms_class:
+          type: integer
+        scheduled:
+          type: string
+          format: date-time
+          description: Allows scheduling of messages with an upper limit of 60 days
+        integration_id:
+          type: string
+          format: uuid
     MessageDetails:
       description: Message details structure.
       type: object
@@ -320,40 +324,36 @@ components:
           - dead
           - expired
           example: accepted
-    SingleMessage:
+    StatusCallback:
       type: object
-      required:
-      - destination
-      - content
       properties:
         id:
           type: string
           format: uuid
-          readOnly: true
-        destination:
+        status:
+          type: string
+          enum:
+          - accepted
+          - queued
+          - submitted
+          - sent
+          - received
+          - blocked
+          - deficient
+          - frozen
+          - rejected
+          - failed
+          - dead
+          - expired
+          example: accepted
+        detail:
           type: string
           example: '+642712345678'
-        source:
-          type: string
-        content:
-          type: string
-        reference:
-          type: string
-        class:
-          type: string
-          default: mt_message
-        mask:
-          type: string
-          maxLength: 20
-        sms_class:
-          type: integer
-        scheduled:
-          type: string
-          format: date-time
-          description: Allows scheduling of messages with an upper limit of 60 days
-        integration_id:
-          type: string
-          format: uuid
+    Uuid:
+      description: A string with UUID format.
+      type: string
+      maxLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   responses:
     ApiErrorResponse:
       description: API Error Response
