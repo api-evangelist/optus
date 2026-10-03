@@ -140,36 +140,6 @@ paths:
     - url: https://api.sms.optus.com.au/rest/gateway
 components:
   schemas:
-    MessageBroadcast:
-      type: object
-      description: Send a message to multiple handsets
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: array
-            items:
-              type: string
-              minimum: 1
-              maximum: 1000
-    RestResponse:
-      type: array
-      items:
-        type: integer
-        format: int64
-        readOnly: true
-    Message:
-      type: object
-      description: Send a message to one handset
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: string
     MessageCommon:
       type: object
       description: Common properties for single and broadcast messages
@@ -198,6 +168,12 @@ components:
           type: string
           format: date-time
           description: Allows scheduling of messages with an upper limit of 60 days
+    RestResponse:
+      type: array
+      items:
+        type: integer
+        format: int64
+        readOnly: true
     BroadcastRestResponse:
       type: array
       items:
@@ -228,21 +204,55 @@ components:
           type: integer
           minimum: 100
           maximum: 600
-    ReplyCallback:
+    MessageBroadcast:
+      type: object
+      description: Send a message to multiple handsets
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: array
+            items:
+              type: string
+              minimum: 1
+              maximum: 1000
+    Message:
+      type: object
+      description: Send a message to one handset
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: string
+    StatusCallback:
       type: object
       properties:
         id:
           type: string
           format: uuid
-        source:
-          description: mobile number
+        status:
           type: string
-        destination:
+          enum:
+          - accepted
+          - queued
+          - submitted
+          - sent
+          - received
+          - blocked
+          - deficient
+          - frozen
+          - rejected
+          - failed
+          - dead
+          - expired
+          example: accepted
+        detail:
           type: string
-        content:
-          type: string
-        operator:
-          type: string
+          example: '+642712345678'
     SingleMessage:
       type: object
       required:
@@ -277,6 +287,21 @@ components:
         integration_id:
           type: string
           format: uuid
+    ReplyCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          description: mobile number
+          type: string
+        destination:
+          type: string
+        content:
+          type: string
+        operator:
+          type: string
     MessageDetails:
       description: Message details structure.
       type: object
@@ -324,31 +349,6 @@ components:
           - dead
           - expired
           example: accepted
-    StatusCallback:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - accepted
-          - queued
-          - submitted
-          - sent
-          - received
-          - blocked
-          - deficient
-          - frozen
-          - rejected
-          - failed
-          - dead
-          - expired
-          example: accepted
-        detail:
-          type: string
-          example: '+642712345678'
     Uuid:
       description: A string with UUID format.
       type: string
@@ -383,6 +383,12 @@ components:
             - message
             - statusCode
             - error
+    SingleMessageResponse:
+      description: API Single Message Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusCallback'
     ResponseMessageGet:
       description: Get Message response structure.
       content:
@@ -399,12 +405,6 @@ components:
                 reference: my-ref-1234
                 content: The body of the message
                 status: received
-    SingleMessageResponse:
-      description: API Single Message Response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StatusCallback'
   requestBodies:
     SingleMessageRequest:
       required: true

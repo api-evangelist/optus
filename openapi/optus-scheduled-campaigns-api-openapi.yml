@@ -54,17 +54,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ScheduleCampaignResponse:
+    DefaultError:
       type: object
-      required:
-      - id
       properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
+        code:
           type: integer
-          readOnly: true
+        message:
+          type: string
     Member:
       type: object
       required:
@@ -97,13 +93,6 @@ components:
           type: string
           maxLength: 50
           minLength: 1
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     ScheduleCampaignRequest:
       type: object
       required:
@@ -156,6 +145,17 @@ components:
           default: true
         template:
           type: string
+    ScheduleCampaignResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
   securitySchemes:
     BasicAuth:
       type: http
