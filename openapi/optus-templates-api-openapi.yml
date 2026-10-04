@@ -44,13 +44,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     TemplateGetResponse:
       type: array
       items:
@@ -60,6 +53,13 @@ components:
             type: integer
           name:
             type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
   securitySchemes:
     BasicAuth:
       type: http

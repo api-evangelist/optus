@@ -54,13 +54,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DefaultError:
+    ScheduleCampaignResponse:
       type: object
+      required:
+      - id
       properties:
-        code:
-          type: integer
-        message:
+        error_messages:
           type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
     Member:
       type: object
       required:
@@ -145,17 +149,13 @@ components:
           default: true
         template:
           type: string
-    ScheduleCampaignResponse:
+    DefaultError:
       type: object
-      required:
-      - id
       properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
+        code:
           type: integer
-          readOnly: true
+        message:
+          type: string
   securitySchemes:
     BasicAuth:
       type: http
