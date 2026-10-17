@@ -54,49 +54,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ScheduleCampaignResponse:
+    DefaultError:
       type: object
-      required:
-      - id
       properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
+        code:
           type: integer
-          readOnly: true
-    Member:
-      type: object
-      required:
-      - destination
-      properties:
-        destination:
+        message:
           type: string
-          minLength: 1
-        param1:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param2:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param3:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param4:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param5:
-          type: string
-          maxLength: 50
-          minLength: 1
-        param6:
-          type: string
-          maxLength: 50
-          minLength: 1
     ScheduleCampaignRequest:
       type: object
       required:
@@ -149,13 +113,49 @@ components:
           default: true
         template:
           type: string
-    DefaultError:
+    Member:
       type: object
+      required:
+      - destination
       properties:
-        code:
-          type: integer
-        message:
+        destination:
           type: string
+          minLength: 1
+        param1:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param2:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param3:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param4:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param5:
+          type: string
+          maxLength: 50
+          minLength: 1
+        param6:
+          type: string
+          maxLength: 50
+          minLength: 1
+    ScheduleCampaignResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
   securitySchemes:
     BasicAuth:
       type: http

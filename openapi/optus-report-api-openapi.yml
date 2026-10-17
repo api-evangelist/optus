@@ -49,6 +49,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
     CampaignReport:
       type: array
       items:
@@ -69,13 +76,6 @@ components:
             type: string
           timezone:
             type: string
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
   securitySchemes:
     BasicAuth:
       type: http

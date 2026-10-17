@@ -114,44 +114,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ListRequest:
-      type: object
-      required:
-      - name
-      - members
-      properties:
-        batch:
-          type: string
-          maxLength: 255
-          minLength: 1
-        email:
-          type: string
-          format: email
-          maxLength: 254
-          minLength: 3
-        members:
-          type: array
-          maxItems: 1000000
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/Member'
-        name:
-          type: string
-          maxLength: 50
-          minLength: 1
-        remove_opt_outs:
-          type: boolean
-          default: true
-        strict_validation:
-          type: boolean
-          default: true
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     Member:
       type: object
       required:
@@ -184,6 +146,44 @@ components:
           type: string
           maxLength: 50
           minLength: 1
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ListRequest:
+      type: object
+      required:
+      - name
+      - members
+      properties:
+        batch:
+          type: string
+          maxLength: 255
+          minLength: 1
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          minLength: 3
+        members:
+          type: array
+          maxItems: 1000000
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Member'
+        name:
+          type: string
+          maxLength: 50
+          minLength: 1
+        remove_opt_outs:
+          type: boolean
+          default: true
+        strict_validation:
+          type: boolean
+          default: true
     ListCreateResponse:
       type: object
       required:

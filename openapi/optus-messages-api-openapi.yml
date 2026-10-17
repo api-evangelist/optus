@@ -140,6 +140,36 @@ paths:
     - url: https://api.sms.optus.com.au/rest/gateway
 components:
   schemas:
+    RestResponse:
+      type: array
+      items:
+        type: integer
+        format: int64
+        readOnly: true
+    Message:
+      type: object
+      description: Send a message to one handset
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: string
+    MessageBroadcast:
+      type: object
+      description: Send a message to multiple handsets
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: array
+            items:
+              type: string
+              minimum: 1
+              maximum: 1000
     DefaultError:
       type: object
       required:
@@ -152,16 +182,6 @@ components:
           type: integer
           minimum: 100
           maximum: 600
-    Message:
-      type: object
-      description: Send a message to one handset
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: string
     BroadcastRestResponse:
       type: array
       items:
@@ -180,26 +200,6 @@ components:
             type: string
           message:
             type: string
-    RestResponse:
-      type: array
-      items:
-        type: integer
-        format: int64
-        readOnly: true
-    MessageBroadcast:
-      type: object
-      description: Send a message to multiple handsets
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: array
-            items:
-              type: string
-              minimum: 1
-              maximum: 1000
     MessageCommon:
       type: object
       description: Common properties for single and broadcast messages
@@ -228,21 +228,6 @@ components:
           type: string
           format: date-time
           description: Allows scheduling of messages with an upper limit of 60 days
-    ReplyCallback:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        source:
-          description: mobile number
-          type: string
-        destination:
-          type: string
-        content:
-          type: string
-        operator:
-          type: string
     SingleMessage:
       type: object
       required:
@@ -277,6 +262,26 @@ components:
         integration_id:
           type: string
           format: uuid
+    ReplyCallback:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          description: mobile number
+          type: string
+        destination:
+          type: string
+        content:
+          type: string
+        operator:
+          type: string
+    Uuid:
+      description: A string with UUID format.
+      type: string
+      maxLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
     StatusCallback:
       type: object
       properties:
@@ -302,11 +307,6 @@ components:
         detail:
           type: string
           example: '+642712345678'
-    Uuid:
-      description: A string with UUID format.
-      type: string
-      maxLength: 36
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
     MessageDetails:
       description: Message details structure.
       type: object
@@ -354,14 +354,23 @@ components:
           - dead
           - expired
           example: accepted
-  requestBodies:
-    SingleMessageRequest:
-      required: true
+  responses:
+    ResponseMessageGet:
+      description: Get Message response structure.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SingleMessage'
-  responses:
+            $ref: '#/components/schemas/MessageDetails'
+          examples:
+            message:
+              value:
+                id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                source: '202'
+                destination: '+6412345678'
+                direction: MT
+                reference: my-ref-1234
+                content: The body of the message
+                status: received
     ApiErrorResponse:
       description: API Error Response
       content:
@@ -396,22 +405,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/StatusCallback'
-    ResponseMessageGet:
-      description: Get Message response structure.
+  requestBodies:
+    SingleMessageRequest:
+      required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MessageDetails'
-          examples:
-            message:
-              value:
-                id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                source: '202'
-                destination: '+6412345678'
-                direction: MT
-                reference: my-ref-1234
-                content: The body of the message
-                status: received
+            $ref: '#/components/schemas/SingleMessage'
   securitySchemes:
     BasicAuth:
       type: http
