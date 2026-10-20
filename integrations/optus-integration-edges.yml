@@ -25,8 +25,45 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: PeeringDB (interconnection register)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.peeringdb.com/net/11354
+  category: network interconnection register
+  contract_reference:
+    register: PeeringDB (peeringdb.com/api net, ix, fac, org)
+    standard: null
+    spec_file: null
+    role: peeringdb-facility-operator+network
+    registered_name: SingTel Optus
+    register_id: https://www.peeringdb.com/net/11354
+    matched_domain: optus.com.au
+    matched_by: domain
+    asns:
+    - 4804
+    - 7474
+    info_types:
+    - Cable/DSL/ISP
+    - NSP
+    ix_presence: 0
+    exchanges_operated: []
+    facilities_operated: 1
+    signal_note: 'participation only: PeeringDB is self-registered by network operators; ASNs, IX presence and facility
+      counts are context, never counted'
+    detected_by: sweep-network-edge.py
+    detected: '2026-10-20'
+  detected_by: sweep-network-edge.py
+  first_seen: '2026-10-20'
 method: searched
 checked:
 - https://zapier.com/api/v4/apps/
+- https://manrs.org/netops/participants/
+- https://www.peeringdb.com/api/fac
+- https://www.peeringdb.com/api/ix
+- https://www.peeringdb.com/api/net
 source:
 - https://zapier.com/api/v4/apps/
