@@ -61,3 +61,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: optus-hubspot-own
+  label: HubSpot (own)
+  partner: hubspot
+  partner_name: HubSpot (own)
+  category: SMS
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/optus-sms-messaging
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

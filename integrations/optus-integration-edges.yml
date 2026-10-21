@@ -1,4 +1,24 @@
-generated: '2026-10-15'
+generated: '2026-10-21'
+method: searched
+source:
+- https://zapier.com/api/v4/apps/
+- https://zapier.com/apps/optus/integrations
+- https://n8n.io/integrations/optus/
+- https://composio.dev/toolkits/optus
+- https://monid.ai/tools/optus
+checked:
+- https://zapier.com/api/v4/apps/
+- https://manrs.org/netops/participants/
+- https://www.peeringdb.com/api/fac
+- https://www.peeringdb.com/api/ix
+- https://www.peeringdb.com/api/net
+- https://composio.dev/toolkits/optus
+- https://monid.ai/tools/optus
+- https://n8n.io/integrations/optus/
+- https://zapier.com/apps/optus/integrations
+- hubspot/integrations/hubspot-integration-edges.yml
+summary: null
+marketplace_apps: []
 edges:
 - partner_name: Zapier
   partner: zapier
@@ -58,12 +78,21 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-network-edge.py
   first_seen: '2026-10-20'
-method: searched
-checked:
-- https://zapier.com/api/v4/apps/
-- https://manrs.org/netops/participants/
-- https://www.peeringdb.com/api/fac
-- https://www.peeringdb.com/api/ix
-- https://www.peeringdb.com/api/net
-source:
-- https://zapier.com/api/v4/apps/
+- partner_name: HubSpot (own)
+  partner: hubspot
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://ecosystem.hubspot.com/marketplace/listing/optus-sms-messaging
+  mirror_of: hubspot/integrations/hubspot-integration-edges.yml
+  apps:
+  - Optus SMS Messaging
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: SMS
+templates: []
