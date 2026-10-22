@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/optus/main/json-schema/optus-list-request-schema.json",
+  "title": "ListRequest",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/optus-lists-api-openapi.yml#/components/schemas/ListRequest",
+  "type": "object",
+  "required": [
+    "name",
+    "members"
+  ],
+  "properties": {
+    "batch": {
+      "type": "string",
+      "maxLength": 255,
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "maxLength": 254,
+      "minLength": 3
+    },
+    "members": {
+      "type": "array",
+      "maxItems": 1000000,
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/Member"
+      }
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "remove_opt_outs": {
+      "type": "boolean",
+      "default": true
+    },
+    "strict_validation": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "$defs": {
+    "Member": {
+      "type": "object",
+      "required": [
+        "destination"
+      ],
+      "properties": {
+        "destination": {
+          "type": "string",
+          "minLength": 1
+        },
+        "param1": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "param2": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "param3": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "param4": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "param5": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        },
+        "param6": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

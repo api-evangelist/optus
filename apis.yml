@@ -1,24 +1,22 @@
 aid: optus
+
 url: https://raw.githubusercontent.com/api-evangelist/optus/refs/heads/main/apis.yml
+
 name: Optus
+
 kind: company
-description: >-
-  Optus (Singtel Optus Pty Limited) is Australia's second-largest telecommunications carrier,
-  wholly owned by Singapore's Singtel and headquartered in Macquarie Park, Sydney. It runs a
-  national mobile network reaching over 99% of the Australian population, alongside NBN and
-  cable broadband, satellite capacity inherited from AUSSAT, enterprise and government
-  connectivity, IoT/M2M services, and consumer media. Its API posture is split in two. The
-  only genuinely public, self-serve developer surface Optus operates is The Optus SMS Suite —
-  an enterprise messaging platform white-labelled from New Zealand's Modica Group at
-  sms.optus.com.au, which publishes open documentation, downloadable OpenAPI/Swagger
-  definitions, a WSDL, delivery-receipt callbacks, and a free-trial signup. Everything else is
-  partner-gated: the IoT Control Centre is a Cisco/Jasper platform behind a referral-coded
-  starter kit, and Optus has no first-party network-API portal — developer.optus.com.au and
-  api.optus.com.au resolve on Akamai but return HTTP 403 Access Denied. On network APIs Optus
-  is a stated GSMA Open Gateway participant and an endorser of the Bridge Alliance API
-  Exchange (BAEx), but as of this review no CAMARA API is callable from Optus directly; its
-  route to developers runs through its parent Singtel's Paragon-powered BAEx and Aduna, not
-  through anything Optus publishes itself.
+
+description: 'Optus (Singtel Optus Pty Limited) is Australia''s second-largest telecommunications carrier, wholly owned by Singapore''s Singtel
+  and headquartered in Macquarie Park, Sydney. It runs a national mobile network reaching over 99% of the Australian population, alongside NBN
+  and cable broadband, satellite capacity inherited from AUSSAT, enterprise and government connectivity, IoT/M2M services, and consumer media.
+  Its API posture is split in two. The only genuinely public, self-serve developer surface Optus operates is The Optus SMS Suite — an enterprise
+  messaging platform white-labelled from New Zealand''s Modica Group at sms.optus.com.au, which publishes open documentation, downloadable OpenAPI/Swagger
+  definitions, a WSDL, delivery-receipt callbacks, and a free-trial signup. Everything else is partner-gated: the IoT Control Centre is a Cisco/Jasper
+  platform behind a referral-coded starter kit, and Optus has no first-party network-API portal — developer.optus.com.au and api.optus.com.au
+  resolve on Akamai but return HTTP 403 Access Denied. On network APIs Optus is a stated GSMA Open Gateway participant and an endorser of the
+  Bridge Alliance API Exchange (BAEx), but as of this review no CAMARA API is callable from Optus directly; its route to developers runs through
+  its parent Singtel''s Paragon-powered BAEx and Aduna, not through anything Optus publishes itself.'
+
 deliveryModel:
   model: saas
   open_source: false
@@ -31,6 +29,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -44,7 +43,9 @@ accessModel:
   - security
   generated: '2026-09-03'
   method: derived
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
+image: https://www.optus.com.au/content/dam/optus/cloud/images/shop/mobile/og-image/og-optus.version-1727925929257.png
+
 tags:
 - Telecommunications
 - Australia
@@ -61,440 +62,66 @@ tags:
 - Broadband
 - Satellite
 - Enterprise
+
 created: '2026-07-25'
-modified: '2026-07-25'
+
+modified: '2026-10-21'
+
 specificationVersion: '0.23'
-apis:
-- aid: optus:optus-sms-suite-2fa-rest-api
-  name: Optus SMS Suite 2FA REST API
-  description: >-
-    Hosted two-factor authentication API that creates an SMS one-time-code challenge for a mobile handset
-    with POST /challenges and validates the user's entry with POST /responses, with customisable message
-    copy, optional alphanumeric mask, and a configurable validity window. Authenticated with HTTP Basic.
-    No published OpenAPI definition was found.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
-  baseURL: https://api.sms.optus.com.au/rest/2fa
-  tags:
-  - Two-Factor Authentication
-  - Identity
-  - SMS
-  - REST
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
-  - type: AgentSkill
-    url: skills/optus-two-factor-authentication.md
-- aid: optus:optus-sms-suite-rest-email-api
-  name: Optus SMS Suite REST Email API
-  description: >-
-    Companion REST API to the SMS gateway for scheduling and sending plain-text transactional email over
-    a separate endpoint, returning a 64-bit message ID for later retrieval and firing DLR callbacks when
-    the email transport has sent the message. Plain text only — no HTML, rich text, or attachments. No
-    published OpenAPI definition was found.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
-  baseURL: https://api.sms.optus.com.au/rest/email/v1
-  tags:
-  - Email
-  - Messaging
-  - REST
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
-- aid: optus:optus-sms-suite-https-api
-  name: Optus SMS Suite HTTPS API
-  description: >-
-    Legacy GET-based HTTPS interface for SMS integration, covering message sending, delivery receipts,
-    and inbound (mobile-originated) message callbacks for systems that cannot build a JSON REST client.
-    No published OpenAPI definition was found.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
-  baseURL: https://api.sms.optus.com.au/message
-  tags:
-  - SMS
-  - Messaging
-  - HTTP
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
-  - type: Deprecation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
-- aid: optus:optus-sms-suite-soap-api
-  name: Optus SMS Suite SOAP API
-  description: >-
-    WSDL-described SOAP interface for SMS integration supporting custom source addressing, message classification,
-    and structured error handling, published for legacy enterprise middleware. The WSDL is served publicly
-    and targets the namespace http://api.sms.optus.com.au/ModicaSoap.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
-  baseURL: https://api.sms.optus.com.au/ModicaSoap
-  tags:
-  - SMS
-  - Messaging
-  - SOAP
-  - WSDL
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
-  - type: WSDL
-    url: https://api.sms.optus.com.au/ModicaSoap.wsdl
-  - type: Deprecation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
-- aid: optus:optus-sms-suite-mms-mm7-api
-  name: Optus SMS Suite MMS MM7 API
-  description: >-
-    Implementation of the 3GPP MM7 SOAP protocol for sending and receiving MMS, carrying text, image,
-    audio, video, and SMIL content in multipart MIME requests to /mm7, with MO message and delivery-report
-    callbacks acknowledged by SOAP responses. Authenticated with HTTP Basic.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
-  baseURL: https://api.sms.optus.com.au/mm7
-  tags:
-  - MMS
-  - Messaging
-  - MM7
-  - SOAP
-  - 3GPP
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
-- aid: optus:optus-sms-suite-smpp-api
-  name: Optus SMS Suite SMPP API
-  description: >-
-    Direct SMSC connectivity over SMPP 3.3 and 3.4 with mandatory TLS, offering high-throughput binary
-    messaging, custom character encoding, and detailed delivery reporting. A wire protocol rather than
-    an HTTP API — no OpenAPI definition exists or is expected.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
-  tags:
-  - SMS
-  - Messaging
-  - SMPP
-  properties:
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
-- aid: optus:optus-delete-multiple-lists-api
-  name: Optus Delete Multiple Lists API
-  description: The Delete Multiple Lists API from Optus — 1 operation(s) for delete multiple lists.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Delete Multiple Lists
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-delete-multiple-lists-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-documentation-api
-  name: Optus Documentation API
-  description: The documentation API from Optus — 1 operation(s) for documentation.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Documentation
-  tags_raw:
-  - documentation
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-documentation-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-lists-api
-  name: Optus Lists API
-  description: The Lists API from Optus — 2 operation(s) for lists.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - List
-  tags_raw:
-  - Lists
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-lists-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-messages-api
-  name: Optus Messages API
-  description: The Messages API from Optus — 3 operation(s) for messages.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Message
-  tags_raw:
-  - Messages
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-messages-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-report-api
-  name: Optus Report API
-  description: The Report API from Optus — 1 operation(s) for report.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Report
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-report-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-scheduled-campaigns-api
-  name: Optus Scheduled Campaigns API
-  description: The Scheduled Campaigns API from Optus — 1 operation(s) for scheduled campaigns.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Scheduled Campaigns
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-scheduled-campaigns-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-services-api
-  name: Optus Services API
-  description: The Services API from Optus — 1 operation(s) for services.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Services
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-services-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-status-api
-  name: Optus Status API
-  description: The Status API from Optus — 1 operation(s) for status.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Status
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-status-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
-- aid: optus:optus-templates-api
-  name: Optus Templates API
-  description: The Templates API from Optus — 1 operation(s) for templates.
-  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  baseURL: https://api.sms.optus.com.au/rest/gateway
-  tags:
-  - Templates
-  properties:
-  - type: OpenAPI
-    url: openapi/optus-templates-api-openapi.yml
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
-  - type: AsyncAPI
-    url: asyncapi/optus-sms-suite-asyncapi.yml
-  - type: Webhooks
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
-  - type: Documentation
-    url: >-
-      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
-  - type: APIReference
-    url: https://sms.optus.com.au/docs/api/campaign-manager.html
-  - type: Documentation
-    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
-  - type: StatusPage
-    url: https://status.sms.optus.com.au/
+
+x-coverage:
+  state: covered
+  reason: enriched
+  detail: Identity pass 2026-10-21. Website www.optus.com.au verified 200 (open front door); og:image adopted as image; all common[] link pointers
+    re-fetched with a browser UA and live. No Blog, Pricing, GitHubOrganization, Roadmap or Postman pointer found on the pages read.
+  evidence:
+  - url: https://www.optus.com.au/
+    status: 200
+  - url: https://www.optus.com.au/about/legal/privacy
+    status: 200
+  - url: https://www.optus.com.au/about/legal/standard-forms-agreement/business
+    status: 200
+  - url: https://www.optus.com.au/business/contact-us
+    status: 200
+  - url: https://sms.optus.com.au/login
+    status: 200
+  - url: https://sms.optus.com.au/docs/en/developer-docs/
+    status: 200
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: RateLimits
+  url: rate-limits/optus-rate-limits.yml
+- type: Plans
+  url: plans/optus-plans-pricing.yml
+- type: Spectral
+  url: rules/optus-rules.yml
+- type: JSONLD
+  url: json-ld/optus-context.jsonld
+- type: Vocabulary
+  url: vocabulary/optus-vocabulary.yml
+- type: Sandbox
+  url: sandbox/optus-sandbox.yml
+- type: ErrorCatalog
+  url: errors/optus-problem-types.yml
+- type: Overlay
+  url: overlays/optus-delete-multiple-lists-overlay.yaml
+- type: Hosts
+  url: hosts/optus-hosts.yml
+- type: IntegrationEdges
+  url: integrations/optus-integration-edges.yml
+- type: Vendors
+  url: vendors/optus-vendors.yml
 - type: CapabilityMap
   url: capabilities/optus-capability-edges.yml
   name: Optus Business Capability Map
-- type: Overlay
-  url: overlays/optus-sms-suite-rest-v1-overlay.yaml
-- type: Overlay
-  url: overlays/optus-sms-suite-rest-v2-overlay.yaml
 - type: AgentSkill
   url: skills/optus-send-and-reconcile-sms.md
-- type: Overlay
-  url: overlays/optus-sms-suite-campaign-manager-overlay.yaml
 - type: AgentSkill
   url: skills/optus-run-sms-campaign.md
-- type: Overlay
-  url: overlays/optus-sms-suite-status-overlay.yaml
 - type: AgentSkill
   url: skills/optus-check-service-health.md
 - type: Website
@@ -553,23 +180,505 @@ common:
   url: data-model/optus-data-model.yml
 - type: X-MCPServerCandidate
   url: mcp/optus-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: ToolCrosswalk
-  url: mcp/optus-tool-crosswalk.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: AgenticAccess
   url: agentic-access/optus-agentic-access.yml
-- type: LLMsTxt
-  url: llms/optus-llms.txt
-- type: Packages
-  url: packages/optus-packages.yml
 - type: Integrations
   url: https://sms.optus.com.au/docs/en/integrations/business-integrations/
 - type: LinkedIn
   url: https://www.linkedin.com/company/optus
 - type: Wikipedia
   url: https://en.wikipedia.org/wiki/Optus
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+apis:
+- aid: optus:optus-sms-suite-2fa-rest-api
+  name: Optus SMS Suite 2FA REST API
+  description: >-
+    Hosted two-factor authentication API that creates an SMS one-time-code challenge for a mobile handset
+    with POST /challenges and validates the user's entry with POST /responses, with customisable message
+    copy, optional alphanumeric mask, and a configurable validity window. Authenticated with HTTP Basic.
+    No published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+  baseURL: https://api.sms.optus.com.au/rest/2fa
+  tags:
+  - Two-Factor Authentication
+  - Identity
+  - SMS
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+- aid: optus:optus-sms-suite-rest-email-api
+  name: Optus SMS Suite REST Email API
+  description: >-
+    Companion REST API to the SMS gateway for scheduling and sending plain-text transactional email over
+    a separate endpoint, returning a 64-bit message ID for later retrieval and firing DLR callbacks when
+    the email transport has sent the message. Plain text only — no HTML, rich text, or attachments. No
+    published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  baseURL: https://api.sms.optus.com.au/rest/email/v1
+  tags:
+  - Email
+  - Messaging
+  - REST
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-email/
+- aid: optus:optus-sms-suite-https-api
+  name: Optus SMS Suite HTTPS API
+  description: >-
+    Legacy GET-based HTTPS interface for SMS integration, covering message sending, delivery receipts,
+    and inbound (mobile-originated) message callbacks for systems that cannot build a JSON REST client.
+    No published OpenAPI definition was found.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  baseURL: https://api.sms.optus.com.au/message
+  tags:
+  - SMS
+  - Messaging
+  - HTTP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  - type: Deprecation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/https/
+- aid: optus:optus-sms-suite-soap-api
+  name: Optus SMS Suite SOAP API
+  description: >-
+    WSDL-described SOAP interface for SMS integration supporting custom source addressing, message classification,
+    and structured error handling, published for legacy enterprise middleware. The WSDL is served publicly
+    and targets the namespace http://api.sms.optus.com.au/ModicaSoap.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  baseURL: https://api.sms.optus.com.au/ModicaSoap
+  tags:
+  - SMS
+  - Messaging
+  - SOAP
+  - WSDL
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  - type: WSDL
+    url: wsdl/optus-sms-suite-soap.wsdl
+  - type: WSDL
+    name: WSDL (provider-hosted)
+    url: https://api.sms.optus.com.au/ModicaSoap.wsdl
+  - type: Deprecation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/soap/
+- aid: optus:optus-sms-suite-mms-mm7-api
+  name: Optus SMS Suite MMS MM7 API
+  description: >-
+    Implementation of the 3GPP MM7 SOAP protocol for sending and receiving MMS, carrying text, image,
+    audio, video, and SMIL content in multipart MIME requests to /mm7, with MO message and delivery-report
+    callbacks acknowledged by SOAP responses. Authenticated with HTTP Basic.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  baseURL: https://api.sms.optus.com.au/mm7
+  tags:
+  - MMS
+  - Messaging
+  - MM7
+  - SOAP
+  - 3GPP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/mm7/
+- aid: optus:optus-sms-suite-smpp-api
+  name: Optus SMS Suite SMPP API
+  description: >-
+    Direct SMSC connectivity over SMPP 3.3 and 3.4 with mandatory TLS, offering high-throughput binary
+    messaging, custom character encoding, and detailed delivery reporting. A wire protocol rather than
+    an HTTP API — no OpenAPI definition exists or is expected.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
+  tags:
+  - SMS
+  - Messaging
+  - SMPP
+  properties:
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
+- aid: optus:optus-delete-multiple-lists-api
+  name: Optus Delete Multiple Lists API
+  description: The Delete Multiple Lists API from Optus — 1 operation(s) for delete multiple lists.
+  humanURL: >-
+    https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - Delete Multiple Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-delete-multiple-lists-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-delete-multiple-lists-request-schema.json
+- aid: optus:optus-documentation-api
+  name: Optus Documentation API
+  description: The documentation API from Optus — 1 operation(s) for documentation.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  baseURL: https://api.sms.optus.com.au/rest/sms/v2
+  tags:
+  - Documentation
+  tags_raw:
+  - documentation
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-documentation-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.yaml
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+- aid: optus:optus-lists-api
+  name: Optus Lists API
+  description: The Lists API from Optus — 2 operation(s) for lists.
+  humanURL: >-
+    https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - List
+  tags_raw:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-lists-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-list-request-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-list-get-response-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-list-create-response-schema.json
+- aid: optus:optus-messages-api
+  name: Optus Messages API
+  description: The Messages API from Optus — 3 operation(s) for messages.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  baseURL: https://api.sms.optus.com.au/rest/gateway
+  tags:
+  - Message
+  tags_raw:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-messages-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.yaml
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-broadcast-rest-response-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-message-broadcast-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-message-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-rest-response-schema.json
+- aid: optus:optus-report-api
+  name: Optus Report API
+  description: The Report API from Optus — 1 operation(s) for report.
+  humanURL: >-
+    https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - Report
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-report-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-campaign-report-schema.json
+- aid: optus:optus-scheduled-campaigns-api
+  name: Optus Scheduled Campaigns API
+  description: The Scheduled Campaigns API from Optus — 1 operation(s) for scheduled campaigns.
+  humanURL: >-
+    https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - Scheduled Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-scheduled-campaigns-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-schedule-campaign-request-schema.json
+  - type: JSONSchema
+    url: json-schema/optus-schedule-campaign-response-schema.json
+- aid: optus:optus-services-api
+  name: Optus Services API
+  description: The Services API from Optus — 1 operation(s) for services.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  baseURL: https://api.sms.optus.com.au/rest/services/v1
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-services-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/services/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+- aid: optus:optus-status-api
+  name: Optus Status API
+  description: The Status API from Optus — 1 operation(s) for status.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  baseURL: https://api.sms.optus.com.au/rest/services/v1
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-status-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/services/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+- aid: optus:optus-templates-api
+  name: Optus Templates API
+  description: The Templates API from Optus — 1 operation(s) for templates.
+  humanURL: >-
+    https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  baseURL: https://api.sms.optus.com.au/rest/campaign_manager/v1
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-templates-api-openapi.yml
+  - type: OpenAPI
+    name: OpenAPI (provider-hosted)
+    url: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v1.html
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/mobile-gateway-rest-v2.html
+  - type: AsyncAPI
+    url: asyncapi/optus-sms-suite-asyncapi.yml
+  - type: Webhooks
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - type: Documentation
+    url: >-
+      https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - type: APIReference
+    url: https://sms.optus.com.au/docs/api/campaign-manager.html
+  - type: Documentation
+    url: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
+  - type: StatusPage
+    url: https://status.sms.optus.com.au/
+  - type: JSONSchema
+    url: json-schema/optus-template-get-response-schema.json
+- aid: optus:optus-healthz-api
+  name: Optus Healthz API
+  description: The Healthz API from Optus — 1 operation(s) for healthz.
+  humanURL: https://sms.optus.com.au/docs/en/integrations/messaging-apis/2fa/
+  baseURL: https://api.sms.optus.com.au/rest/2fa
+  tags:
+  - Healthz
+  properties:
+  - type: OpenAPI
+    url: openapi/optus-healthz-api-openapi.yml
+x-enrichment:
+  date: '2026-10-21'
+  status: enriched
+  artifacts_added: 32
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=anthropic,regulatory=anthropic

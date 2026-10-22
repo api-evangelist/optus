@@ -140,22 +140,6 @@ paths:
     - url: https://api.sms.optus.com.au/rest/gateway
 components:
   schemas:
-    RestResponse:
-      type: array
-      items:
-        type: integer
-        format: int64
-        readOnly: true
-    Message:
-      type: object
-      description: Send a message to one handset
-      required:
-      - destination
-      allOf:
-      - $ref: '#/components/schemas/MessageCommon'
-      - properties:
-          destination:
-            type: string
     MessageBroadcast:
       type: object
       description: Send a message to multiple handsets
@@ -170,18 +154,6 @@ components:
               type: string
               minimum: 1
               maximum: 1000
-    DefaultError:
-      type: object
-      required:
-      - message
-      - code
-      properties:
-        message:
-          type: string
-        code:
-          type: integer
-          minimum: 100
-          maximum: 600
     BroadcastRestResponse:
       type: array
       items:
@@ -200,6 +172,22 @@ components:
             type: string
           message:
             type: string
+    Message:
+      type: object
+      description: Send a message to one handset
+      required:
+      - destination
+      allOf:
+      - $ref: '#/components/schemas/MessageCommon'
+      - properties:
+          destination:
+            type: string
+    RestResponse:
+      type: array
+      items:
+        type: integer
+        format: int64
+        readOnly: true
     MessageCommon:
       type: object
       description: Common properties for single and broadcast messages
@@ -228,6 +216,65 @@ components:
           type: string
           format: date-time
           description: Allows scheduling of messages with an upper limit of 60 days
+    DefaultError:
+      type: object
+      required:
+      - message
+      - code
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          minimum: 100
+          maximum: 600
+    MessageDetails:
+      description: Message details structure.
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          maxLength: 36
+        source:
+          description: The source for the message
+          type: string
+          format: none
+          maxLength: 255
+        destination:
+          description: The destination for the message
+          type: string
+          format: none
+          maxLength: 255
+        direction:
+          type: string
+          enum:
+          - MO
+          - MT
+        reference:
+          type: string
+          format: none
+          maxLength: 255
+        content:
+          type: string
+          format: none
+          maxLength: 5000
+        status:
+          type: string
+          enum:
+          - accepted
+          - queued
+          - submitted
+          - sent
+          - received
+          - blocked
+          - deficient
+          - frozen
+          - rejected
+          - failed
+          - dead
+          - expired
+          example: accepted
     SingleMessage:
       type: object
       required:
@@ -277,11 +324,6 @@ components:
           type: string
         operator:
           type: string
-    Uuid:
-      description: A string with UUID format.
-      type: string
-      maxLength: 36
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
     StatusCallback:
       type: object
       properties:
@@ -307,54 +349,18 @@ components:
         detail:
           type: string
           example: '+642712345678'
-    MessageDetails:
-      description: Message details structure.
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          maxLength: 36
-        source:
-          description: The source for the message
-          type: string
-          format: none
-          maxLength: 255
-        destination:
-          description: The destination for the message
-          type: string
-          format: none
-          maxLength: 255
-        direction:
-          type: string
-          enum:
-          - MO
-          - MT
-        reference:
-          type: string
-          format: none
-          maxLength: 255
-        content:
-          type: string
-          format: none
-          maxLength: 5000
-        status:
-          type: string
-          enum:
-          - accepted
-          - queued
-          - submitted
-          - sent
-          - received
-          - blocked
-          - deficient
-          - frozen
-          - rejected
-          - failed
-          - dead
-          - expired
-          example: accepted
+    Uuid:
+      description: A string with UUID format.
+      type: string
+      maxLength: 36
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
   responses:
+    SingleMessageResponse:
+      description: API Single Message Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StatusCallback'
     ResponseMessageGet:
       description: Get Message response structure.
       content:
@@ -399,12 +405,6 @@ components:
             - message
             - statusCode
             - error
-    SingleMessageResponse:
-      description: API Single Message Response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StatusCallback'
   requestBodies:
     SingleMessageRequest:
       required: true

@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Campaign Manager Scheduled Campaigns API
   contact:
-    name: The Optus SMS Suite API Support
-    url: https://sms.optus.com.au
-    email: optussd@modicagroup.com
+    name: Modica Group API Support
+    url: http://support.modicagroup.com
+    email: support@modicagroup.com
   version: 1.0.1
 servers:
-- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+- url: https://api.modicagroup.com/rest/campaign_manager/v1
 security:
 - BasicAuth: []
 tags:
@@ -24,6 +24,7 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 255
       responses:
         '201':
           description: Campaign Created
@@ -54,13 +55,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     ScheduleCampaignRequest:
       type: object
       required:
@@ -113,6 +107,17 @@ components:
           default: true
         template:
           type: string
+    ScheduleCampaignResponse:
+      type: object
+      required:
+      - id
+      properties:
+        error_messages:
+          type: string
+          readOnly: true
+        id:
+          type: integer
+          readOnly: true
     Member:
       type: object
       required:
@@ -145,17 +150,13 @@ components:
           type: string
           maxLength: 50
           minLength: 1
-    ScheduleCampaignResponse:
+    DefaultError:
       type: object
-      required:
-      - id
       properties:
-        error_messages:
-          type: string
-          readOnly: true
-        id:
+        code:
           type: integer
-          readOnly: true
+        message:
+          type: string
   securitySchemes:
     BasicAuth:
       type: http

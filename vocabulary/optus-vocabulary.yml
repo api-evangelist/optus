@@ -1,0 +1,137 @@
+generated: '2026-10-21'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/optus-delete-multiple-lists-api-openapi.yml
+- openapi/optus-documentation-api-openapi.yml
+- openapi/optus-lists-api-openapi.yml
+- openapi/optus-messages-api-openapi.yml
+- openapi/optus-report-api-openapi.yml
+vocabulary:
+  name: Optus Domain Vocabulary
+  description: 'Terms declared by Optus''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-21'
+  terms:
+  - term: DeleteMultipleListsRequest
+    definition: 'Object declared by the contract with fields: list_ids.'
+    tags:
+    - Object
+    source: openapi/optus-delete-multiple-lists-api-openapi.yml#/components/schemas/DeleteMultipleListsRequest
+  - term: Member
+    definition: 'Object declared by the contract with fields: destination, param1, param2, param3, param4, param5, param6.'
+    tags:
+    - Object
+    source: openapi/optus-lists-api-openapi.yml#/components/schemas/Member
+  - term: DefaultError
+    definition: 'Object declared by the contract with fields: code, message.'
+    tags:
+    - Object
+    source: openapi/optus-lists-api-openapi.yml#/components/schemas/DefaultError
+  - term: ListRequest
+    definition: 'Object declared by the contract with fields: batch, email, members, name, remove_opt_outs, strict_validation.'
+    tags:
+    - Object
+    source: openapi/optus-lists-api-openapi.yml#/components/schemas/ListRequest
+  - term: ListCreateResponse
+    definition: 'Object declared by the contract with fields: error_messages, id.'
+    tags:
+    - Object
+    source: openapi/optus-lists-api-openapi.yml#/components/schemas/ListCreateResponse
+  - term: Message
+    definition: Send a message to one handset
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/Message
+  - term: MessageBroadcast
+    definition: Send a message to multiple handsets
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/MessageBroadcast
+  - term: MessageCommon
+    definition: Common properties for single and broadcast messages
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/MessageCommon
+  - term: SingleMessage
+    definition: 'Object declared by the contract with fields: id, destination, source, content, reference, class, mask, sms_class, scheduled,
+      integration_id.'
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/SingleMessage
+  - term: ReplyCallback
+    definition: 'Object declared by the contract with fields: id, source, destination, content, operator.'
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/ReplyCallback
+  - term: Uuid
+    definition: A string with UUID format.
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/Uuid
+  - term: StatusCallback
+    definition: 'Object declared by the contract with fields: id, status, detail.'
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/StatusCallback
+  - term: MessageDetails
+    definition: Message details structure.
+    tags:
+    - Object
+    source: openapi/optus-messages-api-openapi.yml#/components/schemas/MessageDetails
+  - term: ScheduleCampaignRequest
+    definition: 'Object declared by the contract with fields: batch, content, email, mask, members, name, opt_out_response, remove_opt_outs, reply_response,
+      schedule, strict_validation, template.'
+    tags:
+    - Object
+    source: openapi/optus-scheduled-campaigns-api-openapi.yml#/components/schemas/ScheduleCampaignRequest
+  - term: ScheduleCampaignResponse
+    definition: 'Object declared by the contract with fields: error_messages, id.'
+    tags:
+    - Object
+    source: openapi/optus-scheduled-campaigns-api-openapi.yml#/components/schemas/ScheduleCampaignResponse
+  - term: Delete Multiple Lists
+    definition: 'Resource group in the contract; its operation POST /{application_name}/delete_multiple_lists: Delete multiple lists'
+    tags:
+    - Resource Group
+    source: openapi/optus-delete-multiple-lists-api-openapi.yml
+  - term: Documentation
+    definition: 'Resource group in the contract; its operation GET /openapi.yaml: API documentation'
+    tags:
+    - Resource Group
+    source: openapi/optus-documentation-api-openapi.yml
+  - term: Lists
+    definition: 'Resource group in the contract; its operation GET /{application_name}/lists: Gets all active lists'
+    tags:
+    - Resource Group
+    source: openapi/optus-lists-api-openapi.yml
+  - term: Messages
+    definition: 'Resource group in the contract; its operation POST /messages: Send a message to a single mobile'
+    tags:
+    - Resource Group
+    source: openapi/optus-messages-api-openapi.yml
+  - term: Report
+    definition: 'Resource group in the contract; its operation GET /{application_name}/{campaign_id}/report: Get status report of campaign'
+    tags:
+    - Resource Group
+    source: openapi/optus-report-api-openapi.yml
+  - term: Scheduled Campaigns
+    definition: 'Resource group in the contract; its operation POST /{application_name}/scheduled_campaigns: Schedule campaign'
+    tags:
+    - Resource Group
+    source: openapi/optus-scheduled-campaigns-api-openapi.yml
+  - term: Services
+    definition: 'Resource group in the contract; its operation GET /services: Get services'
+    tags:
+    - Resource Group
+    source: openapi/optus-services-api-openapi.yml
+  - term: Status
+    definition: 'Resource group in the contract; its operation GET /status: Get status'
+    tags:
+    - Resource Group
+    source: openapi/optus-status-api-openapi.yml
+  - term: Templates
+    definition: 'Resource group in the contract; its operation GET /{application_name}/templates: Gets all templates'
+    tags:
+    - Resource Group
+    source: openapi/optus-templates-api-openapi.yml

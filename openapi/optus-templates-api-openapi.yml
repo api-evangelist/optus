@@ -2,12 +2,12 @@ openapi: 3.2.0
 info:
   title: Campaign Manager Templates API
   contact:
-    name: The Optus SMS Suite API Support
-    url: https://sms.optus.com.au
-    email: optussd@modicagroup.com
+    name: Modica Group API Support
+    url: http://support.modicagroup.com
+    email: support@modicagroup.com
   version: 1.0.1
 servers:
-- url: https://api.sms.optus.com.au/rest/campaign_manager/v1
+- url: https://api.modicagroup.com/rest/campaign_manager/v1
 security:
 - BasicAuth: []
 tags:
@@ -25,6 +25,7 @@ paths:
         required: true
         schema:
           type: string
+          maxLength: 255
       responses:
         '200':
           description: Templates returned
@@ -44,13 +45,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    DefaultError:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     TemplateGetResponse:
       type: array
       items:
@@ -60,6 +54,13 @@ components:
             type: integer
           name:
             type: string
+    DefaultError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
   securitySchemes:
     BasicAuth:
       type: http

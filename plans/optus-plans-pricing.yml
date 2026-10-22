@@ -1,0 +1,37 @@
+name: Optus pricing
+generated: '2026-10-21'
+method: searched
+source: https://sms.optus.com.au/docs/en/faq/
+audience: business-product
+pricing_basis: negotiated
+published: false
+delivery:
+  delivery: managed
+plan_count: 2
+note: >-
+  The Optus SMS Suite publishes no price list: sms.optus.com.au/pricing returns 404, the
+  Optus enterprise SMS page carries no prices, and the FAQ routes conversion from the free
+  trial to a production account through "Your Optus salesperson". Usage is billed per
+  message unit (long messages concatenate up to 10 units). An undated-in-text 2014 Optus
+  legal document "Optus SMS Gateway – Standard Pricing Table"
+  (https://optus.com.au/content/dam/optus/documents/about-us/legal/MessPricingTableOB.doc,
+  HTTP 200, file dated 2014-11-19) lists per-message rates from $0.18 to $0.10 ex GST under
+  12-month committed terms, but it describes the legacy "Optus SMS Gateway Service Option" and
+  is not confirmed to apply to the current SMS Suite, so it is not recorded as tiers here.
+plans:
+- name: Free trial
+  description: Self-serve trial account via https://sms.optus.com.au/customer/online_signup; the account shuts down when the trial ends.
+  price: 0
+  price_text: free trial
+  features:
+  - Additional user accounts carry no extra charge
+  limits:
+  - Free trials expire after 30 days or 100 messages (whichever comes first)
+- name: Production account
+  description: Arranged with an Optus salesperson after the trial; billed per message unit. No price is published.
+  price: Contact sales
+  price_text: Your Optus salesperson will discuss the process to move to a production account
+  features:
+  - Usage recorded and billed per message unit
+  limits:
+  - up to a maximum of 10 concatenated message units per message

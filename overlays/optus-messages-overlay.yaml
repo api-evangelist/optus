@@ -1,0 +1,112 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Optus Messages API
+  version: 1.0.0
+extends: openapi/optus-messages-api-openapi.yml
+x-apievangelist:
+  generated: '2026-10-21'
+  method: generated
+  source: openapi/optus-messages-api-openapi.yml + overlays carried forward from the 2026-07-25 overlays
+    on openapi/_original/ (rest-v2, rest-v1)
+  note: Additive only; never mutates the extended document. Actions whose targets no longer exist in the
+    split document were dropped, Swagger 2.0 $.definitions targets were rebased to $.components.schemas,
+    and operationId updates were removed because the split document already declares its own operationIds.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-apievangelist-recommended: true
+    x-white-label-operator: Modica Group
+    contact:
+      name: The Optus SMS Suite API Support
+      url: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+      email: optussd@modicagroup.com
+    x-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      lifecycle: lifecycle/optus-lifecycle.yml
+      asyncapi: asyncapi/optus-sms-suite-asyncapi.yml
+      data_model: data-model/optus-data-model.yml
+- target: $.info
+  update:
+    x-conventions:
+      idempotency: none documented - retrying a submit sends another message
+      pagination: none
+      request_id_header: none
+      rate_limits: none published
+      timestamps: RFC 3339, not in the past, maximum 60 days ahead
+      msisdn_format: E.164 with leading plus
+      network_controls: optional per-application IP allowlisting; TLS 1.2 minimum
+- target: $.paths['/messages'].post
+  update:
+    summary: Send an SMS to a single mobile handset
+    x-apievangelist-note: The provider spec declares no operationId. This id is an API Evangelist convention
+      for tool generation and is NOT a provider-published identifier.
+    x-action-class: acting
+    x-consequence: write
+    x-delivery-outcome: Returns 202 Accepted with a UUID. Delivery success or failure only ever arrives
+      on the DLR callback - a 202 is acceptance, not delivery.
+- target: $.paths['/messages'].get
+  update:
+    summary: Retrieve a submitted message by UUID
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+- target: $.components.securitySchemes.GatewayAuthorizer
+  update:
+    x-actual-scheme: http-basic
+    x-apievangelist-note: Modelled as an apiKey in the Authorization header, but the value is a standard
+      HTTP Basic credential (base64 of application-name:password). Credentials are issued per application
+      at https://sms.optus.com.au/gateway/api_config/restv2.
+- target: $.components.schemas.StatusCallback
+  update:
+    x-apievangelist-note: This schema serves double duty as the 202 submit response body and as the DLR
+      callback payload. The DLR documentation publishes only four of the twelve enum values (sent, received,
+      rejected, expired); accepted, queued, blocked and deficient appear only here in the spec.
+    x-event-catalog: asyncapi/optus-sms-suite-asyncapi.yml
+- target: $.info
+  update:
+    x-rest-v1-apievangelist-provider: optus
+    x-rest-v1-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-rest-v1-lifecycle-status: superseded
+    x-rest-v1-successor: openapi/optus-sms-suite-rest-v2-openapi.yml
+    x-rest-v1-apievangelist-note: Not deprecated, but the documentation steers all new integrations to
+      REST v2. v1 mints 64-bit integer message IDs; v2 mints UUIDs, and the two id spaces cannot be resolved
+      against each other through any published operation.
+    x-rest-v1-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      asyncapi: asyncapi/optus-sms-suite-asyncapi.yml
+- target: $.paths['/messages'].post
+  update:
+    x-rest-v1-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+- target: $.paths['/messages/broadcast'].post
+  update:
+    summary: Send one message body to up to 1000 destinations
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: acting
+    x-consequence: write
+    x-blast-radius: up to 1000 handsets per call; exceeding the account limit returns broadcast_limit
+- target: $.paths['/messages/{messageid}'].get
+  update:
+    summary: Retrieve a message by its 64-bit message ID
+    x-apievangelist-note: Provider spec declares no operationId; this id is an API Evangelist convention.
+    x-action-class: connected
+    x-consequence: read
+- target: $.components.schemas.MessageCommon
+  update:
+    x-apievangelist-note: '`reference` is a free-text correlation label echoed back on retrieval and on
+      DLR/MO callbacks. It is NOT an idempotency key - the API de-duplicates nothing.'
+    x-scheduled-limits: RFC 3339 timestamp, must not be in the past, maximum 60 days ahead
+- target: $.components.schemas.DefaultError
+  update:
+    x-error-catalog: errors/optus-error-codes.yml
+    x-documented-codes:
+    - send_failed
+    - invalid_json
+    - missing_attrib
+    - invalid_attrib
+    - broadcast_limit

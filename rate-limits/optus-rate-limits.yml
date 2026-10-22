@@ -1,0 +1,29 @@
+name: Optus rate limits
+generated: '2026-10-21'
+method: searched
+source: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/smpp/
+note: >-
+  The Optus SMS Suite (Modica-operated) publishes no per-key request quota, no 429 response
+  and no X-RateLimit-* / RateLimit-* / Retry-After headers on its REST v1, REST v2 or Campaign
+  Manager pages. The only published throughput figure is the gateway-capacity note on the SMPP
+  page: carriers may throttle delivery (messages are queued, not rejected), and rates above
+  30 messages per second must be arranged with the account manager. The REST v1 broadcast
+  endpoint can return the `broadcast_limit` error code (see errors/optus-error-codes.yml),
+  whose ceiling is not published. Trial accounts are capped at 100 messages (see
+  plans/optus-plans-pricing.yml).
+limit_count: 1
+signaling:
+  status_on_exhaustion: null
+  headers: []
+  behaviour: >-
+    Carrier-side throttling queues messages on the gateway and delivers them in the order
+    received; no client-visible rate-limit response is documented.
+limits:
+- name: Gateway throughput above which account-manager arrangement is required
+  limit_text: If you require very high throughput rates, (ie more than 30msg per second),
+  limit: 30
+  window: 1 second
+  max: 30
+  scope: per-account
+  endpoint: SMPP / gateway submission
+  kind: negotiated-threshold

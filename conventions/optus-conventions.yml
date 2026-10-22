@@ -31,6 +31,7 @@ network_controls:
     detail: Plain-text HTTP requests are redirected to HTTPS. SMPP requires TLS 1.2+ on port 2776.
     certificates: https://sms.optus.com.au/docs/en/integrations/api-documentation/ssl-certificates/
 idempotency:
+  coverage: none
   supported: false
   idempotency_key_header: null
   detail: >-
@@ -130,3 +131,28 @@ related:
 - lifecycle/optus-lifecycle.yml
 - conformance/optus-conformance.yml
 - asyncapi/optus-sms-suite-asyncapi.yml
+reversibility:
+  coverage: none
+  checked: '2026-10-21'
+  source:
+  - https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
+  - https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/rest-v1/
+  - https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
+  - https://sms.optus.com.au/docs/en/faq/
+  surfaces:
+  - write: send / broadcast / schedule message (postMessages, postMessagesBroadcast)
+    reversal_operation: null
+    window: null
+    note: >-
+      No cancel, recall or unschedule operation is documented for sent or scheduled messages
+      on REST v1 or REST v2; a submitted SMS cannot be taken back through the API.
+  - write: create and schedule campaign (scheduleCampaign)
+    reversal_operation: null
+    window: null
+    note: No campaign cancel or unschedule operation is published in the Campaign Manager contract or docs.
+  - write: create list (createList)
+    reversal_operation: deleteList
+    window: null
+    note: >-
+      deleteList / deleteMultList remove a recipient list; this is a deletion, not a restore,
+      and no window is stated.

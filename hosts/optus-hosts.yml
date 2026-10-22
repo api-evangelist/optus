@@ -1,0 +1,149 @@
+generated: '2026-10-21'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 11
+  own: 5
+  other_domain: 4
+  platform: 2
+  roles:
+  - api
+  - other
+  - portal
+  - security
+  - status
+  - support
+  - website
+hosts:
+- host: api.bugcrowd.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: bugcrowd.com
+  role: api
+  relation: other-domain
+- host: api.com.au
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: api.com.au
+  role: api
+  relation: other-domain
+- host: api.modicagroup.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: modicagroup.com
+  role: api
+  relation: other-domain
+- host: api.sms.optus.com.au
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: optus.com.au
+  role: api
+  relation: own
+- host: bugcrowd.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - Security
+  serves: []
+  registrable_domain: bugcrowd.com
+  role: security
+  relation: other-domain
+- host: en.wikipedia.org
+  found_by:
+  - pointer
+  types:
+  - Wikipedia
+  serves: []
+  registrable_domain: wikipedia.org
+  role: other
+  relation: platform
+- host: help.optus.com.au
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types: []
+  serves:
+  - docs
+  registrable_domain: optus.com.au
+  role: support
+  relation: own
+- host: sms.optus.com.au
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - SignUp
+  - Login
+  - HelpCenter
+  - Compliance
+  - Integrations
+  serves:
+  - docs
+  - cdn
+  vendor: cloudfront
+  registrable_domain: optus.com.au
+  role: portal
+  relation: own
+- host: status.sms.optus.com.au
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: optus.com.au
+  role: status
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.optus.com.au
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Support
+  - TermsOfService
+  - PrivacyPolicy
+  serves:
+  - cdn
+  vendor: akamai
+  registrable_domain: optus.com.au
+  role: website
+  relation: own

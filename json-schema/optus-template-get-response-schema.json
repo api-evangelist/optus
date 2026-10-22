@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/optus/main/json-schema/optus-template-get-response-schema.json",
+  "title": "TemplateGetResponse",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/optus-templates-api-openapi.yml#/components/schemas/TemplateGetResponse",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      }
+    }
+  }
+}

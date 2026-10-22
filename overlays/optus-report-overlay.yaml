@@ -1,0 +1,37 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Campaign Manager Report API
+  version: 1.0.0
+extends: openapi/optus-report-api-openapi.yml
+x-apievangelist:
+  generated: '2026-10-21'
+  method: generated
+  source: openapi/optus-report-api-openapi.yml + overlays carried forward from the 2026-07-25 overlays
+    on openapi/_original/ (campaign-manager)
+  note: Additive only; never mutates the extended document. Actions whose targets no longer exist in the
+    split document were dropped, Swagger 2.0 $.definitions targets were rebased to $.components.schemas,
+    and operationId updates were removed because the split document already declares its own operationIds.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: optus
+    x-apievangelist-repo: https://github.com/api-evangelist/optus
+    x-live-copy: https://api.sms.optus.com.au/rest/campaign_manager/v1/swagger.json
+    x-apievangelist-note: A live copy of this document is served from the API host (HTTP 200), but that
+      copy declares host api.modicagroup.com. The Optus-branded docs copy is the one harvested here.
+    x-artifacts:
+      authentication: authentication/optus-authentication.yml
+      conventions: conventions/optus-conventions.yml
+      errors: errors/optus-error-codes.yml
+      data_model: data-model/optus-data-model.yml
+- target: $.info
+  update:
+    x-conventions:
+      tenancy: every path is scoped by the {application_name} segment, which is also the Basic auth username
+      pagination: none - list and template collections return in full
+      idempotency: none
+- target: $.paths['/{application_name}/{campaign_id}/report'].get
+  update:
+    summary: Get per-recipient delivery status for a campaign
+    x-action-class: connected
+    x-consequence: read

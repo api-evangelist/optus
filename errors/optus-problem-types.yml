@@ -1,0 +1,41 @@
+generated: '2026-10-21'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/optus-delete-multiple-lists-api-openapi.yml
+- openapi/optus-documentation-api-openapi.yml
+- openapi/optus-lists-api-openapi.yml
+- openapi/optus-messages-api-openapi.yml
+- openapi/optus-report-api-openapi.yml
+- openapi/optus-scheduled-campaigns-api-openapi.yml
+- openapi/optus-services-api-openapi.yml
+- openapi/optus-status-api-openapi.yml
+- openapi/optus-templates-api-openapi.yml
+format: custom
+envelope:
+  media_type: application/json
+  schema: DefaultError
+coverage:
+  operations: 14
+  statuses_declared: 3
+problems:
+- status: 404
+  title: Not Found
+  description: Not found
+  operations: 1
+  media_types: []
+  schema: null
+- status: 503
+  title: Service Unavailable
+  description: Health check service temporarily unavailable
+  operations: 2
+  media_types:
+  - application/json
+  schema: null
+- status: default
+  title: null
+  description: Default Error Response
+  operations: 13
+  media_types:
+  - application/json
+  schema: DefaultError

@@ -8,6 +8,7 @@
   ],
   "outputs": [
     "optus-delete-multiple-lists-api-openapi.yml",
+    "optus-healthz-api-openapi.yml",
     "optus-lists-api-openapi.yml",
     "optus-report-api-openapi.yml",
     "optus-scheduled-campaigns-api-openapi.yml",
@@ -23,6 +24,7 @@
   "notes": [
     "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "optus-sms-suite-campaign-manager-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "optus-sms-suite-campaign-manager-openapi.yml: tagged paths GET /healthz -> Healthz",
     "optus-sms-suite-campaign-manager-openapi.yml: tagged paths POST /{application_name}/delete_multiple_lists -> Delete Multiple Lists",
     "optus-sms-suite-campaign-manager-openapi.yml: tagged paths GET /{application_name}/lists -> Lists",
     "optus-sms-suite-campaign-manager-openapi.yml: tagged paths POST /{application_name}/lists -> Lists",
@@ -31,6 +33,7 @@
     "optus-sms-suite-campaign-manager-openapi.yml: tagged paths GET /{application_name}/templates -> Templates",
     "optus-sms-suite-campaign-manager-openapi.yml: tagged paths GET /{application_name}/{campaign_id}/report -> Report",
     "optus-sms-suite-campaign-manager-openapi.yml: declared missing tag: Delete Multiple Lists",
+    "optus-sms-suite-campaign-manager-openapi.yml: declared missing tag: Healthz",
     "optus-sms-suite-campaign-manager-openapi.yml: declared missing tag: Lists",
     "optus-sms-suite-campaign-manager-openapi.yml: declared missing tag: Report",
     "optus-sms-suite-campaign-manager-openapi.yml: declared missing tag: Scheduled Campaigns",
@@ -49,7 +52,7 @@
     "optus-sms-suite-status-openapi.json: declared missing tag: Services",
     "optus-sms-suite-status-openapi.json: declared missing tag: Status",
     "tag 'Messages' spans 2 source specs (optus-sms-suite-rest-v1-openapi.yml, optus-sms-suite-rest-v2-openapi.yml): per-path servers applied",
-    "apis.yml register: already-registered"
+    "apis.yml register: written (+1 apis, 16 total)"
   ],
   "skipped": [
     "optus-delete-multiple-lists-api-openapi.yml: previously refined output, superseded by openapi/_original/",

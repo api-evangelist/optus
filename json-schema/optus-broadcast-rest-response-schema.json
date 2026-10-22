@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/optus/main/json-schema/optus-broadcast-rest-response-schema.json",
+  "title": "BroadcastRestResponse",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/optus-messages-api-openapi.yml#/components/schemas/BroadcastRestResponse",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "status"
+    ],
+    "readOnly": true,
+    "description": "Response per destination",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "destination": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      }
+    }
+  }
+}

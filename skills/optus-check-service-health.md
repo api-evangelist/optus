@@ -1,12 +1,12 @@
 ---
 name: optus-check-service-health
 description: Check whether Optus SMS Suite services are available before sending production traffic, using the unauthenticated Health Monitoring API and the Statuspage feed.
-api: openapi/optus-sms-suite-status-openapi.json
+api: openapi/optus-status-api-openapi.yml
 base_url: https://api.sms.optus.com.au/rest/services/v1
 operations:
-  - GET /services
-  - GET /status
-generated: '2026-07-25'
+  - getServices
+  - getStatus
+generated: '2026-10-21'
 method: generated
 source: https://sms.optus.com.au/docs/en/integrations/api-documentation/health-api/
 ---
@@ -18,7 +18,7 @@ an alerting signal — never as a delivery signal.
 
 ## Step 1 — Discover the service names
 
-`GET /services` returns `{"services": [...]}`.
+`getServices` (openapi/optus-services-api-openapi.yml) — `GET /services` returns `{"services": [...]}`.
 
 Live values observed 2026-07-25: `https`, `rest`, `soap`, `smpp`, `restv2`, `email2sms`.
 
@@ -27,7 +27,7 @@ status `unknown` rather than an error, so validate against this list rather than
 
 ## Step 2 — Query the services you actually depend on
 
-`GET /status?service=rest&service=smpp` — the `service` query parameter repeats, one per
+`getStatus` (openapi/optus-status-api-openapi.yml) — `GET /status?service=rest&service=smpp` — the `service` query parameter repeats, one per
 service.
 
 ```

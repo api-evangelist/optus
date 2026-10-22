@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<definitions 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:s="http://www.w3.org/2001/XMLSchema" 
+    xmlns:tns="http://api.sms.optus.com.au/ModicaSoap" 
+    targetNamespace="http://api.sms.optus.com.au/ModicaSoap" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema elementFormDefault="qualified" 
+              targetNamespace="http://api.sms.optus.com.au/ModicaSoap">
+      <!-- soap:Body request message description -->
+      <s:element name="sendMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="application" type="s:string" minOccurs="1" maxOccurs="1"/>
+            <s:element name="password" type="s:string" minOccurs="1" maxOccurs="1"/>
+            <s:element name="destination" type="s:string" minOccurs="1" maxOccurs="1"/>
+            <s:element name="content" type="s:string" minOccurs="1" maxOccurs="1"/>
+            <s:element name="reference" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="requestSource" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="customer" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="class" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="cost" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="mask" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="replyTo" type="s:long" minOccurs="0" maxOccurs="1"/>
+            <s:element name="smsClass" type="s:int" minOccurs="0" maxOccurs="1" nillable="true" default="1"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <!-- soap:Body response message description -->
+      <s:element name="sendMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element name="messageid" type="s:long" minOccurs="1" maxOccurs="1"/>
+            <s:element name="status" type="s:string" minOccurs="1" maxOccurs="1"/>
+            <s:element name="recipient" type="s:string" minOccurs="0" maxOccurs="1"/>
+            <s:element name="reference" type="s:string" minOccurs="0" maxOccurs="1"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </types>
+  <message name="sendMessageIn">
+    <part name="parameters" element="tns:sendMessage" />
+  </message>
+  <message name="sendMessageOut">
+    <part name="parameters" element="tns:sendMessageResponse" />
+  </message>
+  <portType name="ModicaSoapServicePortType">
+    <operation name="sendMessage">
+      <input message="tns:sendMessageIn" />
+      <output message="tns:sendMessageOut" />
+    </operation>
+  </portType>
+  <binding name="ModicaSoapServiceBinding" type="tns:ModicaSoapServicePortType">
+    <soap:binding 
+        transport="http://schemas.xmlsoap.org/soap/http" 
+        style="document" />
+    <operation name="sendMessage">
+      <soap:operation 
+          soapAction="https://api.sms.optus.com.au/ModicaSoap"/>
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ModicaSoapService">
+    <documentation>Modica SOAP Services</documentation>
+    <port name="sendMessagePort"
+          binding="tns:ModicaSoapServiceBinding">
+      <soap:address location="https://api.sms.optus.com.au/ModicaSoap"/>
+    </port>
+  </service>
+</definitions>

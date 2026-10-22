@@ -1,0 +1,168 @@
+{
+  "@context": {
+    "@vocab": "https://optus.com.au/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "optus": "https://optus.com.au/schema#",
+    "DeleteMultipleListsRequest": "optus:DeleteMultipleListsRequest",
+    "list_ids": {
+      "@id": "optus:list_ids",
+      "@container": "@list"
+    },
+    "Member": "optus:Member",
+    "destination": {
+      "@id": "optus:destination",
+      "@type": "xsd:string"
+    },
+    "param1": {
+      "@id": "optus:param1",
+      "@type": "xsd:string"
+    },
+    "param2": {
+      "@id": "optus:param2",
+      "@type": "xsd:string"
+    },
+    "param3": {
+      "@id": "optus:param3",
+      "@type": "xsd:string"
+    },
+    "param4": {
+      "@id": "optus:param4",
+      "@type": "xsd:string"
+    },
+    "param5": {
+      "@id": "optus:param5",
+      "@type": "xsd:string"
+    },
+    "param6": {
+      "@id": "optus:param6",
+      "@type": "xsd:string"
+    },
+    "DefaultError": "optus:DefaultError",
+    "code": {
+      "@id": "optus:code",
+      "@type": "xsd:integer"
+    },
+    "message": {
+      "@id": "optus:message",
+      "@type": "xsd:string"
+    },
+    "ListRequest": "optus:ListRequest",
+    "batch": {
+      "@id": "optus:batch",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "optus:email",
+      "@type": "xsd:string"
+    },
+    "members": {
+      "@id": "optus:members",
+      "@container": "@list"
+    },
+    "name": {
+      "@id": "optus:name",
+      "@type": "xsd:string"
+    },
+    "remove_opt_outs": {
+      "@id": "optus:remove_opt_outs",
+      "@type": "xsd:boolean"
+    },
+    "strict_validation": {
+      "@id": "optus:strict_validation",
+      "@type": "xsd:boolean"
+    },
+    "ListCreateResponse": "optus:ListCreateResponse",
+    "error_messages": {
+      "@id": "optus:error_messages",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "optus:id",
+      "@type": "xsd:integer"
+    },
+    "MessageCommon": "optus:MessageCommon",
+    "source": {
+      "@id": "optus:source",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "optus:content",
+      "@type": "xsd:string"
+    },
+    "reference": {
+      "@id": "optus:reference",
+      "@type": "xsd:string"
+    },
+    "class": {
+      "@id": "optus:class",
+      "@type": "xsd:string"
+    },
+    "mask": {
+      "@id": "optus:mask",
+      "@type": "xsd:string"
+    },
+    "sms_class": {
+      "@id": "optus:sms_class",
+      "@type": "xsd:integer"
+    },
+    "scheduled": {
+      "@id": "optus:scheduled",
+      "@type": "xsd:dateTime"
+    },
+    "SingleMessage": "optus:SingleMessage",
+    "integration_id": {
+      "@id": "optus:integration_id",
+      "@type": "xsd:string"
+    },
+    "ReplyCallback": "optus:ReplyCallback",
+    "operator": {
+      "@id": "optus:operator",
+      "@type": "xsd:string"
+    },
+    "StatusCallback": "optus:StatusCallback",
+    "status": {
+      "@id": "optus:status",
+      "@type": "xsd:string"
+    },
+    "detail": {
+      "@id": "optus:detail",
+      "@type": "xsd:string"
+    },
+    "MessageDetails": "optus:MessageDetails",
+    "direction": {
+      "@id": "optus:direction",
+      "@type": "xsd:string"
+    },
+    "ScheduleCampaignRequest": "optus:ScheduleCampaignRequest",
+    "opt_out_response": {
+      "@id": "optus:opt_out_response",
+      "@type": "xsd:string"
+    },
+    "reply_response": {
+      "@id": "optus:reply_response",
+      "@type": "xsd:string"
+    },
+    "schedule": {
+      "@id": "optus:schedule",
+      "@type": "xsd:dateTime"
+    },
+    "template": {
+      "@id": "optus:template",
+      "@type": "xsd:string"
+    },
+    "ScheduleCampaignResponse": "optus:ScheduleCampaignResponse"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Optus API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Optus's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-21) from openapi/optus-delete-multiple-lists-api-openapi.yml, openapi/optus-documentation-api-openapi.yml, openapi/optus-lists-api-openapi.yml.",
+  "dcterms:created": "2026-10-21",
+  "dcterms:source": [
+    "openapi/optus-delete-multiple-lists-api-openapi.yml",
+    "openapi/optus-documentation-api-openapi.yml",
+    "openapi/optus-lists-api-openapi.yml",
+    "openapi/optus-messages-api-openapi.yml",
+    "openapi/optus-report-api-openapi.yml"
+  ]
+}

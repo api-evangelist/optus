@@ -1,7 +1,7 @@
 ---
 name: optus-run-sms-campaign
 description: Build a recipient list, schedule an SMS campaign against it, and pull the per-recipient delivery report using the Optus SMS Suite Campaign Manager API.
-api: openapi/optus-sms-suite-campaign-manager-openapi.yml
+api: openapi/optus-scheduled-campaigns-api-openapi.yml
 base_url: https://api.sms.optus.com.au/rest/campaign_manager/v1
 operations:
   - getLists
@@ -11,7 +11,7 @@ operations:
   - scheduleCampaign
   - getTemplates
   - getReport
-generated: '2026-07-25'
+generated: '2026-10-21'
 method: generated
 source: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/campaign-manager-api/
 ---
@@ -19,7 +19,7 @@ source: https://sms.optus.com.au/docs/en/integrations/messaging-apis/sms-apis/ca
 # Run an SMS campaign (Optus SMS Suite Campaign Manager)
 
 Every `operationId` below exists verbatim in
-`openapi/optus-sms-suite-campaign-manager-openapi.yml`.
+the Campaign Manager contracts `openapi/optus-lists-api-openapi.yml`, `openapi/optus-templates-api-openapi.yml`, `openapi/optus-scheduled-campaigns-api-openapi.yml`, `openapi/optus-report-api-openapi.yml` and `openapi/optus-delete-multiple-lists-api-openapi.yml`.
 
 ## Before you start
 

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/optus/main/json-schema/optus-message-schema.json",
+  "title": "Message",
+  "description": "Send a message to one handset",
+  "x-generated": "2026-10-21",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/optus-messages-api-openapi.yml#/components/schemas/Message",
+  "type": "object",
+  "required": [
+    "destination"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/$defs/MessageCommon"
+    },
+    {
+      "properties": {
+        "destination": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "MessageCommon": {
+      "type": "object",
+      "description": "Common properties for single and broadcast messages",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "source": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "class": {
+          "type": "string",
+          "default": "mt_message"
+        },
+        "mask": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "sms_class": {
+          "type": "integer"
+        },
+        "scheduled": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Allows scheduling of messages with an upper limit of 60 days"
+        }
+      }
+    }
+  }
+}

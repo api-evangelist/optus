@@ -1,0 +1,19 @@
+generated: '2026-10-21'
+method: searched
+source: https://sms.optus.com.au/docs/en/developer-getting-started/
+docs: https://sms.optus.com.au/docs/en/faq/
+description: >-
+  The getting-started page tells developers to "Use our sandbox environment where available",
+  but no sandbox host, test credentials, test numbers or magic values are documented on any
+  API page read (REST v1, REST v2, Campaign Manager, SMPP). The practical test path is the
+  self-serve free trial account, which sends real messages on the production platform:
+  "Free trials expire after 30 days or 100 messages (whichever comes first)". A trial account
+  that exhausts its cap reports message status "Deficient".
+modes:
+- name: Free trial account
+  host: https://sms.optus.com.au
+  signup: https://sms.optus.com.au/customer/online_signup
+  live_traffic: true
+  limits: 30 days or 100 messages, whichever comes first
+test_values: []
+time_simulation: none documented

@@ -1,5 +1,5 @@
 generated: '2026-07-25'
-method: searched
+method: none
 source: npm, PyPI, GitHub, and https://sms.optus.com.au/docs/en/
 official_packages_found: 0
 packages: []

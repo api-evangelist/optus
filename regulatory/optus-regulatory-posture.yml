@@ -1,0 +1,75 @@
+generated: '2026-10-21'
+method: searched
+probe: true
+source: https://www.optus.com.au/about/legal/privacy
+note: >-
+  Read from Optus's own Privacy Policy (with Credit Reporting Policy), whose text is embedded as escaped JSON in the
+  page HTML (a plain and rendered fetch both returned only the title), and from the Optus SMS Suite "Safe & Secure"
+  solution sheet. The privacy page has no retention period, breach-notification, Do Not Track/GPC or automated
+  decision language; the Bugcrowd VDP page's safe-harbour clause is security-research authorisation, not a
+  notice-and-action mechanism, so neither is recorded.
+signals:
+  data_subject_request:
+    url: https://www.optus.com.au/about/legal/privacy
+    section: How to access and correct your personal information
+    stated_sla: acknowledge within 7 days; access usually provided within 30 days
+    rights_named: [access, correction]
+    escalation: Office of the Australian Information Commissioner; Telecommunications Industry Ombudsman
+    evidence:
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: You can contact us if you wish to request access to, or update, your personal information and credit information we hold about you.
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: We’ll acknowledge your request within 7 days, and provided that you tell us specifically what you wish to access, we’ll usually be able to provide it to you within 30 days of receipt of your request.
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: If we can’t resolve your complaint, you may contact the Office of the Australian Information Commissioner or where appropriate, the Telecommunications Industry Ombudsman .
+    note: >-
+      Access and correction rights with a stated 7-day acknowledgement and usual 30-day fulfilment window, plus a
+      regulator escalation path. No deletion or portability right is named.
+  data_residency:
+    url: https://www.optus.com.au/about/legal/privacy
+    section: Countries where we may share your information
+    evidence:
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: In some cases, we may share, host and access your information with organisations (including some Singtel Group companies, service providers and third parties) located overseas for the purposes listed above ( see countries where we may share your information ).
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: Singapore, India, Philippines, USA, Canada, the European Union (including the UK), the Bailiwick of Jersey, Mexico, Malaysia, Japan, Israel, Iceland and New Zealand.
+    - source: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: Data sovereignty, retention, platform reliability, and business continuity controls are built into our operating model.
+    note: >-
+      Consumer data is NOT confined to Australia: the policy discloses cross-border sharing and hosting and names
+      the destination countries (a country list, not a named subprocessor list). The SMS Suite sheet asserts data
+      sovereignty controls without saying where data is held.
+  ai_transparency:
+    url: https://www.optus.com.au/about/legal/privacy
+    section: How we use your information
+    evidence:
+    - source: https://www.optus.com.au/about/legal/privacy
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: We may also utilise artificial intelligence (AI) technologies to enhance our products and services (including customer support), manage and improve communication with you, improve our data analysis and operational processes and deliver better experiences for our customers and stakeholders.
+    note: >-
+      A general disclosure that personal information may be used with AI technologies, including in customer
+      support. It does not name models, say whether data trains them, or offer an opt-out.
+  data_retention:
+    url: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+    section: Security and Privacy
+    evidence:
+    - source: https://sms.optus.com.au/docs/en/solution-sheets/safe-secure/
+      http_status: 200
+      fetched: '2026-10-21'
+      quote: Data sovereignty, retention, platform reliability, and business continuity controls are built into our operating model.
+    note: >-
+      A bare claim, for the Optus SMS Suite only, that retention controls exist; no period or deletion schedule is
+      published, and the consumer Privacy Policy has no retention language at all.

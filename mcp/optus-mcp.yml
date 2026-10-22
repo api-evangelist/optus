@@ -1,5 +1,14 @@
-generated: '2026-07-25'
+generated: '2026-10-21'
 method: derived
+source:
+- openapi/optus-messages-api-openapi.yml
+- openapi/optus-lists-api-openapi.yml
+- openapi/optus-delete-multiple-lists-api-openapi.yml
+- openapi/optus-scheduled-campaigns-api-openapi.yml
+- openapi/optus-templates-api-openapi.yml
+- openapi/optus-report-api-openapi.yml
+- openapi/optus-status-api-openapi.yml
+- openapi/optus-services-api-openapi.yml
 status: candidate
 published: false
 search:
@@ -39,61 +48,61 @@ auth:
 tools:
 - name: send_sms
   description: Send an SMS to a single mobile handset (asynchronous, UUID-tracked).
-  source_operation: openapi/optus-sms-suite-rest-v2-openapi.yml#POST /messages
+  source_operation: openapi/optus-messages-api-openapi.yml#postMessages
   action_class: acting
   consequence: write
   auth_required: true
 - name: get_sms_message
   description: Retrieve a submitted message by its UUID, including current delivery status.
-  source_operation: openapi/optus-sms-suite-rest-v2-openapi.yml#GET /messages
+  source_operation: openapi/optus-messages-api-openapi.yml#getMessages
   action_class: connected
   consequence: read
   auth_required: true
 - name: send_sms_v1
   description: Send an SMS via the legacy REST v1 gateway, returning a 64-bit integer message ID.
-  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#POST /messages
+  source_operation: openapi/optus-messages-api-openapi.yml#postMessages
   action_class: acting
   consequence: write
   auth_required: true
 - name: broadcast_sms
   description: Send one message body to an array of up to 1000 destinations.
-  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#POST /messages/broadcast
+  source_operation: openapi/optus-messages-api-openapi.yml#postMessagesBroadcast
   action_class: acting
   consequence: write
   auth_required: true
 - name: get_sms_message_v1
   description: Retrieve a REST v1 message by its 64-bit integer message ID.
-  source_operation: openapi/optus-sms-suite-rest-v1-openapi.yml#GET /messages/{messageid}
+  source_operation: openapi/optus-messages-api-openapi.yml#getMessagesByMessageid
   action_class: connected
   consequence: read
   auth_required: true
 - name: list_recipient_lists
   description: List all active Campaign Manager recipient lists for an application.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getLists
+  source_operation: openapi/optus-lists-api-openapi.yml#getLists
   action_class: connected
   consequence: read
   auth_required: true
 - name: create_recipient_list
   description: Create a named recipient list and load its members.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#createList
+  source_operation: openapi/optus-lists-api-openapi.yml#createList
   action_class: acting
   consequence: write
   auth_required: true
 - name: delete_recipient_list
   description: Delete a single recipient list by ID.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#deleteList
+  source_operation: openapi/optus-lists-api-openapi.yml#deleteList
   action_class: acting
   consequence: write
   auth_required: true
 - name: delete_recipient_lists
   description: Delete up to 100 recipient lists in one call.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#deleteMultList
+  source_operation: openapi/optus-delete-multiple-lists-api-openapi.yml#deleteMultList
   action_class: acting
   consequence: write
   auth_required: true
 - name: schedule_campaign
   description: Schedule an SMS campaign to a member set, optionally using a saved template.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#scheduleCampaign
+  source_operation: openapi/optus-scheduled-campaigns-api-openapi.yml#scheduleCampaign
   action_class: acting
   consequence: write
   auth_required: true
@@ -101,25 +110,25 @@ tools:
     require human confirmation before execution.
 - name: list_templates
   description: List all Campaign Manager message templates for an application.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getTemplates
+  source_operation: openapi/optus-templates-api-openapi.yml#getTemplates
   action_class: connected
   consequence: read
   auth_required: true
 - name: get_campaign_report
   description: Get per-recipient delivery status rows for a campaign.
-  source_operation: openapi/optus-sms-suite-campaign-manager-openapi.yml#getReport
+  source_operation: openapi/optus-report-api-openapi.yml#getReport
   action_class: connected
   consequence: read
   auth_required: true
 - name: get_service_status
   description: Get near real-time availability for one or more SMS Suite services.
-  source_operation: openapi/optus-sms-suite-status-openapi.json#GET /status
+  source_operation: openapi/optus-status-api-openapi.yml#getStatus
   action_class: connected
   consequence: read
   auth_required: false
 - name: list_services
   description: List the service names the health API can report on.
-  source_operation: openapi/optus-sms-suite-status-openapi.json#GET /services
+  source_operation: openapi/optus-services-api-openapi.yml#getServices
   action_class: connected
   consequence: read
   auth_required: false

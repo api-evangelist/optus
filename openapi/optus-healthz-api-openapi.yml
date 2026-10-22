@@ -1,0 +1,45 @@
+openapi: 3.2.0
+info:
+  title: Campaign Manager Healthz API
+  contact:
+    name: Modica Group API Support
+    url: http://support.modicagroup.com
+    email: support@modicagroup.com
+  version: 1.0.1
+servers:
+- url: https://api.modicagroup.com/rest/campaign_manager/v1
+security:
+- BasicAuth: []
+tags:
+- name: Healthz
+paths:
+  /healthz:
+    get:
+      security: []
+      description: Health check endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ok
+        default:
+          description: 500 Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'error: cannot connect'
+      tags:
+      - Healthz
+      summary: Get healthz
+      x-summary-source: derived
+      operationId: getHealthz
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

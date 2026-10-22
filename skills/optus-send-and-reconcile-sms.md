@@ -1,12 +1,12 @@
 ---
 name: optus-send-and-reconcile-sms
 description: Send a single SMS through the Optus SMS Suite REST API v2 and reconcile its real delivery outcome from the DLR callback rather than from the submit response.
-api: openapi/optus-sms-suite-rest-v2-openapi.yml
+api: openapi/optus-messages-api-openapi.yml
 base_url: https://api.sms.optus.com.au/rest/sms/v2
 operations:
-  - POST /messages
-  - GET /messages
-generated: '2026-07-25'
+  - postMessages
+  - getMessages
+generated: '2026-10-21'
 method: generated
 source: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
 ---
@@ -15,7 +15,7 @@ source: https://sms.optus.com.au/docs/en/integrations/api-documentation/rest-v2/
 
 The provider's REST v2 spec declares no `operationId`s, so operations below are named by
 method and path exactly as they appear in
-`openapi/optus-sms-suite-rest-v2-openapi.yml`.
+`openapi/optus-messages-api-openapi.yml` (server https://api.sms.optus.com.au/rest/sms/v2).
 
 ## Before you start
 
@@ -32,7 +32,7 @@ method and path exactly as they appear in
 
 ## Step 1 — Submit the message
 
-`POST /messages` with HTTP Basic auth and `Content-Type: application/json`.
+`postMessages` — `POST /messages` with HTTP Basic auth and `Content-Type: application/json`.
 
 Required body fields (from `components.schemas.SingleMessage`): `destination`, `content`.
 Useful optional fields: `source`, `reference`, `mask`, `scheduled`, `class`, `sms_class`,
@@ -73,7 +73,7 @@ be URL-encoded.
 
 ## Step 4 — Poll only as a fallback
 
-`GET /messages?id={uuid}` returns a `MessageDetails` object (`id`, `source`, `destination`,
+`getMessages` — `GET /messages?id={uuid}` returns a `MessageDetails` object (`id`, `source`, `destination`,
 `direction`, `reference`, `content`, `status`). Use it to reconcile a message whose callback
 you may have missed — not as the primary delivery signal. A `404` means no message matched
 that id.
